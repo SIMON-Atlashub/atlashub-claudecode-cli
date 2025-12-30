@@ -20,17 +20,17 @@
 | Phase EPCT | Description | APEX | BA |
 |------------|-------------|------|-----|
 | **E**xplore | Analyser le contexte, codebase, besoins | `/apex:1-analyze` | `/ba:1-init` + `/ba:2-analyse` |
-| **P**lan | Creer un plan d'implementation | `/apex:2-plan` + `/apex:5-tasks` | `/ba:3-validate` (partiel) |
-| **C**ode | Implementer le code | `/apex:3-execute` | **MANQUANT** |
-| **T**est | Valider, tester, examiner | `/apex:4-examine` | **MANQUANT** |
+| **P**lan | Creer un plan d'implementation | `/apex:2-plan` + `/apex:5-tasks` | `/ba:3-validate` |
+| **C**ode | Implementer le code | `/apex:3-execute` | `/ba:4-implement` |
+| **T**est | Valider, tester, examiner | `/apex:4-examine` | `/ba:5-verify` |
 
 ### Constat
 
-**BA couvre seulement 50% du cycle EPCT** :
+**BA couvre maintenant 100% du cycle EPCT** :
 - Explore : Oui (init + analyse)
-- Plan : Partiel (validation des specs, pas de plan technique)
-- Code : **NON**
-- Test : **NON**
+- Plan : Oui (validation des specs)
+- Code : Oui (implement .NET/Blazor)
+- Test : Oui (verify dotnet build/test)
 
 ---
 
@@ -58,17 +58,19 @@
 | 3-execute | plan.md + analyze.md | Code + `implementation.md` | snipper |
 | 4-examine | Code | Build/Lint/Test results | snipper (fix) |
 
-### BA : 3 Phases (Incomplet)
+### BA : 5 Phases (Complet - Microsoft .NET)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  BA WORKFLOW                                                     │
+│  BA WORKFLOW - Microsoft Stack                                   │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│  1-INIT ──► 2-ANALYSE ──► 3-VALIDATE ──► ???                   │
+│  1-INIT ──► 2-ANALYSE ──► 3-VALIDATE ──► 4-IMPLEMENT ──► 5-VERIFY│
 │                                                                  │
-│  [E]xplore   [E]xplore    [P]lan        [C]ode? [T]est?        │
-│                           (partiel)      MANQUANT MANQUANT      │
+│  [E]xplore   [E]xplore    [P]lan        [C]ode        [T]est    │
+│  Scan .NET   Challenge    Specs 85%     Entites       dotnet    │
+│              Metier                     Controllers   build     │
+│                                         Blazor        test      │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -78,8 +80,8 @@
 | 1-init | Projet | `config.json` | ba:scan (haiku) |
 | 2-analyse | Besoin utilisateur | `analyses/*.md` | ba:entity-analyzer, ba:doc-generator (haiku) |
 | 3-validate | analyse.md | `validations/*.md` + `specs/*.md` | - |
-| ~~4-code~~ | - | - | **MANQUANT** |
-| ~~5-test~~ | - | - | **MANQUANT** |
+| 4-implement | specs validees | Code .NET/Blazor | snipper (haiku) |
+| 5-verify | Code | Build/Test results | snipper (sonnet) |
 
 ---
 
@@ -105,37 +107,29 @@
 
 ---
 
-## 4. Lacunes Critiques de BA
+## 4. Corrections Apportees a BA
 
-### 4.1 Pas de Phase Code
+### 4.1 Phase Code Ajoutee : `/ba:4-implement`
 
-BA s'arrete a la generation de specs techniques :
+Generation automatique du code .NET :
+- Entites EF Core + Configuration
+- Migration EF Core
+- Controllers API + DTOs
+- Pages Blazor (List + Form)
+- Tests xUnit
 
-```markdown
-## Tasks Backend
-- [ ] Entites : <liste>
-- [ ] Migration EF Core
-- [ ] Endpoints : <liste>
-- [ ] Tests
+### 4.2 Phase Test Ajoutee : `/ba:5-verify`
 
-## Tasks Frontend
-- [ ] Pages : <liste>
-- [ ] Composants
-- [ ] Permissions UI
-```
+Validation technique complete :
+- `dotnet restore` + `dotnet build`
+- `dotnet ef migrations list`
+- `dotnet test`
+- `dotnet format`
+- Fix automatique via snipper si erreurs
 
-**Ces tasks ne sont jamais executees automatiquement.**
+### 4.3 Orchestrateur Ajoute : `ba.md`
 
-### 4.2 Pas de Phase Test/Validation Technique
-
-- Pas de `npm run build`
-- Pas de `dotnet build`
-- Pas de `dotnet test`
-- Pas de validation lint/format
-
-### 4.3 Pas d'Orchestrateur
-
-APEX a `apex.md` qui orchestre tout le workflow. BA n'a pas de `ba.md`.
+Documente le workflow complet avec les 5 phases et leurs dependances.
 
 ---
 
