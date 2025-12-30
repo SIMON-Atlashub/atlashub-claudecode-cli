@@ -12,4 +12,6 @@ export default defineConfig({
   banner: {
     js: '#!/usr/bin/env node',
   },
+  // Bundle ALL dependencies into dist/index.js (standalone CLI)
+  noExternal: [/.*/],
 });
