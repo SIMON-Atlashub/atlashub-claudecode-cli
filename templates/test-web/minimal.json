@@ -1,0 +1,19 @@
+{
+  "$schema": "https://atlashub.ch/schemas/test-web-config.json",
+  "version": "1.0.0",
+  "targets": [
+    {
+      "name": "Site principal",
+      "url": "https://example.com",
+      "type": "fetch",
+      "expects": {
+        "status": 200
+      }
+    }
+  ],
+  "settings": {
+    "timeout": 30000,
+    "retries": 2,
+    "reportPath": ".claude/test-web/reports"
+  }
+}

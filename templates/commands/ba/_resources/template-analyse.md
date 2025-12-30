@@ -39,10 +39,8 @@ erDiagram
 {{MERMAID_ER}}
 ```
 
-### Migration EF Core
-```bash
-{{MIGRATION_CMD}}
-```
+### Migration EF Core prevue
+{{MIGRATION_NAME}}
 
 ---
 
@@ -54,10 +52,11 @@ erDiagram
 |--------|-------|-------|-------------|
 {{ENDPOINTS_TABLE}}
 
-### DTOs
-```csharp
-{{DTOS}}
-```
+### DTOs (specification)
+
+| DTO | Proprietes | Usage |
+|-----|------------|-------|
+{{DTOS_TABLE}}
 
 ---
 

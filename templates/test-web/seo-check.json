@@ -1,0 +1,54 @@
+{
+  "$schema": "https://atlashub.ch/schemas/test-web-config.json",
+  "version": "1.0.0",
+  "targets": [
+    {
+      "name": "Google Indexation",
+      "query": "site:example.com",
+      "type": "search",
+      "expects": {
+        "hasResults": true
+      }
+    },
+    {
+      "name": "Brand Search",
+      "query": "\"Example Company\" official",
+      "type": "search",
+      "expects": {
+        "hasResults": true
+      }
+    },
+    {
+      "name": "Homepage Meta",
+      "url": "https://example.com",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["meta", "description", "title"]
+      }
+    },
+    {
+      "name": "Robots.txt",
+      "url": "https://example.com/robots.txt",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["User-agent", "Sitemap"]
+      }
+    },
+    {
+      "name": "Sitemap",
+      "url": "https://example.com/sitemap.xml",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["urlset", "url", "loc"]
+      }
+    }
+  ],
+  "settings": {
+    "timeout": 30000,
+    "retries": 2,
+    "reportPath": ".claude/test-web/reports"
+  }
+}

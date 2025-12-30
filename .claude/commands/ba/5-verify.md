@@ -7,9 +7,64 @@ allowed-tools: Bash(dotnet *), Read, Edit, Task, Grep
 
 Expert QA .NET senior. Validation complete du code genere.
 
-## Pre-requis
+## Selection de l'implementation
 
-Verifier : `.claude/ba/implementations/*.md` existe (sinon `/ba:4-implement`)
+**Dossier source** : `.claude/ba/implementations/`
+
+### Etape 1 : Lister les fichiers disponibles
+
+```bash
+ls -1 .claude/ba/implementations/*.md 2>/dev/null
+```
+
+### Etape 2 : Logique de selection
+
+**Cas A - Parametre fourni** (`$ARGUMENTS` non vide) :
+```
+IMPLEMENTATION_FILE = ".claude/ba/implementations/$ARGUMENTS"
+Verifier que le fichier existe, sinon ERREUR: "Fichier non trouve: $ARGUMENTS"
+```
+
+**Cas B - Aucun parametre** :
+
+| Nombre de fichiers | Action |
+|-------------------|--------|
+| 0 fichiers | ERREUR: "Aucune implementation disponible. Executez `/ba:4-implement` d'abord." |
+| 1 fichier | Utiliser automatiquement ce fichier |
+| 2+ fichiers | Afficher questionnaire de selection (voir ci-dessous) |
+
+### Questionnaire de selection (si plusieurs fichiers)
+
+Utiliser `AskUserQuestion` avec les fichiers trouves :
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "Quelle implementation voulez-vous verifier ?",
+    header: "Impl",
+    options: [
+      // Pour CHAQUE fichier trouve, creer une option :
+      {
+        label: "<nom-du-fichier>.md",
+        description: "Verifier l'implementation .claude/ba/implementations/<nom-du-fichier>.md"
+      }
+      // Exemple concret :
+      // { label: "2025-12-30-user-auth.md", description: "Verifier l'implementation .claude/ba/implementations/2025-12-30-user-auth.md" }
+      // { label: "2025-12-30-payment.md", description: "Verifier l'implementation .claude/ba/implementations/2025-12-30-payment.md" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+### Etape 3 : Executer avec le fichier selectionne
+
+Apres selection (automatique ou par l'utilisateur), stocker :
+```
+IMPLEMENTATION_FILE = ".claude/ba/implementations/<fichier-selectionne>"
+```
+
+Puis continuer avec les etapes suivantes en utilisant `$IMPLEMENTATION_FILE`.
 
 ## Workflow
 

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://atlashub.ch/schemas/test-web-config.json",
+  "version": "1.0.0",
+  "targets": [
+    {
+      "name": "API Health Check",
+      "url": "https://api.example.com/health",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["healthy", "status", "ok"]
+      }
+    },
+    {
+      "name": "API Version",
+      "url": "https://api.example.com/version",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["version"]
+      }
+    },
+    {
+      "name": "API Documentation",
+      "url": "https://api.example.com/docs",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["swagger", "openapi", "API"]
+      }
+    }
+  ],
+  "settings": {
+    "timeout": 10000,
+    "retries": 3,
+    "reportPath": ".claude/test-web/reports"
+  }
+}
