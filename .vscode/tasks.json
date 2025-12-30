@@ -1,0 +1,59 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Local",
+      "type": "shell",
+      "command": "node",
+      "args": ["dist/index.js", "install", "--local", "--force", "--skip-license"],
+      "problemMatcher": [],
+      "dependsOn": "Build"
+    },
+    {
+      "label": "Install Global",
+      "type": "shell",
+      "command": "node",
+      "args": ["dist/index.js", "install", "--force", "--skip-license"],
+      "problemMatcher": [],
+      "dependsOn": "Build"
+    },
+    {
+      "label": "Status Local",
+      "type": "shell",
+      "command": "node",
+      "args": ["dist/index.js", "status", "--local", "--verbose"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Status Global",
+      "type": "shell",
+      "command": "node",
+      "args": ["dist/index.js", "status", "--verbose"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Uninstall Local",
+      "type": "shell",
+      "command": "node",
+      "args": ["dist/index.js", "uninstall", "--local", "--yes"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev Watch",
+      "type": "npm",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

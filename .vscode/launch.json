@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug: Install Local",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["install", "--local", "--force", "--skip-license"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "Build"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug: Install Global",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["install", "--force", "--skip-license"],
+      "console": "integratedTerminal",
+      "preLaunchTask": "Build"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug: Status Local",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["status", "--local", "--verbose"],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug: Status Global",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["status", "--verbose"],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug: Uninstall Local",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["uninstall", "--local", "--yes"],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug: Help",
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": ["--help"],
+      "console": "integratedTerminal"
+    }
+  ]
+}

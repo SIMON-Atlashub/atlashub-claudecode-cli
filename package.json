@@ -51,7 +51,11 @@
     "format": "prettier --write src/**/*.ts",
     "prepublishOnly": "npm run build",
     "test": "node --test",
-    "link": "npm run build && npm link"
+    "link": "npm run build && npm link",
+    "install:local": "npm run build && node dist/index.js install --local --force --skip-license",
+    "install:global": "npm run build && node dist/index.js install --force --skip-license",
+    "status:local": "node dist/index.js status --local --verbose",
+    "status:global": "node dist/index.js status --verbose"
   },
   "dependencies": {
     "chalk": "^5.3.0",
