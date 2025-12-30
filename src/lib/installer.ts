@@ -1,11 +1,9 @@
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import { homedir } from 'os';
 import fs from 'fs-extra';
 import { logger } from './logger.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// __dirname is available in CommonJS
 
 const PACKAGE_ROOT = join(__dirname, '..', '..');
 const TEMPLATES_DIR = join(PACKAGE_ROOT, 'templates');

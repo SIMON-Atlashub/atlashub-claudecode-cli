@@ -6,11 +6,9 @@ import { activateCommand } from './commands/activate.js';
 import { statusCommand } from './commands/status.js';
 import { updateCommand } from './commands/update.js';
 import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { join } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// CommonJS compatible __dirname
 const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf-8'));
 
 const program = new Command();
