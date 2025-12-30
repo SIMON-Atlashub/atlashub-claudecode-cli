@@ -1,9 +1,7 @@
 import { createHash } from 'crypto';
-import { homedir } from 'os';
+import { homedir, hostname, userInfo, platform } from 'os';
 import { join } from 'path';
 import fs from 'fs-extra';
-import fetch from 'node-fetch';
-import { hostname, userInfo, platform } from 'os';
 import {
   LicenseKeySchema,
   LicenseResponse,
