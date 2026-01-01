@@ -1,5 +1,6 @@
 ---
 description: Phase 3 - Smart commit with EF Core migration validation
+agent: gitflow-commit
 model: sonnet
 args: [message]
 ---
@@ -117,6 +118,54 @@ Migrations: {liste}
 
 - Verifier qu'il ne reste pas de fichiers migration non commites
 - Afficher resume
+
+### 8. Push automatique (selon config)
+
+Lire la config : `.claude/gitflow/config.json` → `workflow.push.afterCommit`
+
+**Detection worktree:**
+```bash
+# Si git-common-dir != .git → c'est un worktree
+COMMON_DIR=$(git rev-parse --git-common-dir 2>/dev/null)
+if [[ "$COMMON_DIR" != ".git" && "$COMMON_DIR" != "." ]]; then
+  IS_WORKTREE=true
+fi
+```
+
+**Logique de push:**
+
+| Config `afterCommit` | Worktree | Action |
+|---------------------|----------|--------|
+| `worktree` | Oui | Push automatique |
+| `worktree` | Non | Demander à l'utilisateur |
+| `always` | - | Push automatique |
+| `ask` | - | Demander à l'utilisateur |
+| `never` | - | Ne pas push |
+
+**Si demande utilisateur:**
+```
+AskUserQuestion({
+  questions: [{
+    question: "Voulez-vous pusher ce commit ?",
+    header: "Push",
+    options: [
+      { label: "Oui, push maintenant", description: "git push origin <branch>" },
+      { label: "Non, plus tard", description: "Commit local uniquement" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+**Execution push:**
+```bash
+git push origin $(git branch --show-current)
+```
+
+**Gestion erreurs push:**
+- Si remote non configure → Skip avec message
+- Si rebase necessaire → Avertir et proposer `/gitflow:4-plan rebase`
+- Si branche protegee → Avertir (PR requise)
 
 ---
 

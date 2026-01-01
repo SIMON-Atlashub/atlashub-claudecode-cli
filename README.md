@@ -116,7 +116,7 @@ claude-tools uninstall --yes
 | `/gitflow` | Full GitFlow workflow orchestrator |
 | `/gitflow:1-init` | Initialize GitFlow structure |
 | `/gitflow:2-status` | Show detailed GitFlow status |
-| `/gitflow:3-commit` | Smart commit with migration handling |
+| `/gitflow:3-commit` | Smart commit with migration handling + auto-push for worktrees |
 | `/gitflow:4-plan` | Create integration plan |
 | `/gitflow:5-exec` | Execute integration plan |
 | `/gitflow:6-abort` | Rollback operations |
@@ -131,6 +131,22 @@ claude-tools uninstall --yes
 | `/apex:3-execute` | Implement the plan |
 | `/apex:4-examine` | Validate and test |
 | `/apex:5-tasks` | Divide into task files |
+
+### Business Analyse (Specification to Implementation)
+
+| Command | Description |
+|---------|-------------|
+| `/business-analyse` | Full BA workflow (7 phases) |
+| `/business-analyse:1-init` | Initialize .business-analyse/ structure |
+| `/business-analyse:2-discover` | Adaptive questionnaire (ultrathink) |
+| `/business-analyse:3-analyse` | BRD generation (ultrathink) |
+| `/business-analyse:4-specify` | FRD with use cases & wireframes (ultrathink) |
+| `/business-analyse:5-document` | Cross-cutting documentation |
+| `/business-analyse:6-handoff` | Generate autonomous dev prompt |
+| `/business-analyse:7-dev` | Guided implementation with user validation |
+| `/business-analyse:bug` | Bug documentation & specification |
+
+> **Note**: Phases 1-6 produce specifications only. Phase 7 implements with mandatory user validation before each step.
 
 ### EF Core Migrations
 
