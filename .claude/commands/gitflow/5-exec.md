@@ -27,11 +27,17 @@ Tu es expert GitFlow et EF Core. Execute le plan d'integration de maniere securi
 - Build OK
 - Plan valide
 
-### 3. Creer checkpoint
+### 3. Creer checkpoint (sur source branch)
 
 Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
 - Branche, commit, plan, status
 - Backup migrations si presentes
+- **IMPORTANT: Commit le checkpoint sur la branche source AVANT le merge**
+
+```bash
+git add .claude/gitflow/logs/checkpoint_{timestamp}.json
+git commit -m "chore(gitflow): create integration checkpoint"
+```
 
 ### 4. Executer etapes
 
@@ -41,7 +47,7 @@ Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
 - Si conflit ModelSnapshot: accept theirs + regenerer migration
 
 **Merge:**
-- Checkout target
+- Checkout target (utiliser worktree si necessaire: `git -C {worktree_path}`)
 - Pull
 - Merge --no-ff source
 
@@ -57,17 +63,35 @@ Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
 - Tag
 - Merge main sur develop
 
-### 5. Validation
+### 5. Archiver plan (sur target branch)
+
+**IMPORTANT: Toujours archiver et commiter sur la branche cible AVANT le push**
+
+```bash
+# Sur target branch (develop)
+mv .claude/gitflow/plans/{plan}.md .claude/gitflow/plans/{plan}_DONE_{timestamp}.md
+# Mettre a jour checkpoint avec status "completed"
+git add .claude/gitflow/logs/ .claude/gitflow/plans/
+git commit -m "chore(gitflow): archive integration plan and checkpoint"
+```
+
+### 6. Push
+
+- Push target branch
+- Push tag(s)
+- Verifier CI/CD declenche
+
+### 7. Validation
 
 - Build OK
 - Tests OK (si disponibles)
 - Migrations list correcte
 - Historique git correct
 
-### 6. Finaliser
+### 8. Finaliser
 
-- Archiver plan (suffix `_DONE_{timestamp}`)
 - Afficher resume et prochaines etapes
+- Suggerer nettoyage branche source si applicable
 
 ---
 
