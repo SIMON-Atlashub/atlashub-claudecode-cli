@@ -1,0 +1,54 @@
+{
+  "$schema": "https://atlashub.ch/schemas/test-web-config.json",
+  "version": "1.0.0",
+  "targets": [
+    {
+      "name": "GitHub Repository",
+      "url": "https://github.com/SIMON-Atlashub/atlashub-claudecode-cli",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["README", "package.json", "claude-tools"]
+      }
+    },
+    {
+      "name": "npm Package",
+      "url": "https://www.npmjs.com/package/@atlashub/claude-tools",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["claude-tools", "atlashub"]
+      }
+    },
+    {
+      "name": "Google Indexation",
+      "query": "@atlashub/claude-tools npm",
+      "type": "search",
+      "expects": {
+        "hasResults": true
+      }
+    }
+  ],
+  "chrome": {
+    "enabled": true,
+    "note": "Requires 'claude --chrome' mode and Claude for Chrome extension",
+    "targets": [
+      {
+        "name": "GitHub Repo Navigation",
+        "url": "https://github.com/SIMON-Atlashub/atlashub-claudecode-cli",
+        "actions": [
+          { "type": "navigate", "url": "https://github.com/SIMON-Atlashub/atlashub-claudecode-cli" },
+          { "type": "verify", "selector": "article", "contains": "README" },
+          { "type": "click", "selector": "a[href*='package.json']" },
+          { "type": "verify", "content": "@atlashub/claude-tools" }
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "timeout": 30000,
+    "retries": 2,
+    "reportPath": ".claude/test-web/reports",
+    "reportFormat": "markdown"
+  }
+}

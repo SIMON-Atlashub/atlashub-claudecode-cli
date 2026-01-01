@@ -7,9 +7,61 @@ allowed-tools: Bash(dotnet *), Read, Write, Edit, Glob, Grep, Task
 
 Expert developpeur .NET senior. Generation de code Microsoft stack.
 
-## Pre-requis
+## Selection du plan de developpement
 
-Verifier : `.claude/ba/validations/*.md` existe (sinon `/ba:3-validate`)
+**Dossier source** : `.claude/ba/specs/`
+
+### Etape 1 : Lister les fichiers disponibles
+
+```bash
+ls -1 .claude/ba/specs/*.md 2>/dev/null
+```
+
+### Etape 2 : Logique de selection
+
+**Cas A - Parametre fourni** (`$ARGUMENTS` non vide) :
+```
+PLAN_FILE = ".claude/ba/specs/$ARGUMENTS"
+Verifier que le fichier existe, sinon ERREUR: "Fichier non trouve: $ARGUMENTS"
+```
+
+**Cas B - Aucun parametre** :
+
+| Nombre de fichiers | Action |
+|-------------------|--------|
+| 0 fichiers | ERREUR: "Aucun plan disponible. Executez `/ba:3-validate` d'abord." |
+| 1 fichier | Utiliser automatiquement ce fichier |
+| 2+ fichiers | Afficher questionnaire de selection (voir ci-dessous) |
+
+### Questionnaire de selection (si plusieurs fichiers)
+
+Utiliser `AskUserQuestion` avec les fichiers trouves :
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "Quel plan voulez-vous implementer ?",
+    header: "Plan",
+    options: [
+      // Pour CHAQUE fichier trouve, creer une option :
+      {
+        label: "<nom-du-fichier>.md",
+        description: "Implementer le plan .claude/ba/specs/<nom-du-fichier>.md"
+      }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+### Etape 3 : Executer avec le fichier selectionne
+
+Apres selection (automatique ou par l'utilisateur), stocker :
+```
+PLAN_FILE = ".claude/ba/specs/<fichier-selectionne>"
+```
+
+Puis continuer avec les etapes suivantes en utilisant `$PLAN_FILE`.
 
 ## Strategie Agents
 
@@ -22,8 +74,8 @@ Verifier : `.claude/ba/validations/*.md` existe (sinon `/ba:3-validate`)
 
 ### 1. Charger contexte
 
-1. Lire `config.json` → architecture
-2. Lire spec validee → entites, endpoints, pages
+1. Lire `config.json` → architecture, paths
+2. Lire `$PLAN_FILE` → entites, endpoints, pages (avec ordre)
 
 ### 2. Explorer patterns existants (HAIKU)
 

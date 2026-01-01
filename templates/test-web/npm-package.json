@@ -1,0 +1,46 @@
+{
+  "$schema": "https://atlashub.ch/schemas/test-web-config.json",
+  "version": "1.0.0",
+  "targets": [
+    {
+      "name": "npm Package Page",
+      "url": "https://www.npmjs.com/package/@scope/package-name",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["package-name", "Install"]
+      }
+    },
+    {
+      "name": "npm Search",
+      "query": "@scope/package-name npm",
+      "type": "search",
+      "expects": {
+        "hasResults": true
+      }
+    },
+    {
+      "name": "GitHub Repository",
+      "url": "https://github.com/org/repo",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["README", "package.json"]
+      }
+    },
+    {
+      "name": "GitHub Releases",
+      "url": "https://github.com/org/repo/releases",
+      "type": "fetch",
+      "expects": {
+        "status": 200,
+        "contains": ["Release", "tag"]
+      }
+    }
+  ],
+  "settings": {
+    "timeout": 30000,
+    "retries": 2,
+    "reportPath": ".claude/test-web/reports"
+  }
+}
