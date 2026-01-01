@@ -780,9 +780,9 @@
 
                         <!-- Decision Flowchart SVG -->
                         <div class="decision-diagram" style="margin: 2rem 0; overflow-x: auto;">
-                            <svg viewBox="0 0 900 520" style="width: 100%; max-width: 900px; height: auto; display: block; margin: 0 auto;">
+                            <svg viewBox="0 0 900 600" style="width: 100%; max-width: 900px; height: auto; display: block; margin: 0 auto;">
                                 <!-- Background -->
-                                <rect width="900" height="520" fill="#0f172a" rx="8"/>
+                                <rect width="900" height="600" fill="#0f172a" rx="8"/>
 
                                 <!-- Title -->
                                 <text x="450" y="35" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="600">
@@ -792,93 +792,163 @@
 
                                 <!-- Central decision diamond -->
                                 <polygon points="450,60 550,110 450,160 350,110" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-                                <text x="450" y="115" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="500">?</text>
+                                <text x="450" y="115" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="500">
+                                    <tspan data-lang="fr">Objectif</tspan>
+                                    <tspan data-lang="en">Goal</tspan>
+                                </text>
 
                                 <!-- FEATURE PATH (Left) -->
-                                <line x1="350" y1="110" x2="150" y2="110" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="150,110 160,105 160,115" fill="#22c55e"/>
+                                <line x1="350" y1="110" x2="160" y2="110" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="160,110 170,105 170,115" fill="#22c55e"/>
 
-                                <rect x="30" y="85" width="120" height="50" rx="6" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="2"/>
-                                <text x="90" y="105" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                <rect x="30" y="85" width="130" height="50" rx="6" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="2"/>
+                                <text x="95" y="105" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
                                     <tspan data-lang="fr">Nouvelle</tspan>
                                     <tspan data-lang="en">New</tspan>
                                 </text>
-                                <text x="90" y="120" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                <text x="95" y="120" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
                                     <tspan data-lang="fr">fonctionnalite</tspan>
                                     <tspan data-lang="en">feature</tspan>
                                 </text>
 
                                 <!-- Feature flow down -->
-                                <line x1="90" y1="135" x2="90" y2="180" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,180 85,170 95,170" fill="#22c55e"/>
+                                <line x1="90" y1="135" x2="90" y2="175" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,175 85,165 95,165" fill="#22c55e"/>
 
-                                <rect x="20" y="185" width="140" height="35" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="1.5"/>
-                                <text x="90" y="207" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">/gitflow:10-start</text>
-                                <text x="90" y="215" text-anchor="middle" fill="#94a3b8" font-size="8">feature {nom}</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:10-start feature {nom}" style="cursor:pointer;">
+                                    <rect x="20" y="180" width="140" height="35" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="1.5"/>
+                                    <text x="90" y="202" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">/gitflow:10-start</text>
+                                    <text x="90" y="210" text-anchor="middle" fill="#94a3b8" font-size="8">feature {nom}</text>
+                                </g>
 
-                                <line x1="90" y1="220" x2="90" y2="250" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+                                <line x1="90" y1="215" x2="90" y2="245" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
                                 <text x="90" y="265" text-anchor="middle" fill="#64748b" font-size="10" font-style="italic">
                                     <tspan data-lang="fr">coder...</tspan>
                                     <tspan data-lang="en">code...</tspan>
                                 </text>
 
-                                <line x1="90" y1="275" x2="90" y2="305" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,305 85,295 95,295" fill="#22c55e"/>
+                                <!-- Decision: Fini? (Done?) -->
+                                <line x1="90" y1="275" x2="90" y2="290" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,330 120,310 90,290 60,310" fill="#1e293b" stroke="#22c55e" stroke-width="1.5"/>
+                                <text x="90" y="313" text-anchor="middle" fill="#f8fafc" font-size="9" font-weight="500">
+                                    <tspan data-lang="fr">Fini?</tspan>
+                                    <tspan data-lang="en">Done?</tspan>
+                                </text>
 
-                                <rect x="20" y="310" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
-                                <text x="90" y="330" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:4-plan</text>
+                                <!-- NON path - go right to commit -->
+                                <line x1="120" y1="310" x2="145" y2="310" stroke="#64748b" stroke-width="2"/>
+                                <polygon points="145,310 135,305 135,315" fill="#64748b"/>
+                                <text x="132" y="303" text-anchor="middle" fill="#64748b" font-size="7" font-weight="600">
+                                    <tspan data-lang="fr">NON</tspan>
+                                    <tspan data-lang="en">NO</tspan>
+                                </text>
 
-                                <line x1="90" y1="340" x2="90" y2="365" stroke="#f97316" stroke-width="2"/>
-                                <polygon points="90,365 85,355 95,355" fill="#f97316"/>
+                                <g class="cmd-copyable" data-cmd="/gitflow:3-commit" style="cursor:pointer;">
+                                    <rect x="148" y="295" width="85" height="30" rx="4" fill="#0f172a" stroke="#64748b" stroke-width="1.5"/>
+                                    <text x="190" y="314" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">/gitflow:3-commit</text>
+                                </g>
 
-                                <rect x="20" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
-                                <text x="90" y="390" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:5-exec</text>
+                                <!-- Loop back from commit to coder -->
+                                <path d="M 190 295 L 190 260 L 120 260" stroke="#64748b" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+                                <polygon points="120,260 130,255 130,265" fill="#64748b"/>
 
-                                <line x1="90" y1="400" x2="90" y2="430" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,430 85,420 95,420" fill="#22c55e"/>
+                                <!-- OUI path - continue to plan -->
+                                <line x1="90" y1="330" x2="90" y2="355" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,355 85,345 95,345" fill="#22c55e"/>
+                                <text x="75" y="345" text-anchor="end" fill="#22c55e" font-size="7" font-weight="600">
+                                    <tspan data-lang="fr">OUI</tspan>
+                                    <tspan data-lang="en">YES</tspan>
+                                </text>
 
-                                <rect x="30" y="435" width="120" height="30" rx="6" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="2"/>
-                                <text x="90" y="455" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600">
+                                <!-- Plan step -->
+                                <g class="cmd-copyable" data-cmd="/gitflow:4-plan" style="cursor:pointer;">
+                                    <rect x="20" y="358" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
+                                    <text x="90" y="378" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:4-plan</text>
+                                </g>
+
+                                <!-- Decision diamond - Plan OK? -->
+                                <line x1="90" y1="388" x2="90" y2="400" stroke="#f97316" stroke-width="2"/>
+                                <polygon points="90,445 125,422 90,400 55,422" fill="#1e293b" stroke="#f97316" stroke-width="1.5"/>
+                                <text x="90" y="426" text-anchor="middle" fill="#f8fafc" font-size="9" font-weight="500">
+                                    <tspan data-lang="fr">Plan OK?</tspan>
+                                    <tspan data-lang="en">Plan OK?</tspan>
+                                </text>
+
+                                <!-- YES path - continue to exec -->
+                                <line x1="90" y1="445" x2="90" y2="465" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,465 85,455 95,455" fill="#22c55e"/>
+                                <text x="75" y="458" text-anchor="end" fill="#22c55e" font-size="7" font-weight="600">
+                                    <tspan data-lang="fr">OUI</tspan>
+                                    <tspan data-lang="en">YES</tspan>
+                                </text>
+
+                                <g class="cmd-copyable" data-cmd="/gitflow:5-exec" style="cursor:pointer;">
+                                    <rect x="20" y="468" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
+                                    <text x="90" y="488" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:5-exec</text>
+                                </g>
+
+                                <!-- NO path - arrow back up to revise code -->
+                                <path d="M 55 422 L 15 422 L 15 260 L 55 260" stroke="#ef4444" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+                                <polygon points="55,260 45,255 45,265" fill="#ef4444"/>
+                                <text x="5" y="345" text-anchor="middle" fill="#ef4444" font-size="7" font-weight="500" transform="rotate(-90, 5, 345)">
+                                    <tspan data-lang="fr">réviser</tspan>
+                                    <tspan data-lang="en">revise</tspan>
+                                </text>
+
+                                <!-- Final merge result -->
+                                <line x1="90" y1="498" x2="90" y2="520" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,520 85,510 95,510" fill="#22c55e"/>
+
+                                <rect x="30" y="525" width="120" height="30" rx="6" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="2"/>
+                                <text x="90" y="545" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600">
                                     <tspan data-lang="fr">Merge dans develop</tspan>
                                     <tspan data-lang="en">Merged to develop</tspan>
                                 </text>
 
-                                <!-- RELEASE PATH (Center-Left) -->
-                                <line x1="400" y1="160" x2="300" y2="200" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="300,200 312,195 308,207" fill="#eab308"/>
+                                <!-- RELEASE PATH (Center) -->
+                                <line x1="420" y1="160" x2="420" y2="180" stroke="#eab308" stroke-width="2"/>
+                                <line x1="420" y1="180" x2="350" y2="180" stroke="#eab308" stroke-width="2"/>
+                                <line x1="350" y1="180" x2="350" y2="200" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="350,200 345,190 355,190" fill="#eab308"/>
 
-                                <rect x="230" y="205" width="140" height="50" rx="6" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="2"/>
-                                <text x="300" y="225" text-anchor="middle" fill="#eab308" font-size="11" font-weight="600">
+                                <rect x="280" y="205" width="140" height="50" rx="6" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="2"/>
+                                <text x="350" y="225" text-anchor="middle" fill="#eab308" font-size="11" font-weight="600">
                                     <tspan data-lang="fr">Deployer en</tspan>
                                     <tspan data-lang="en">Deploy to</tspan>
                                 </text>
-                                <text x="300" y="240" text-anchor="middle" fill="#eab308" font-size="11" font-weight="600">production</text>
+                                <text x="350" y="240" text-anchor="middle" fill="#eab308" font-size="11" font-weight="600">production</text>
 
-                                <line x1="300" y1="255" x2="300" y2="295" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="300,295 295,285 305,285" fill="#eab308"/>
+                                <line x1="350" y1="255" x2="350" y2="295" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="350,295 345,285 355,285" fill="#eab308"/>
 
-                                <rect x="230" y="300" width="140" height="35" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
-                                <text x="300" y="322" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">/gitflow:10-start</text>
-                                <text x="300" y="330" text-anchor="middle" fill="#94a3b8" font-size="8">release</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:10-start release" style="cursor:pointer;">
+                                    <rect x="280" y="300" width="140" height="35" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
+                                    <text x="350" y="322" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">/gitflow:10-start</text>
+                                    <text x="350" y="330" text-anchor="middle" fill="#94a3b8" font-size="8">release</text>
+                                </g>
 
-                                <line x1="300" y1="335" x2="300" y2="365" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="300,365 295,355 305,355" fill="#eab308"/>
+                                <line x1="350" y1="335" x2="350" y2="363" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="350,363 345,353 355,353" fill="#eab308"/>
 
-                                <rect x="230" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
-                                <text x="300" y="390" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">/gitflow:11-finish</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:11-finish" style="cursor:pointer;">
+                                    <rect x="280" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
+                                    <text x="350" y="390" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">/gitflow:11-finish</text>
+                                </g>
 
-                                <line x1="300" y1="400" x2="300" y2="430" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="300,430 295,420 305,420" fill="#eab308"/>
+                                <line x1="350" y1="400" x2="350" y2="430" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="350,430 345,420 355,420" fill="#eab308"/>
 
-                                <rect x="240" y="435" width="120" height="30" rx="6" fill="#eab308" fill-opacity="0.2" stroke="#eab308" stroke-width="2"/>
-                                <text x="300" y="455" text-anchor="middle" fill="#eab308" font-size="10" font-weight="600">
+                                <rect x="290" y="435" width="120" height="30" rx="6" fill="#eab308" fill-opacity="0.2" stroke="#eab308" stroke-width="2"/>
+                                <text x="350" y="455" text-anchor="middle" fill="#eab308" font-size="10" font-weight="600">
                                     <tspan data-lang="fr">Tag + Production</tspan>
                                     <tspan data-lang="en">Tag + Production</tspan>
                                 </text>
 
                                 <!-- HOTFIX PATH (Center-Right) -->
-                                <line x1="500" y1="160" x2="600" y2="200" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,200 588,195 592,207" fill="#ec4899"/>
+                                <line x1="490" y1="160" x2="490" y2="180" stroke="#ec4899" stroke-width="2"/>
+                                <line x1="490" y1="180" x2="600" y2="180" stroke="#ec4899" stroke-width="2"/>
+                                <line x1="600" y1="180" x2="600" y2="200" stroke="#ec4899" stroke-width="2"/>
+                                <polygon points="600,200 595,190 605,190" fill="#ec4899"/>
 
                                 <rect x="530" y="205" width="140" height="50" rx="6" fill="#ec4899" fill-opacity="0.15" stroke="#ec4899" stroke-width="2"/>
                                 <text x="600" y="225" text-anchor="middle" fill="#ec4899" font-size="11" font-weight="600">
@@ -893,15 +963,19 @@
                                 <line x1="600" y1="255" x2="600" y2="295" stroke="#ec4899" stroke-width="2"/>
                                 <polygon points="600,295 595,285 605,285" fill="#ec4899"/>
 
-                                <rect x="530" y="300" width="140" height="35" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
-                                <text x="600" y="322" text-anchor="middle" fill="#ec4899" font-size="10" font-family="monospace">/gitflow:10-start</text>
-                                <text x="600" y="330" text-anchor="middle" fill="#94a3b8" font-size="8">hotfix {nom}</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:10-start hotfix {nom}" style="cursor:pointer;">
+                                    <rect x="530" y="300" width="140" height="35" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
+                                    <text x="600" y="322" text-anchor="middle" fill="#ec4899" font-size="10" font-family="monospace">/gitflow:10-start</text>
+                                    <text x="600" y="330" text-anchor="middle" fill="#94a3b8" font-size="8">hotfix {nom}</text>
+                                </g>
 
-                                <line x1="600" y1="335" x2="600" y2="365" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,365 595,355 605,355" fill="#ec4899"/>
+                                <line x1="600" y1="335" x2="600" y2="363" stroke="#ec4899" stroke-width="2"/>
+                                <polygon points="600,363 595,353 605,353" fill="#ec4899"/>
 
-                                <rect x="530" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
-                                <text x="600" y="390" text-anchor="middle" fill="#ec4899" font-size="10" font-family="monospace">/gitflow:11-finish</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:11-finish" style="cursor:pointer;">
+                                    <rect x="530" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
+                                    <text x="600" y="390" text-anchor="middle" fill="#ec4899" font-size="10" font-family="monospace">/gitflow:11-finish</text>
+                                </g>
 
                                 <line x1="600" y1="400" x2="600" y2="430" stroke="#ec4899" stroke-width="2"/>
                                 <polygon points="600,430 595,420 605,420" fill="#ec4899"/>
@@ -923,20 +997,28 @@
                                 </text>
 
                                 <!-- Status -->
-                                <rect x="745" y="110" width="120" height="30" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
-                                <text x="805" y="130" text-anchor="middle" fill="#3b82f6" font-size="9" font-family="monospace">/gitflow:2-status</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:2-status" style="cursor:pointer;">
+                                    <rect x="745" y="110" width="120" height="30" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+                                    <text x="805" y="130" text-anchor="middle" fill="#3b82f6" font-size="9" font-family="monospace">/gitflow:2-status</text>
+                                </g>
 
                                 <!-- Commit -->
-                                <rect x="745" y="150" width="120" height="30" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
-                                <text x="805" y="170" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="monospace">/gitflow:3-commit</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:3-commit" style="cursor:pointer;">
+                                    <rect x="745" y="150" width="120" height="30" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
+                                    <text x="805" y="170" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="monospace">/gitflow:3-commit</text>
+                                </g>
 
                                 <!-- Abort -->
-                                <rect x="745" y="190" width="120" height="30" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
-                                <text x="805" y="210" text-anchor="middle" fill="#ef4444" font-size="9" font-family="monospace">/gitflow:6-abort</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:6-abort" style="cursor:pointer;">
+                                    <rect x="745" y="190" width="120" height="30" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+                                    <text x="805" y="210" text-anchor="middle" fill="#ef4444" font-size="9" font-family="monospace">/gitflow:6-abort</text>
+                                </g>
 
                                 <!-- Init (special) -->
-                                <rect x="745" y="230" width="120" height="25" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" stroke-dasharray="3,2"/>
-                                <text x="805" y="247" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">/gitflow:1-init</text>
+                                <g class="cmd-copyable" data-cmd="/gitflow:1-init" style="cursor:pointer;">
+                                    <rect x="745" y="230" width="120" height="25" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" stroke-dasharray="3,2"/>
+                                    <text x="805" y="247" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">/gitflow:1-init</text>
+                                </g>
 
                                 <!-- Legend at bottom -->
                                 <rect x="730" y="290" width="150" height="85" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>

@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollSpy();
     initInteractiveDiagram();
     initSearch();
+    initCopyableCommands();
 });
 
 /* ============================================
@@ -680,5 +681,108 @@ function initSearch() {
             searchInput.focus();
             searchInput.select();
         }
+    });
+}
+
+/* ============================================
+   COPYABLE COMMANDS (SVG Diagram)
+   ============================================ */
+
+function initCopyableCommands() {
+    const copyableElements = document.querySelectorAll('.cmd-copyable');
+
+    if (copyableElements.length === 0) return;
+
+    // Get current language
+    function getLang() {
+        return document.body.classList.contains('lang-en') ? 'en' : 'fr';
+    }
+
+    // Create floating tooltip for feedback
+    const tooltip = document.createElement('div');
+    tooltip.className = 'copy-tooltip';
+    tooltip.style.cssText = `
+        position: fixed;
+        background: #22c55e;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        z-index: 10000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    document.body.appendChild(tooltip);
+
+    copyableElements.forEach(element => {
+        // Add hover effect
+        element.addEventListener('mouseenter', function() {
+            const rect = this.querySelector('rect');
+            if (rect) {
+                rect.style.filter = 'brightness(1.2)';
+                rect.style.transition = 'filter 0.2s ease';
+            }
+        });
+
+        element.addEventListener('mouseleave', function() {
+            const rect = this.querySelector('rect');
+            if (rect) {
+                rect.style.filter = '';
+            }
+        });
+
+        // Add click handler
+        element.addEventListener('click', function(e) {
+            e.stopPropagation();
+
+            const cmd = this.dataset.cmd;
+            if (!cmd) return;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(cmd).then(() => {
+                // Show tooltip
+                const lang = getLang();
+                tooltip.textContent = lang === 'fr' ? '✓ Copié !' : '✓ Copied!';
+
+                // Position tooltip near cursor
+                tooltip.style.left = e.clientX + 10 + 'px';
+                tooltip.style.top = e.clientY - 30 + 'px';
+                tooltip.style.opacity = '1';
+
+                // Flash effect on element
+                const rect = this.querySelector('rect');
+                if (rect) {
+                    const originalStroke = rect.getAttribute('stroke');
+                    rect.setAttribute('stroke', '#22c55e');
+                    rect.style.filter = 'brightness(1.4)';
+
+                    setTimeout(() => {
+                        rect.setAttribute('stroke', originalStroke);
+                        rect.style.filter = '';
+                    }, 300);
+                }
+
+                // Hide tooltip after delay
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                const lang = getLang();
+                tooltip.textContent = lang === 'fr' ? '✗ Erreur' : '✗ Error';
+                tooltip.style.background = '#ef4444';
+                tooltip.style.left = e.clientX + 10 + 'px';
+                tooltip.style.top = e.clientY - 30 + 'px';
+                tooltip.style.opacity = '1';
+
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.background = '#22c55e';
+                }, 1500);
+            });
+        });
     });
 }
