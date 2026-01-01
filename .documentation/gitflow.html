@@ -13,6 +13,7 @@
             <div class="sidebar-header">
                 <div class="logo">CT</div>
                 <h2>Claude Tools</h2>
+                <span class="version-badge">v1.2.0</span>
             </div>
             <button class="sidebar-toggle" title="Toggle sidebar">
                 <span class="toggle-icon-collapse">&#171;</span>
@@ -348,7 +349,14 @@
                         <h3 data-lang="fr">Schema du workflow</h3>
                         <h3 data-lang="en">Workflow Diagram</h3>
 
-                        <div class="svg-diagram">
+                        <div class="svg-diagram" id="gitflow-diagram">
+                            <!-- Tooltip for interactive elements -->
+                            <div class="diagram-tooltip" id="diagram-tooltip">
+                                <div class="tooltip-title"></div>
+                                <div class="tooltip-desc"></div>
+                                <div class="tooltip-cmd"></div>
+                            </div>
+
                             <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Inter', system-ui, sans-serif;">
                                 <!-- Definitions -->
                                 <defs>
@@ -362,85 +370,282 @@
                                             <feMergeNode in="SourceGraphic"/>
                                         </feMerge>
                                     </filter>
+                                    <!-- Highlight filter for hover/click -->
+                                    <filter id="highlight">
+                                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
                                 </defs>
 
-                                <!-- Branch Labels -->
-                                <text x="30" y="55" fill="#ef4444" font-weight="600" font-size="14">main</text>
-                                <text x="30" y="115" fill="#eab308" font-weight="600" font-size="14">release</text>
-                                <text x="30" y="175" fill="#f97316" font-weight="600" font-size="14">develop</text>
-                                <text x="30" y="235" fill="#22c55e" font-weight="600" font-size="14">feature</text>
-                                <text x="30" y="295" fill="#ec4899" font-weight="600" font-size="14">hotfix</text>
-
-                                <!-- Main branch line -->
-                                <line x1="100" y1="50" x2="850" y2="50" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
-
-                                <!-- Develop branch line -->
-                                <line x1="100" y1="170" x2="850" y2="170" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
-
-                                <!-- Feature A branch -->
-                                <path d="M 200 170 Q 200 210 230 230 L 330 230 Q 360 210 360 170" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                <text x="260" y="260" fill="#94a3b8" font-size="11">feature/a</text>
-
-                                <!-- Feature B branch -->
-                                <path d="M 420 170 Q 420 210 450 230 L 550 230 Q 580 210 580 170" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                <text x="480" y="260" fill="#94a3b8" font-size="11">feature/b</text>
-
-                                <!-- Release branch -->
-                                <path d="M 400 170 Q 400 140 430 110 L 550 110 Q 570 80 600 50" stroke="#eab308" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                <path d="M 600 50 L 600 170" stroke="#eab308" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
-                                <text x="470" y="95" fill="#94a3b8" font-size="11">release/v1.0</text>
-
-                                <!-- Hotfix branch -->
-                                <path d="M 700 50 Q 700 90 720 110 L 750 290 Q 770 310 800 290 L 800 50" stroke="#ec4899" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                <path d="M 800 170 L 800 170" stroke="#ec4899" stroke-width="2" fill="none"/>
-                                <!-- Hotfix merge to develop -->
-                                <line x1="800" y1="170" x2="820" y2="170" stroke="#ec4899" stroke-width="2" stroke-dasharray="5,5"/>
-                                <text x="735" y="280" fill="#94a3b8" font-size="11">hotfix/bug</text>
-
-                                <!-- Commits on main -->
-                                <circle cx="150" cy="50" r="8" fill="#ef4444" filter="url(#glow)"/>
-                                <circle cx="600" cy="50" r="10" fill="#ef4444" stroke="#eab308" stroke-width="3" filter="url(#glow)"/>
-                                <circle cx="800" cy="50" r="10" fill="#ef4444" stroke="#ec4899" stroke-width="3" filter="url(#glow)"/>
-
-                                <!-- Tag indicators -->
-                                <g transform="translate(600, 20)">
-                                    <rect x="-20" y="-12" width="40" height="18" rx="4" fill="#eab308"/>
-                                    <text x="0" y="2" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">v1.0</text>
-                                </g>
-                                <g transform="translate(800, 20)">
-                                    <rect x="-24" y="-12" width="48" height="18" rx="4" fill="#ec4899"/>
-                                    <text x="0" y="2" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">v1.0.1</text>
+                                <!-- INTERACTIVE: Main branch -->
+                                <g class="clickable-element" data-element="branch-main"
+                                   data-title-fr="Branche main (production)"
+                                   data-title-en="Main branch (production)"
+                                   data-desc-fr="Branche protegee contenant le code en production. Chaque commit represente une version deployee. Jamais de push direct - uniquement via release ou hotfix."
+                                   data-desc-en="Protected branch containing production code. Each commit represents a deployed version. Never push directly - only via release or hotfix."
+                                   data-cmd="/gitflow:2-status">
+                                    <text x="30" y="55" fill="#ef4444" font-weight="600" font-size="14">main</text>
+                                    <line x1="100" y1="50" x2="850" y2="50" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+                                    <!-- Invisible hit area -->
+                                    <rect x="25" y="35" width="830" height="30" fill="transparent" class="hit-area"/>
                                 </g>
 
-                                <!-- Commits on develop -->
+                                <!-- INTERACTIVE: Develop branch -->
+                                <g class="clickable-element" data-element="branch-develop"
+                                   data-title-fr="Branche develop (integration)"
+                                   data-title-en="Develop branch (integration)"
+                                   data-desc-fr="Branche d'integration recevant toutes les features terminees. Base pour les nouvelles features et releases. Doit toujours etre stable."
+                                   data-desc-en="Integration branch receiving all completed features. Base for new features and releases. Must always be stable."
+                                   data-cmd="/gitflow:2-status">
+                                    <text x="30" y="175" fill="#f97316" font-weight="600" font-size="14">develop</text>
+                                    <line x1="100" y1="170" x2="850" y2="170" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+                                    <rect x="25" y="155" width="830" height="30" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Release branch label -->
+                                <g class="clickable-element" data-element="branch-release-label"
+                                   data-title-fr="Ligne release"
+                                   data-title-en="Release line"
+                                   data-desc-fr="Zone de preparation des releases avant deploiement. Permet de finaliser une version sans bloquer le developpement."
+                                   data-desc-en="Release preparation zone before deployment. Allows finalizing a version without blocking development."
+                                   data-cmd="/gitflow:10-start release">
+                                    <text x="30" y="115" fill="#eab308" font-weight="600" font-size="14">release</text>
+                                    <rect x="25" y="100" width="60" height="25" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Feature branch label -->
+                                <g class="clickable-element" data-element="branch-feature-label"
+                                   data-title-fr="Ligne feature"
+                                   data-title-en="Feature line"
+                                   data-desc-fr="Zone de developpement des nouvelles fonctionnalites. Chaque feature a sa branche creee depuis develop."
+                                   data-desc-en="Development zone for new features. Each feature has its branch created from develop."
+                                   data-cmd="/gitflow:10-start feature {nom}">
+                                    <text x="30" y="235" fill="#22c55e" font-weight="600" font-size="14">feature</text>
+                                    <rect x="25" y="220" width="60" height="25" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Hotfix branch label -->
+                                <g class="clickable-element" data-element="branch-hotfix-label"
+                                   data-title-fr="Ligne hotfix"
+                                   data-title-en="Hotfix line"
+                                   data-desc-fr="Zone pour les corrections urgentes en production. Creee depuis main, mergee dans main ET develop."
+                                   data-desc-en="Zone for urgent production fixes. Created from main, merged into main AND develop."
+                                   data-cmd="/gitflow:10-start hotfix {nom}">
+                                    <text x="30" y="295" fill="#ec4899" font-weight="600" font-size="14">hotfix</text>
+                                    <rect x="25" y="280" width="60" height="25" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Feature A branch -->
+                                <g class="clickable-element" data-element="feature-a"
+                                   data-title-fr="Feature A"
+                                   data-title-en="Feature A"
+                                   data-desc-fr="Branche de developpement d'une fonctionnalite. Contient plusieurs commits de travail avant d'etre mergee dans develop."
+                                   data-desc-en="Feature development branch. Contains multiple work commits before being merged into develop."
+                                   data-cmd="/gitflow:10-start feature {nom}">
+                                    <path d="M 200 170 Q 200 210 230 230 L 330 230 Q 360 210 360 170" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <text x="260" y="260" fill="#94a3b8" font-size="11">feature/a</text>
+                                    <circle cx="260" cy="230" r="6" fill="#22c55e"/>
+                                    <circle cx="300" cy="230" r="6" fill="#22c55e"/>
+                                    <rect x="195" y="165" width="175" height="100" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Feature B branch -->
+                                <g class="clickable-element" data-element="feature-b"
+                                   data-title-fr="Feature B"
+                                   data-title-en="Feature B"
+                                   data-desc-fr="Deuxieme feature en parallele. Les features peuvent etre developpees simultanement par differents developpeurs sans conflit."
+                                   data-desc-en="Second feature in parallel. Features can be developed simultaneously by different developers without conflict."
+                                   data-cmd="/gitflow:10-start feature {nom}">
+                                    <path d="M 420 170 Q 420 210 450 230 L 550 230 Q 580 210 580 170" stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <text x="480" y="260" fill="#94a3b8" font-size="11">feature/b</text>
+                                    <circle cx="480" cy="230" r="6" fill="#22c55e"/>
+                                    <circle cx="520" cy="230" r="6" fill="#22c55e"/>
+                                    <rect x="415" y="165" width="175" height="100" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Release branch -->
+                                <g class="clickable-element" data-element="release-branch"
+                                   data-title-fr="Branche release/v1.0"
+                                   data-title-en="Release branch v1.0"
+                                   data-desc-fr="Preparation de la version 1.0. Permet les derniers ajustements (bugfix, doc) avant deploiement en production."
+                                   data-desc-en="Preparation of version 1.0. Allows final adjustments (bugfix, docs) before production deployment."
+                                   data-cmd="/gitflow:10-start release">
+                                    <path d="M 400 170 Q 400 140 430 110 L 550 110 Q 570 80 600 50" stroke="#eab308" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <text x="470" y="95" fill="#94a3b8" font-size="11">release/v1.0</text>
+                                    <circle cx="500" cy="110" r="6" fill="#eab308"/>
+                                    <rect x="395" y="45" width="215" height="135" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Release merge back (dashed line) -->
+                                <g class="clickable-element" data-element="release-mergeback"
+                                   data-title-fr="Merge back release → develop"
+                                   data-title-en="Merge back release → develop"
+                                   data-desc-fr="Synchronisation de la release vers develop. Apres merge dans main, les changements doivent aussi aller dans develop."
+                                   data-desc-en="Sync release to develop. After merging into main, changes must also go into develop."
+                                   data-cmd="/gitflow:11-finish">
+                                    <path d="M 600 50 L 600 170" stroke="#eab308" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+                                    <rect x="590" y="45" width="20" height="130" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Hotfix branch -->
+                                <g class="clickable-element" data-element="hotfix-branch"
+                                   data-title-fr="Branche hotfix/bug"
+                                   data-title-en="Hotfix branch bug"
+                                   data-desc-fr="Correction urgente d'un bug en production. Increment automatique du PATCH (1.0.0 → 1.0.1)."
+                                   data-desc-en="Urgent fix for a production bug. Automatic PATCH increment (1.0.0 → 1.0.1)."
+                                   data-cmd="/gitflow:10-start hotfix {nom}">
+                                    <path d="M 700 50 Q 700 170 720 290 L 780 290 Q 800 170 800 50" stroke="#ec4899" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <text x="720" y="310" fill="#94a3b8" font-size="11">hotfix/bug</text>
+                                    <circle cx="750" cy="290" r="6" fill="#ec4899"/>
+                                    <rect x="695" y="45" width="115" height="275" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Hotfix merge back (dashed line) -->
+                                <g class="clickable-element" data-element="hotfix-mergeback"
+                                   data-title-fr="Merge back hotfix → develop"
+                                   data-title-en="Merge back hotfix → develop"
+                                   data-desc-fr="Synchronisation du hotfix vers develop. CRITIQUE pour eviter de regresser dans les futures versions."
+                                   data-desc-en="Sync hotfix to develop. CRITICAL to avoid regression in future versions."
+                                   data-cmd="/gitflow:11-finish">
+                                    <path d="M 780 290 L 820 170" stroke="#ec4899" stroke-width="2" stroke-dasharray="4,3"/>
+                                    <rect x="775" y="165" width="55" height="135" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Commit on main -->
+                                <g class="clickable-element" data-element="commit-main"
+                                   data-title-fr="Commit sur main"
+                                   data-title-en="Commit on main"
+                                   data-desc-fr="Commit sur main. Les commits viennent uniquement des merges de release ou hotfix, jamais de push direct."
+                                   data-desc-en="Commit on main. Commits only come from release or hotfix merges, never from direct push."
+                                   data-cmd="/gitflow:3-commit">
+                                    <circle cx="150" cy="50" r="8" fill="#ef4444" filter="url(#glow)"/>
+                                    <rect x="140" y="38" width="20" height="24" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Release merge commit on main -->
+                                <g class="clickable-element" data-element="merge-release-main"
+                                   data-title-fr="Merge release → main"
+                                   data-title-en="Merge release → main"
+                                   data-desc-fr="Commit de merge de la release dans main. La bordure jaune = source release. Tag v1.0 cree automatiquement."
+                                   data-desc-en="Release merge commit into main. Yellow border = release source. Tag v1.0 automatically created."
+                                   data-cmd="/gitflow:11-finish">
+                                    <circle cx="600" cy="50" r="10" fill="#ef4444" stroke="#eab308" stroke-width="3" filter="url(#glow)"/>
+                                    <rect x="588" y="38" width="24" height="24" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Hotfix merge commit on main -->
+                                <g class="clickable-element" data-element="merge-hotfix-main"
+                                   data-title-fr="Merge hotfix → main"
+                                   data-title-en="Merge hotfix → main"
+                                   data-desc-fr="Commit de merge du hotfix dans main. La bordure rose = source hotfix. Tag v1.0.1 (patch) cree automatiquement."
+                                   data-desc-en="Hotfix merge commit into main. Pink border = hotfix source. Tag v1.0.1 (patch) automatically created."
+                                   data-cmd="/gitflow:11-finish">
+                                    <circle cx="800" cy="50" r="10" fill="#ef4444" stroke="#ec4899" stroke-width="3" filter="url(#glow)"/>
+                                    <rect x="788" y="38" width="24" height="24" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Tag v1.0 -->
+                                <g class="clickable-element" data-element="tag-v1"
+                                   data-title-fr="Tag v1.0"
+                                   data-title-en="Tag v1.0"
+                                   data-desc-fr="Tag Git marquant cette version en production. Cree automatiquement lors du finish. Format: v{MAJOR}.{MINOR}.{PATCH}"
+                                   data-desc-en="Git tag marking this version in production. Automatically created on finish. Format: v{MAJOR}.{MINOR}.{PATCH}"
+                                   data-cmd="/gitflow:11-finish">
+                                    <g transform="translate(600, 20)">
+                                        <rect x="-20" y="-12" width="40" height="18" rx="4" fill="#eab308"/>
+                                        <text x="0" y="2" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">v1.0</text>
+                                    </g>
+                                    <rect x="578" y="5" width="44" height="22" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Tag v1.0.1 -->
+                                <g class="clickable-element" data-element="tag-v101"
+                                   data-title-fr="Tag v1.0.1 (patch)"
+                                   data-title-en="Tag v1.0.1 (patch)"
+                                   data-desc-fr="Tag de version patch cree par le hotfix. Increment automatique: 1.0.0 → 1.0.1. Correction sans nouvelles features."
+                                   data-desc-en="Patch version tag created by hotfix. Automatic increment: 1.0.0 → 1.0.1. Fix without new features."
+                                   data-cmd="/gitflow:11-finish">
+                                    <g transform="translate(800, 20)">
+                                        <rect x="-24" y="-12" width="48" height="18" rx="4" fill="#ec4899"/>
+                                        <text x="0" y="2" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">v1.0.1</text>
+                                    </g>
+                                    <rect x="774" y="5" width="52" height="22" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Merge commit feature A on develop -->
+                                <g class="clickable-element" data-element="merge-feature-a"
+                                   data-title-fr="Merge feature/a → develop"
+                                   data-title-en="Merge feature/a → develop"
+                                   data-desc-fr="Commit de merge de la feature A dans develop. La bordure verte = merge de feature."
+                                   data-desc-en="Feature A merge commit into develop. Green border = feature merge."
+                                   data-cmd="/gitflow:5-exec">
+                                    <circle cx="360" cy="170" r="8" fill="#f97316" stroke="#22c55e" stroke-width="2"/>
+                                    <rect x="350" y="160" width="20" height="20" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Merge commit feature B on develop -->
+                                <g class="clickable-element" data-element="merge-feature-b"
+                                   data-title-fr="Merge feature/b → develop"
+                                   data-title-en="Merge feature/b → develop"
+                                   data-desc-fr="Commit de merge de la feature B dans develop. Plusieurs features peuvent etre mergees independamment."
+                                   data-desc-en="Feature B merge commit into develop. Multiple features can be merged independently."
+                                   data-cmd="/gitflow:5-exec">
+                                    <circle cx="580" cy="170" r="8" fill="#f97316" stroke="#22c55e" stroke-width="2"/>
+                                    <rect x="570" y="160" width="20" height="20" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Release merge back on develop -->
+                                <g class="clickable-element" data-element="merge-release-develop"
+                                   data-title-fr="Merge back release → develop"
+                                   data-title-en="Merge back release → develop"
+                                   data-desc-fr="Commit de synchronisation de la release vers develop. Les bugfix sont integres dans develop."
+                                   data-desc-en="Release sync commit to develop. Bugfixes are integrated into develop."
+                                   data-cmd="/gitflow:11-finish">
+                                    <circle cx="600" cy="170" r="8" fill="#f97316" stroke="#eab308" stroke-width="2"/>
+                                    <rect x="590" y="160" width="20" height="20" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- INTERACTIVE: Hotfix merge back on develop -->
+                                <g class="clickable-element" data-element="merge-hotfix-develop"
+                                   data-title-fr="Merge back hotfix → develop"
+                                   data-title-en="Merge back hotfix → develop"
+                                   data-desc-fr="Commit de synchronisation du hotfix vers develop. ESSENTIEL pour eviter regression."
+                                   data-desc-en="Hotfix sync commit to develop. ESSENTIAL to avoid regression."
+                                   data-cmd="/gitflow:11-finish">
+                                    <circle cx="820" cy="170" r="8" fill="#f97316" stroke="#ec4899" stroke-width="2"/>
+                                    <rect x="810" y="160" width="20" height="20" fill="transparent" class="hit-area"/>
+                                </g>
+
+                                <!-- Regular commits on develop (non-interactive) -->
                                 <circle cx="150" cy="170" r="8" fill="#f97316"/>
                                 <circle cx="200" cy="170" r="6" fill="#f97316"/>
-                                <circle cx="360" cy="170" r="8" fill="#f97316" stroke="#22c55e" stroke-width="2"/>
                                 <circle cx="400" cy="170" r="6" fill="#f97316"/>
-                                <circle cx="580" cy="170" r="8" fill="#f97316" stroke="#22c55e" stroke-width="2"/>
-                                <circle cx="600" cy="170" r="8" fill="#f97316" stroke="#eab308" stroke-width="2"/>
-                                <circle cx="820" cy="170" r="8" fill="#f97316" stroke="#ec4899" stroke-width="2"/>
 
-                                <!-- Commits on feature A -->
-                                <circle cx="260" cy="230" r="6" fill="#22c55e"/>
-                                <circle cx="300" cy="230" r="6" fill="#22c55e"/>
-
-                                <!-- Commits on feature B -->
-                                <circle cx="480" cy="230" r="6" fill="#22c55e"/>
-                                <circle cx="520" cy="230" r="6" fill="#22c55e"/>
-
-                                <!-- Commit on release -->
-                                <circle cx="500" cy="110" r="6" fill="#eab308"/>
-
-                                <!-- Commit on hotfix -->
-                                <circle cx="760" cy="200" r="6" fill="#ec4899"/>
-
-                                <!-- Merge arrows -->
-                                <path d="M 360 230 L 360 178" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
-                                <path d="M 580 230 L 580 178" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
+                                <!-- INTERACTIVE: Merge arrows -->
+                                <g class="clickable-element" data-element="merge-arrow"
+                                   data-title-fr="Fleche de merge"
+                                   data-title-en="Merge arrow"
+                                   data-desc-fr="Direction du merge: de la feature vers develop. Utilise --no-ff pour preserver l'historique."
+                                   data-desc-en="Merge direction: from feature to develop. Uses --no-ff to preserve history."
+                                   data-cmd="/gitflow:5-exec">
+                                    <path d="M 360 230 L 360 178" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
+                                    <path d="M 580 230 L 580 178" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
+                                    <rect x="355" y="175" width="10" height="60" fill="transparent" class="hit-area"/>
+                                    <rect x="575" y="175" width="10" height="60" fill="transparent" class="hit-area"/>
+                                </g>
                             </svg>
+                            <p class="diagram-hint">
+                                <span data-lang="fr">💡 Cliquez sur n'importe quel element du schema pour voir sa definition et la commande associee.</span>
+                                <span data-lang="en">💡 Click on any element in the diagram to see its definition and associated command.</span>
+                            </p>
                         </div>
 
+                        <!-- Legend: Branch Colors -->
+                        <h4 data-lang="fr">Legende - Branches</h4>
+                        <h4 data-lang="en">Legend - Branches</h4>
                         <div class="diagram-legend">
                             <div class="legend-item">
                                 <span class="legend-color main"></span>
@@ -461,6 +666,430 @@
                             <div class="legend-item">
                                 <span class="legend-color hotfix"></span>
                                 <span>hotfix/*</span>
+                            </div>
+                        </div>
+
+                        <!-- Legend: Visual Elements -->
+                        <h4 data-lang="fr">Legende - Elements visuels</h4>
+                        <h4 data-lang="en">Legend - Visual Elements</h4>
+                        <div class="table-container">
+                            <table class="legend-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:60px;">Visuel</th>
+                                        <th>
+                                            <span data-lang="fr">Nom</span>
+                                            <span data-lang="en">Name</span>
+                                        </th>
+                                        <th>
+                                            <span data-lang="fr">Signification</span>
+                                            <span data-lang="en">Meaning</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;"><span style="display:inline-block;width:40px;height:3px;background:#22c55e;vertical-align:middle;"></span></td>
+                                        <td>
+                                            <span data-lang="fr">Ligne pleine</span>
+                                            <span data-lang="en">Solid line</span>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr">Branche active - flux principal de developpement</span>
+                                            <span data-lang="en">Active branch - main development flow</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;"><span style="display:inline-block;width:40px;height:2px;background:repeating-linear-gradient(90deg,#ec4899 0,#ec4899 4px,transparent 4px,transparent 7px);vertical-align:middle;"></span></td>
+                                        <td>
+                                            <span data-lang="fr">Ligne pointillee</span>
+                                            <span data-lang="en">Dashed line</span>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr"><strong>Merge back</strong> - synchronisation vers develop apres merge dans main</span>
+                                            <span data-lang="en"><strong>Merge back</strong> - sync to develop after merging into main</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#f97316;vertical-align:middle;"></span></td>
+                                        <td>
+                                            <span data-lang="fr">Cercle plein</span>
+                                            <span data-lang="en">Solid circle</span>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr">Commit standard sur la branche</span>
+                                            <span data-lang="en">Standard commit on the branch</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#f97316;border:2px solid #22c55e;vertical-align:middle;"></span></td>
+                                        <td>
+                                            <span data-lang="fr">Cercle avec bordure</span>
+                                            <span data-lang="en">Circle with border</span>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr"><strong>Commit de merge</strong> - integration d'une branche (couleur bordure = source)</span>
+                                            <span data-lang="en"><strong>Merge commit</strong> - branch integration (border color = source)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;"><span style="display:inline-block;padding:2px 6px;background:#eab308;border-radius:4px;font-size:10px;color:#0f172a;font-weight:600;">v1.0</span></td>
+                                        <td>
+                                            <span data-lang="fr">Tag de version</span>
+                                            <span data-lang="en">Version tag</span>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr">Version deployee en production (cree lors du finish)</span>
+                                            <span data-lang="en">Version deployed to production (created on finish)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <svg width="16" height="24" viewBox="0 0 16 24" style="vertical-align:middle;">
+                                                <line x1="8" y1="20" x2="8" y2="8" stroke="#22c55e" stroke-width="2"/>
+                                                <polygon points="8,0 2,8 14,8" fill="#22c55e"/>
+                                            </svg>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr">Fleche de merge</span>
+                                            <span data-lang="en">Merge arrow</span>
+                                        </td>
+                                        <td>
+                                            <span data-lang="fr">Direction du merge (feature → develop)</span>
+                                            <span data-lang="en">Merge direction (feature → develop)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- When to use which command -->
+                        <h3 id="when-to-use">
+                            <span data-lang="fr">Quand utiliser quelle commande ?</span>
+                            <span data-lang="en">When to use which command?</span>
+                        </h3>
+
+                        <!-- Decision Flowchart SVG -->
+                        <div class="decision-diagram" style="margin: 2rem 0; overflow-x: auto;">
+                            <svg viewBox="0 0 900 520" style="width: 100%; max-width: 900px; height: auto; display: block; margin: 0 auto;">
+                                <!-- Background -->
+                                <rect width="900" height="520" fill="#0f172a" rx="8"/>
+
+                                <!-- Title -->
+                                <text x="450" y="35" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="600">
+                                    <tspan data-lang="fr">Quel est votre objectif ?</tspan>
+                                    <tspan data-lang="en">What is your goal?</tspan>
+                                </text>
+
+                                <!-- Central decision diamond -->
+                                <polygon points="450,60 550,110 450,160 350,110" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+                                <text x="450" y="115" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="500">?</text>
+
+                                <!-- FEATURE PATH (Left) -->
+                                <line x1="350" y1="110" x2="150" y2="110" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="150,110 160,105 160,115" fill="#22c55e"/>
+
+                                <rect x="30" y="85" width="120" height="50" rx="6" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="2"/>
+                                <text x="90" y="105" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">Nouvelle</tspan>
+                                    <tspan data-lang="en">New</tspan>
+                                </text>
+                                <text x="90" y="120" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">fonctionnalite</tspan>
+                                    <tspan data-lang="en">feature</tspan>
+                                </text>
+
+                                <!-- Feature flow down -->
+                                <line x1="90" y1="135" x2="90" y2="180" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,180 85,170 95,170" fill="#22c55e"/>
+
+                                <rect x="20" y="185" width="140" height="35" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="1.5"/>
+                                <text x="90" y="207" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">/gitflow:10-start</text>
+                                <text x="90" y="215" text-anchor="middle" fill="#94a3b8" font-size="8">feature {nom}</text>
+
+                                <line x1="90" y1="220" x2="90" y2="250" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+                                <text x="90" y="265" text-anchor="middle" fill="#64748b" font-size="10" font-style="italic">
+                                    <tspan data-lang="fr">coder...</tspan>
+                                    <tspan data-lang="en">code...</tspan>
+                                </text>
+
+                                <line x1="90" y1="275" x2="90" y2="305" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,305 85,295 95,295" fill="#22c55e"/>
+
+                                <rect x="20" y="310" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
+                                <text x="90" y="330" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:4-plan</text>
+
+                                <line x1="90" y1="340" x2="90" y2="365" stroke="#f97316" stroke-width="2"/>
+                                <polygon points="90,365 85,355 95,355" fill="#f97316"/>
+
+                                <rect x="20" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
+                                <text x="90" y="390" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:5-exec</text>
+
+                                <line x1="90" y1="400" x2="90" y2="430" stroke="#22c55e" stroke-width="2"/>
+                                <polygon points="90,430 85,420 95,420" fill="#22c55e"/>
+
+                                <rect x="30" y="435" width="120" height="30" rx="6" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="2"/>
+                                <text x="90" y="455" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600">
+                                    <tspan data-lang="fr">Merge dans develop</tspan>
+                                    <tspan data-lang="en">Merged to develop</tspan>
+                                </text>
+
+                                <!-- RELEASE PATH (Center-Left) -->
+                                <line x1="400" y1="160" x2="300" y2="200" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="300,200 312,195 308,207" fill="#eab308"/>
+
+                                <rect x="230" y="205" width="140" height="50" rx="6" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="2"/>
+                                <text x="300" y="225" text-anchor="middle" fill="#eab308" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">Deployer en</tspan>
+                                    <tspan data-lang="en">Deploy to</tspan>
+                                </text>
+                                <text x="300" y="240" text-anchor="middle" fill="#eab308" font-size="11" font-weight="600">production</text>
+
+                                <line x1="300" y1="255" x2="300" y2="295" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="300,295 295,285 305,285" fill="#eab308"/>
+
+                                <rect x="230" y="300" width="140" height="35" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
+                                <text x="300" y="322" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">/gitflow:10-start</text>
+                                <text x="300" y="330" text-anchor="middle" fill="#94a3b8" font-size="8">release</text>
+
+                                <line x1="300" y1="335" x2="300" y2="365" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="300,365 295,355 305,355" fill="#eab308"/>
+
+                                <rect x="230" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
+                                <text x="300" y="390" text-anchor="middle" fill="#eab308" font-size="10" font-family="monospace">/gitflow:11-finish</text>
+
+                                <line x1="300" y1="400" x2="300" y2="430" stroke="#eab308" stroke-width="2"/>
+                                <polygon points="300,430 295,420 305,420" fill="#eab308"/>
+
+                                <rect x="240" y="435" width="120" height="30" rx="6" fill="#eab308" fill-opacity="0.2" stroke="#eab308" stroke-width="2"/>
+                                <text x="300" y="455" text-anchor="middle" fill="#eab308" font-size="10" font-weight="600">
+                                    <tspan data-lang="fr">Tag + Production</tspan>
+                                    <tspan data-lang="en">Tag + Production</tspan>
+                                </text>
+
+                                <!-- HOTFIX PATH (Center-Right) -->
+                                <line x1="500" y1="160" x2="600" y2="200" stroke="#ec4899" stroke-width="2"/>
+                                <polygon points="600,200 588,195 592,207" fill="#ec4899"/>
+
+                                <rect x="530" y="205" width="140" height="50" rx="6" fill="#ec4899" fill-opacity="0.15" stroke="#ec4899" stroke-width="2"/>
+                                <text x="600" y="225" text-anchor="middle" fill="#ec4899" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">Bug urgent</tspan>
+                                    <tspan data-lang="en">Urgent bug</tspan>
+                                </text>
+                                <text x="600" y="240" text-anchor="middle" fill="#ec4899" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">en production</tspan>
+                                    <tspan data-lang="en">in production</tspan>
+                                </text>
+
+                                <line x1="600" y1="255" x2="600" y2="295" stroke="#ec4899" stroke-width="2"/>
+                                <polygon points="600,295 595,285 605,285" fill="#ec4899"/>
+
+                                <rect x="530" y="300" width="140" height="35" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
+                                <text x="600" y="322" text-anchor="middle" fill="#ec4899" font-size="10" font-family="monospace">/gitflow:10-start</text>
+                                <text x="600" y="330" text-anchor="middle" fill="#94a3b8" font-size="8">hotfix {nom}</text>
+
+                                <line x1="600" y1="335" x2="600" y2="365" stroke="#ec4899" stroke-width="2"/>
+                                <polygon points="600,365 595,355 605,355" fill="#ec4899"/>
+
+                                <rect x="530" y="370" width="140" height="30" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
+                                <text x="600" y="390" text-anchor="middle" fill="#ec4899" font-size="10" font-family="monospace">/gitflow:11-finish</text>
+
+                                <line x1="600" y1="400" x2="600" y2="430" stroke="#ec4899" stroke-width="2"/>
+                                <polygon points="600,430 595,420 605,420" fill="#ec4899"/>
+
+                                <rect x="540" y="435" width="120" height="30" rx="6" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="2"/>
+                                <text x="600" y="455" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="600">
+                                    <tspan data-lang="fr">Fix deploye</tspan>
+                                    <tspan data-lang="en">Fix deployed</tspan>
+                                </text>
+
+                                <!-- UTILITY COMMANDS (Right) -->
+                                <line x1="550" y1="110" x2="720" y2="110" stroke="#6366f1" stroke-width="2"/>
+                                <polygon points="720,110 710,105 710,115" fill="#6366f1"/>
+
+                                <rect x="730" y="70" width="150" height="190" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+                                <text x="805" y="95" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">Utilitaires</tspan>
+                                    <tspan data-lang="en">Utilities</tspan>
+                                </text>
+
+                                <!-- Status -->
+                                <rect x="745" y="110" width="120" height="30" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
+                                <text x="805" y="130" text-anchor="middle" fill="#3b82f6" font-size="9" font-family="monospace">/gitflow:2-status</text>
+
+                                <!-- Commit -->
+                                <rect x="745" y="150" width="120" height="30" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
+                                <text x="805" y="170" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="monospace">/gitflow:3-commit</text>
+
+                                <!-- Abort -->
+                                <rect x="745" y="190" width="120" height="30" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+                                <text x="805" y="210" text-anchor="middle" fill="#ef4444" font-size="9" font-family="monospace">/gitflow:6-abort</text>
+
+                                <!-- Init (special) -->
+                                <rect x="745" y="230" width="120" height="25" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1" stroke-dasharray="3,2"/>
+                                <text x="805" y="247" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">/gitflow:1-init</text>
+
+                                <!-- Legend at bottom -->
+                                <rect x="730" y="290" width="150" height="85" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                                <text x="805" y="310" text-anchor="middle" fill="#64748b" font-size="9" font-weight="600">
+                                    <tspan data-lang="fr">Couleurs</tspan>
+                                    <tspan data-lang="en">Colors</tspan>
+                                </text>
+
+                                <circle cx="750" cy="330" r="5" fill="#22c55e"/>
+                                <text x="760" y="334" fill="#94a3b8" font-size="8">Feature</text>
+
+                                <circle cx="820" cy="330" r="5" fill="#eab308"/>
+                                <text x="830" y="334" fill="#94a3b8" font-size="8">Release</text>
+
+                                <circle cx="750" cy="350" r="5" fill="#ec4899"/>
+                                <text x="760" y="354" fill="#94a3b8" font-size="8">Hotfix</text>
+
+                                <circle cx="820" cy="350" r="5" fill="#f97316"/>
+                                <text x="830" y="354" fill="#94a3b8" font-size="8">
+                                    <tspan data-lang="fr">Integr.</tspan>
+                                    <tspan data-lang="en">Integr.</tspan>
+                                </text>
+
+                                <circle cx="750" cy="370" r="5" fill="#6366f1"/>
+                                <text x="760" y="374" fill="#94a3b8" font-size="8">
+                                    <tspan data-lang="fr">Decision</tspan>
+                                    <tspan data-lang="en">Decision</tspan>
+                                </text>
+                            </svg>
+                        </div>
+
+                        <!-- Command Reference Cards -->
+                        <h3 id="command-reference">
+                            <span data-lang="fr">Reference des commandes</span>
+                            <span data-lang="en">Command Reference</span>
+                        </h3>
+
+                        <div class="command-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+
+                            <!-- gitflow:1-init -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #475569;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #475569; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:1-init</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Initialisation</span>
+                                    <span data-lang="en">Initialization</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Configure GitFlow dans le projet. Cree les branches main/develop et le fichier de configuration. A utiliser une seule fois au debut du projet.</span>
+                                    <span data-lang="en">Configures GitFlow in the project. Creates main/develop branches and config file. Use once at the start of the project.</span>
+                                </p>
+                            </div>
+
+                            <!-- gitflow:2-status -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #3b82f6;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #3b82f6; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:2-status</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Etat du projet</span>
+                                    <span data-lang="en">Project Status</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Affiche la branche actuelle, la version, l'etat de synchronisation avec le remote et les migrations EF Core en attente.</span>
+                                    <span data-lang="en">Shows current branch, version, remote sync status, and pending EF Core migrations.</span>
+                                </p>
+                            </div>
+
+                            <!-- gitflow:3-commit -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #8b5cf6;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #8b5cf6; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:3-commit</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Commit intelligent</span>
+                                    <span data-lang="en">Smart Commit</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Cree un commit avec message conventionnel. Valide automatiquement les migrations EF Core et detecte les fichiers sensibles.</span>
+                                    <span data-lang="en">Creates commit with conventional message. Automatically validates EF Core migrations and detects sensitive files.</span>
+                                </p>
+                            </div>
+
+                            <!-- gitflow:4-plan -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #f97316;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #f97316; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:4-plan</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Planifier l'integration</span>
+                                    <span data-lang="en">Plan Integration</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Analyse les conflits potentiels avec develop. Cree un plan detaille de merge. A executer avant /gitflow:5-exec.</span>
+                                    <span data-lang="en">Analyzes potential conflicts with develop. Creates detailed merge plan. Run before /gitflow:5-exec.</span>
+                                </p>
+                            </div>
+
+                            <!-- gitflow:5-exec -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #f97316;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #f97316; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:5-exec</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Executer le merge</span>
+                                    <span data-lang="en">Execute Merge</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Execute le plan d'integration : rebase sur develop, resolution conflits, tests, merge --no-ff, suppression branche locale.</span>
+                                    <span data-lang="en">Executes integration plan: rebase on develop, conflict resolution, tests, merge --no-ff, delete local branch.</span>
+                                </p>
+                            </div>
+
+                            <!-- gitflow:6-abort -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #ef4444;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #ef4444; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:6-abort</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Annuler l'operation</span>
+                                    <span data-lang="en">Abort Operation</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Annule le merge/rebase en cours et restaure l'etat precedent via le checkpoint automatique.</span>
+                                    <span data-lang="en">Aborts ongoing merge/rebase and restores previous state via automatic checkpoint.</span>
+                                </p>
+                            </div>
+
+                            <!-- gitflow:10-start -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #22c55e;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #22c55e; color: #0f172a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:10-start</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Demarrer une branche</span>
+                                    <span data-lang="en">Start a Branch</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0 0 0.5rem 0; line-height: 1.5;">
+                                    <span data-lang="fr">Cree une nouvelle branche selon le type :</span>
+                                    <span data-lang="en">Creates a new branch by type:</span>
+                                </p>
+                                <ul style="color: #94a3b8; font-size: 0.8rem; margin: 0; padding-left: 1.25rem; line-height: 1.6;">
+                                    <li><code style="color: #22c55e;">feature {nom}</code> <span data-lang="fr">→ depuis develop</span><span data-lang="en">→ from develop</span></li>
+                                    <li><code style="color: #eab308;">release</code> <span data-lang="fr">→ depuis develop</span><span data-lang="en">→ from develop</span></li>
+                                    <li><code style="color: #ec4899;">hotfix {nom}</code> <span data-lang="fr">→ depuis main</span><span data-lang="en">→ from main</span></li>
+                                </ul>
+                            </div>
+
+                            <!-- gitflow:11-finish -->
+                            <div class="command-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; border-left: 4px solid #eab308;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <code style="background: #eab308; color: #0f172a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:11-finish</code>
+                                </div>
+                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                    <span data-lang="fr">Finaliser release/hotfix</span>
+                                    <span data-lang="en">Finish Release/Hotfix</span>
+                                </h5>
+                                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">
+                                    <span data-lang="fr">Termine une release ou hotfix : merge dans main, creation du tag de version, merge back vers develop, suppression de la branche.</span>
+                                    <span data-lang="en">Completes release or hotfix: merge to main, create version tag, merge back to develop, delete branch.</span>
+                                </p>
                             </div>
                         </div>
                     </section>
