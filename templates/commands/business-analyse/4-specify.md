@@ -1,5 +1,6 @@
 ---
 description: Phase 4 - Spécifications fonctionnelles FRD (ULTRATHINK)
+model: opus
 ---
 
 # Business Analyse - Specify
@@ -302,6 +303,99 @@ cat .claude/commands/business-analyse/_resources/checklist-specification.md
 **Score**: {{X}}/30 ({{PERCENT}}%)
 **Seuil**: 85% (26/30)
 
+### Étape 7bis : Plan d'implémentation (si complexité > Standard)
+
+**Déclencheur** : Si la complexité détectée en phase 2-Discover est "Complexe" ou "Critique", le découpage en phases testables est **obligatoire**.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PLAN D'IMPLÉMENTATION - Découpage en phases testables                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Complexité détectée: {{COMPLEXITE}}                                     │
+│ Découpage: {{OBLIGATOIRE si Complexe/Critique | OPTIONNEL si Standard}} │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│ PHASE 1: DATA LAYER (Backend - Testable isolément)                      │
+│ ─────────────────────────────────────────────────                       │
+│ Scope:                                                                  │
+│   • Entités / Modèles de données                                        │
+│   • Migrations EF Core / SQL                                            │
+│   • Repository pattern (si applicable)                                  │
+│   • Seed data (données de test)                                         │
+│                                                                         │
+│ Livrable: Modèle de données fonctionnel                                 │
+│ Tests: Tests unitaires Repository + Tests migrations                    │
+│ Critère de validation: `dotnet ef database update` OK                   │
+│ Estimation complexité: {{LOW|MEDIUM|HIGH}}                              │
+│                                                                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│ PHASE 2: API LAYER (Backend - Testable isolément)                       │
+│ ─────────────────────────────────────────────────                       │
+│ Scope:                                                                  │
+│   • Controllers / Endpoints REST                                        │
+│   • Services / Business logic                                           │
+│   • Validations backend                                                 │
+│   • DTOs / Mapping                                                      │
+│                                                                         │
+│ Livrable: API fonctionnelle (Swagger/Postman testable)                  │
+│ Tests: Tests d'intégration API + Tests unitaires services               │
+│ Critère de validation: Tous endpoints répondent correctement            │
+│ Dépendances: Phase 1 complète                                           │
+│ Estimation complexité: {{LOW|MEDIUM|HIGH}}                              │
+│                                                                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│ PHASE 3: UI LAYER (Frontend - Testable isolément)                       │
+│ ─────────────────────────────────────────────────                       │
+│ Scope:                                                                  │
+│   • Composants UI (React/Angular/Vue/Blazor)                            │
+│   • State management                                                    │
+│   • Formulaires et validations front                                    │
+│   • Intégration API (appels HTTP)                                       │
+│                                                                         │
+│ Livrable: Interface utilisateur fonctionnelle                           │
+│ Tests: Tests composants + Tests E2E (Cypress/Playwright)                │
+│ Critère de validation: Scénarios Gherkin passent en E2E                 │
+│ Dépendances: Phase 2 complète (API disponible)                          │
+│ Estimation complexité: {{LOW|MEDIUM|HIGH}}                              │
+│                                                                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│ PHASE 4: INTÉGRATION & FINALISATION                                     │
+│ ─────────────────────────────────────                                   │
+│ Scope:                                                                  │
+│   • Wiring complet (front ↔ back)                                       │
+│   • Tests end-to-end complets                                           │
+│   • Performance / Optimisation                                          │
+│   • Documentation technique                                             │
+│                                                                         │
+│ Livrable: Feature complète et validée                                   │
+│ Tests: Suite E2E complète + Tests de charge (si applicable)             │
+│ Critère de validation: UAT (User Acceptance Testing) OK                 │
+│ Dépendances: Phases 1, 2, 3 complètes                                   │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Tableau récapitulatif des phases :**
+
+| Phase | Scope | Livrable | Tests | Validation | Deps |
+|-------|-------|----------|-------|------------|------|
+| 1. Data | Entités, Migrations | DB Schema | Unit + Migration | EF OK | - |
+| 2. API | Endpoints, Services | API REST | Integration | Swagger OK | P1 |
+| 3. UI | Composants, Forms | Interface | E2E | Gherkin OK | P2 |
+| 4. Intégration | Wiring, Perf | Feature | Full E2E | UAT OK | P1-3 |
+
+**Règle de découpage :**
+
+| Complexité | Phases requises | Justification |
+|------------|-----------------|---------------|
+| CRUD simple | Pas de découpage | Implémentation directe possible |
+| Standard | Optionnel | Recommandé si > 3 endpoints |
+| Complexe | **Obligatoire** | Trop de risques sans découpage |
+| Critique | **Obligatoire + Reviews** | Chaque phase nécessite validation |
+
 ### Étape 8 : Génération du FRD
 
 Créer `3-functional-specification.md` :
@@ -458,17 +552,77 @@ flowchart TD
 
 ---
 
-## 9. Annexes
+## 9. Plan d'Implémentation
 
-### 9.1 Checklist de complétude
+> **Note**: Cette section est obligatoire si complexité = Complexe ou Critique
+
+### 9.1 Découpage en phases
+
+| Phase | Scope | Livrable | Tests | Validation | Status |
+|-------|-------|----------|-------|------------|--------|
+| 1. Data | {{DATA_SCOPE}} | DB Schema | Unit | EF OK | ⏳ |
+| 2. API | {{API_SCOPE}} | API REST | Integration | Swagger OK | ⏳ |
+| 3. UI | {{UI_SCOPE}} | Interface | E2E | Gherkin OK | ⏳ |
+| 4. Intégration | Wiring | Feature | Full E2E | UAT OK | ⏳ |
+
+### 9.2 Détail Phase 1: Data Layer
+
+**Scope:**
+{{DATA_LAYER_DETAILS}}
+
+**Entités à créer:**
+- [ ] {{ENTITY_1}}
+- [ ] {{ENTITY_2}}
+
+**Migrations:**
+- [ ] {{MIGRATION_NAME}}
+
+**Critère de validation:** `dotnet ef database update` sans erreur
+
+### 9.3 Détail Phase 2: API Layer
+
+**Scope:**
+{{API_LAYER_DETAILS}}
+
+**Endpoints à implémenter:**
+- [ ] {{ENDPOINT_1}}
+- [ ] {{ENDPOINT_2}}
+
+**Critère de validation:** Tous les endpoints testables via Swagger/Postman
+
+### 9.4 Détail Phase 3: UI Layer
+
+**Scope:**
+{{UI_LAYER_DETAILS}}
+
+**Composants à créer:**
+- [ ] {{COMPONENT_1}}
+- [ ] {{COMPONENT_2}}
+
+**Critère de validation:** Scénarios Gherkin passent en E2E
+
+### 9.5 Détail Phase 4: Intégration
+
+**Scope:**
+- Wiring front ↔ back
+- Tests end-to-end complets
+- Optimisations performance
+
+**Critère de validation:** UAT (User Acceptance Testing) OK
+
+---
+
+## 10. Annexes
+
+### 10.1 Checklist de complétude
 
 Score: {{SCORE}}/30 ({{PERCENT}}%)
 
-### 9.2 Questions résolues
+### 10.2 Questions résolues
 
 {{RESOLVED_QUESTIONS}}
 
-### 9.3 Décisions prises
+### 10.3 Décisions prises
 
 | Décision | Justification | Date |
 |----------|---------------|------|
@@ -516,3 +670,4 @@ Prochain: /business-analyse:document {{FEAT-XXX}}
 4. **Gherkin testable** - Critères vérifiables
 5. **Score 85%+** - Minimum pour valider
 6. **Aucun code** - Specs fonctionnelles, pas techniques
+7. **Découpage obligatoire si Complexe/Critique** - Phases testables API/UI/Intégration

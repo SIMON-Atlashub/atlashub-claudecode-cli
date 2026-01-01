@@ -1,5 +1,6 @@
 ---
 description: Phase 3 - Analyse métier et BRD (ULTRATHINK)
+model: opus
 ---
 
 # Business Analyse - Analyse

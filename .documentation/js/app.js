@@ -440,9 +440,15 @@ function initSearch() {
         { page: 'apex.html', icon: '🎯', title: { fr: 'APEX', en: 'APEX' }, section: { fr: 'Examine', en: 'Examine' }, anchor: 'examine',
           keywords: 'examine test testing validation vérification review revue quality qualité' },
 
-        // BA - Best Practices
-        { page: 'ba.html', icon: '📊', title: { fr: 'Bonnes Pratiques', en: 'Best Practices' }, section: '', anchor: '',
-          keywords: 'bonnes pratiques best practices ba business analysis guidelines standards quality qualité' },
+        // Business Analyse
+        { page: 'business-analyse.html', icon: '📊', title: { fr: 'Business Analyse', en: 'Business Analyse' }, section: '', anchor: '',
+          keywords: 'business analyse analysis specification brd frd requirements exigences babok' },
+        { page: 'business-analyse.html', icon: '📊', title: { fr: 'Business Analyse', en: 'Business Analyse' }, section: { fr: 'Discovery', en: 'Discovery' }, anchor: 'phase-2',
+          keywords: 'discover discovery questionnaire questions adaptatives ultrathink elicitation' },
+        { page: 'business-analyse.html', icon: '📊', title: { fr: 'Business Analyse', en: 'Business Analyse' }, section: { fr: 'Specification', en: 'Specification' }, anchor: 'phase-4',
+          keywords: 'specify specification frd use cases wireframes gherkin acceptance criteria' },
+        { page: 'business-analyse.html', icon: '📊', title: { fr: 'Business Analyse', en: 'Business Analyse' }, section: { fr: 'Handoff', en: 'Handoff' }, anchor: 'phase-6',
+          keywords: 'handoff dev prompt developer implementation autonome autonomous' },
 
         // Agents
         { page: 'agents.html', icon: '🤖', title: { fr: 'Agents', en: 'Agents' }, section: '', anchor: '',

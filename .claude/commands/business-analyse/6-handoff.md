@@ -1,5 +1,6 @@
 ---
 description: Phase 6 - Génération du prompt de développement
+model: opus
 ---
 
 # Business Analyse - Handoff

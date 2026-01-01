@@ -108,9 +108,9 @@
                         <span class="icon">&#127919;</span>
                         <span class="nav-text">APEX</span>
                     </a>
-                    <a href="ba.html" class="nav-item">
+                    <a href="business-analyse.html" class="nav-item">
                         <span class="icon">&#128202;</span>
-                        <span class="nav-text">BA</span>
+                        <span class="nav-text">Business Analyse</span>
                     </a>
                 </div>
 
@@ -1602,9 +1602,36 @@ Une migration EF Core valide = **3 fichiers** :
 | `/gitflow:3-commit {msg}` | Commit avec message |
 | `/gitflow:3-commit` | Genere message auto |
 | `/gitflow:3-commit --validate` | Valide sans commit |
-| `/gitflow:3-commit --dry-run` | Simulation |</code></pre>
+| `/gitflow:3-commit --dry-run` | Simulation |
+
+## Push automatique (Worktree)
+
+Detection automatique : `git rev-parse --git-common-dir`
+Si worktree detecte → push automatique apres commit.
+
+| Config `afterCommit` | Worktree | Action |
+|---------------------|----------|--------|
+| `worktree` | Oui | Push automatique |
+| `worktree` | Non | Demander a l'utilisateur |
+| `always` | - | Push automatique |
+| `ask` | - | Demander a l'utilisateur |
+| `never` | - | Ne pas push |</code></pre>
                                     </div>
                                 </details>
+
+                                <div class="alert alert-info">
+                                    <span class="alert-icon">&#128640;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Push automatique pour worktrees</h5>
+                                        <h5 data-lang="en">Automatic push for worktrees</h5>
+                                        <p data-lang="fr">
+                                            Si vous travaillez dans un <strong>git worktree</strong>, le push est automatique apres le commit. Configurable dans <code>.claude/gitflow/config.json</code> via <code>workflow.push.afterCommit</code>.
+                                        </p>
+                                        <p data-lang="en">
+                                            If you're working in a <strong>git worktree</strong>, push is automatic after commit. Configurable in <code>.claude/gitflow/config.json</code> via <code>workflow.push.afterCommit</code>.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

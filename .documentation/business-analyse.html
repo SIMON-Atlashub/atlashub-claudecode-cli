@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Analyse - Claude Tools</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Global Header -->
+        <header class="global-header">
+            <div class="logo">CT</div>
+            <span class="site-title">Claude Tools</span>
+            <span class="version-badge">v1.2.0</span>
+            <div class="header-divider"></div>
+            <span class="page-title">Business Analyse</span>
+            <nav class="breadcrumb">
+                <a href="index.html">
+                    <span data-lang="fr">Accueil</span>
+                    <span data-lang="en">Home</span>
+                </a>
+                <span class="breadcrumb-separator">&#8250;</span>
+                <span data-lang="fr">Workflows</span>
+                <span data-lang="en">Workflows</span>
+                <span class="breadcrumb-separator">&#8250;</span>
+                <span class="breadcrumb-current">Business Analyse</span>
+            </nav>
+            <!-- Language Select -->
+            <select class="lang-select" id="lang-select" onchange="setLanguage(this.value); localStorage.setItem('doc-language', this.value);">
+                <option value="fr">FR</option>
+                <option value="en">EN</option>
+            </select>
+            <!-- Search -->
+            <div class="header-search">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" id="search-input" class="search-input" placeholder="Rechercher..." data-placeholder-fr="Rechercher..." data-placeholder-en="Search..." autocomplete="off">
+                    <span class="search-shortcut">Ctrl+K</span>
+                </div>
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </header>
+
+        <!-- App Body -->
+        <div class="app-body">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <button class="sidebar-toggle" title="Toggle sidebar">
+                    <span class="toggle-icon-collapse">&#171;</span>
+                    <span class="toggle-icon-expand">&#187;</span>
+                </button>
+
+                <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">
+                        <span data-lang="fr">Demarrage</span>
+                        <span data-lang="en">Getting Started</span>
+                    </div>
+                    <a href="index.html" class="nav-item">
+                        <span class="icon">&#127968;</span>
+                        <span class="nav-text" data-lang="fr">Accueil</span>
+                        <span class="nav-text" data-lang="en">Home</span>
+                    </a>
+                    <a href="installation.html" class="nav-item">
+                        <span class="icon">&#128230;</span>
+                        <span class="nav-text">Installation</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Workflows</div>
+                    <a href="gitflow.html" class="nav-item">
+                        <span class="icon">&#128256;</span>
+                        <span class="nav-text">GitFlow</span>
+                    </a>
+                    <a href="efcore.html" class="nav-item">
+                        <span class="icon">&#128452;</span>
+                        <span class="nav-text">EF Core</span>
+                    </a>
+                    <a href="apex.html" class="nav-item">
+                        <span class="icon">&#127919;</span>
+                        <span class="nav-text">APEX</span>
+                    </a>
+                    <div class="nav-item-with-toc">
+                        <a href="business-analyse.html" class="active">
+                            <span class="icon">&#128202;</span>
+                            <span class="nav-text">Business Analyse</span>
+                            <button class="toc-toggle">&#9654;</button>
+                        </a>
+                        <nav class="sidebar-toc">
+                            <a href="#introduction" class="sidebar-toc-link">Introduction</a>
+                            <a href="#workflow" class="sidebar-toc-link">Workflow</a>
+                            <a href="#phase-1" class="sidebar-toc-link">1. Init</a>
+                            <a href="#phase-2" class="sidebar-toc-link">2. Discover</a>
+                            <a href="#phase-3" class="sidebar-toc-link">3. Analyse</a>
+                            <a href="#phase-4" class="sidebar-toc-link">4. Specify</a>
+                            <a href="#phase-5" class="sidebar-toc-link">5. Document</a>
+                            <a href="#phase-6" class="sidebar-toc-link">6. Handoff</a>
+                            <a href="#phase-7" class="sidebar-toc-link">7. Dev</a>
+                            <a href="#bug-tracking" class="sidebar-toc-link">Bug Tracking</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">
+                        <span data-lang="fr">Outils</span>
+                        <span data-lang="en">Tools</span>
+                    </div>
+                    <a href="agents.html" class="nav-item">
+                        <span class="icon">&#129302;</span>
+                        <span class="nav-text">Agents</span>
+                    </a>
+                    <a href="commands.html" class="nav-item">
+                        <span class="icon">&#9889;</span>
+                        <span class="nav-text" data-lang="fr">Commandes</span>
+                        <span class="nav-text" data-lang="en">Commands</span>
+                    </a>
+                    <a href="hooks.html" class="nav-item">
+                        <span class="icon">&#128279;</span>
+                        <span class="nav-text">Hooks</span>
+                    </a>
+                    <a href="test-web.html" class="nav-item">
+                        <span class="icon">&#127760;</span>
+                        <span class="nav-text">Test Web</span>
+                    </a>
+                </div>
+            </nav>
+
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="content-full">
+                    <!-- Introduction -->
+                    <section id="introduction">
+                        <h2>Introduction</h2>
+                        <p data-lang="fr">
+                            Le workflow <strong>Business Analyse</strong> est specialise pour la specification fonctionnelle et technique. Il combine la methodologie BABOK v3 avec une approche systematique pour produire des specifications completes et autonomes. <strong>Le BA ne code jamais</strong> - il produit uniquement des documents de specification.
+                        </p>
+                        <p data-lang="en">
+                            The <strong>Business Analyse</strong> workflow is specialized for functional and technical specification. It combines BABOK v3 methodology with a systematic approach to produce complete and autonomous specifications. <strong>The BA never codes</strong> - it only produces specification documents.
+                        </p>
+
+                        <div class="alert alert-warning">
+                            <span class="alert-icon">&#9888;</span>
+                            <div class="alert-content">
+                                <h5 data-lang="fr">Principe fondamental</h5>
+                                <h5 data-lang="en">Core Principle</h5>
+                                <p data-lang="fr">
+                                    <strong>LE BA NE CODE JAMAIS.</strong> Il produit des specifications suffisamment detaillees pour qu'un developpeur puisse implementer de maniere autonome, sans poser de questions.
+                                </p>
+                                <p data-lang="en">
+                                    <strong>THE BA NEVER CODES.</strong> It produces specifications detailed enough for a developer to implement autonomously, without asking questions.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <span class="alert-icon">&#128161;</span>
+                            <div class="alert-content">
+                                <h5 data-lang="fr">Questions adaptatives</h5>
+                                <h5 data-lang="en">Adaptive Questions</h5>
+                                <p data-lang="fr">
+                                    Le nombre de questions s'adapte a la complexite : 6-8 pour un CRUD simple, jusqu'a 30+ pour une feature critique. Plus besoin de repondre a 44 questions pour un simple formulaire !
+                                </p>
+                                <p data-lang="en">
+                                    The number of questions adapts to complexity: 6-8 for a simple CRUD, up to 30+ for a critical feature. No more answering 44 questions for a simple form!
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Workflow Diagram -->
+                    <section id="workflow">
+                        <h2>Workflow</h2>
+
+                        <div class="svg-diagram">
+                            <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Inter', system-ui, sans-serif;">
+                                <defs>
+                                    <linearGradient id="baInitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3b82f6"/>
+                                        <stop offset="100%" style="stop-color:#1d4ed8"/>
+                                    </linearGradient>
+                                    <linearGradient id="baDiscoverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#8b5cf6"/>
+                                        <stop offset="100%" style="stop-color:#6d28d9"/>
+                                    </linearGradient>
+                                    <linearGradient id="baAnalyseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ec4899"/>
+                                        <stop offset="100%" style="stop-color:#be185d"/>
+                                    </linearGradient>
+                                    <linearGradient id="baSpecifyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f97316"/>
+                                        <stop offset="100%" style="stop-color:#c2410c"/>
+                                    </linearGradient>
+                                    <linearGradient id="baDocumentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#22c55e"/>
+                                        <stop offset="100%" style="stop-color:#15803d"/>
+                                    </linearGradient>
+                                    <linearGradient id="baHandoffGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#06b6d4"/>
+                                        <stop offset="100%" style="stop-color:#0891b2"/>
+                                    </linearGradient>
+                                    <filter id="baGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+
+                                <!-- Background boxes -->
+                                <rect x="20" y="160" width="860" height="140" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                                <text x="40" y="185" fill="#94a3b8" font-size="11" font-weight="600">Output Documents</text>
+
+                                <!-- Phase 1: INIT -->
+                                <g transform="translate(30, 40)" filter="url(#baGlow)">
+                                    <rect x="0" y="0" width="110" height="90" rx="10" fill="url(#baInitGrad)"/>
+                                    <text x="55" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="600">1. INIT</text>
+                                    <text x="55" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Structure</text>
+                                    <text x="55" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">.business-analyse/</text>
+                                </g>
+                                <text x="85" y="205" text-anchor="middle" fill="#3b82f6" font-size="10" font-weight="500">config.json</text>
+                                <text x="85" y="220" text-anchor="middle" fill="#94a3b8" font-size="9">glossary.md</text>
+
+                                <!-- Arrow 1 -->
+                                <path d="M 145 85 L 165 85" stroke="#94a3b8" stroke-width="2"/>
+                                <polygon points="163,80 173,85 163,90" fill="#94a3b8"/>
+
+                                <!-- Phase 2: DISCOVER -->
+                                <g transform="translate(170, 40)" filter="url(#baGlow)">
+                                    <rect x="0" y="0" width="110" height="90" rx="10" fill="url(#baDiscoverGrad)"/>
+                                    <text x="55" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="600">2. DISCOVER</text>
+                                    <text x="55" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Questions</text>
+                                    <text x="55" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">adaptatives</text>
+                                    <rect x="70" y="70" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="87" y="80" text-anchor="middle" fill="white" font-size="7" font-weight="600">ultrathink</text>
+                                </g>
+                                <text x="225" y="205" text-anchor="middle" fill="#8b5cf6" font-size="10" font-weight="500">discovery.md</text>
+                                <text x="225" y="220" text-anchor="middle" fill="#94a3b8" font-size="9">6-30+ questions</text>
+
+                                <!-- Arrow 2 -->
+                                <path d="M 285 85 L 305 85" stroke="#94a3b8" stroke-width="2"/>
+                                <polygon points="303,80 313,85 303,90" fill="#94a3b8"/>
+
+                                <!-- Phase 3: ANALYSE -->
+                                <g transform="translate(310, 40)" filter="url(#baGlow)">
+                                    <rect x="0" y="0" width="110" height="90" rx="10" fill="url(#baAnalyseGrad)"/>
+                                    <text x="55" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="600">3. ANALYSE</text>
+                                    <text x="55" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">BRD Generation</text>
+                                    <text x="55" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Process Model</text>
+                                    <rect x="70" y="70" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="87" y="80" text-anchor="middle" fill="white" font-size="7" font-weight="600">ultrathink</text>
+                                </g>
+                                <text x="365" y="205" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="500">BRD.md</text>
+                                <text x="365" y="220" text-anchor="middle" fill="#94a3b8" font-size="9">process-model.md</text>
+
+                                <!-- Arrow 3 -->
+                                <path d="M 425 85 L 445 85" stroke="#94a3b8" stroke-width="2"/>
+                                <polygon points="443,80 453,85 443,90" fill="#94a3b8"/>
+
+                                <!-- Phase 4: SPECIFY -->
+                                <g transform="translate(450, 40)" filter="url(#baGlow)">
+                                    <rect x="0" y="0" width="110" height="90" rx="10" fill="url(#baSpecifyGrad)"/>
+                                    <text x="55" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="600">4. SPECIFY</text>
+                                    <text x="55" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">FRD Generation</text>
+                                    <text x="55" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Use Cases</text>
+                                    <rect x="70" y="70" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="87" y="80" text-anchor="middle" fill="white" font-size="7" font-weight="600">ultrathink</text>
+                                </g>
+                                <text x="505" y="205" text-anchor="middle" fill="#f97316" font-size="10" font-weight="500">FRD.md</text>
+                                <text x="505" y="220" text-anchor="middle" fill="#94a3b8" font-size="9">wireframes, gherkin</text>
+
+                                <!-- Arrow 4 -->
+                                <path d="M 565 85 L 585 85" stroke="#94a3b8" stroke-width="2"/>
+                                <polygon points="583,80 593,85 583,90" fill="#94a3b8"/>
+
+                                <!-- Phase 5: DOCUMENT -->
+                                <g transform="translate(590, 40)" filter="url(#baGlow)">
+                                    <rect x="0" y="0" width="110" height="90" rx="10" fill="url(#baDocumentGrad)"/>
+                                    <text x="55" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="600">5. DOCUMENT</text>
+                                    <text x="55" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Transverse</text>
+                                    <text x="55" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Documentation</text>
+                                </g>
+                                <text x="645" y="205" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="500">data-dictionary.md</text>
+                                <text x="645" y="220" text-anchor="middle" fill="#94a3b8" font-size="9">glossary, flows</text>
+
+                                <!-- Arrow 5 -->
+                                <path d="M 705 85 L 725 85" stroke="#94a3b8" stroke-width="2"/>
+                                <polygon points="723,80 733,85 723,90" fill="#94a3b8"/>
+
+                                <!-- Phase 6: HANDOFF -->
+                                <g transform="translate(730, 40)" filter="url(#baGlow)">
+                                    <rect x="0" y="0" width="130" height="90" rx="10" fill="url(#baHandoffGrad)"/>
+                                    <text x="65" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="600">6. HANDOFF</text>
+                                    <text x="65" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Dev Prompt</text>
+                                    <text x="65" y="65" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Generation</text>
+                                </g>
+                                <text x="795" y="205" text-anchor="middle" fill="#06b6d4" font-size="10" font-weight="500">DEV-PROMPT.md</text>
+                                <text x="795" y="220" text-anchor="middle" fill="#94a3b8" font-size="9">Autonomous impl.</text>
+
+                                <!-- 85% threshold indicator -->
+                                <rect x="450" y="250" width="120" height="25" rx="4" fill="rgba(249, 115, 22, 0.2)" stroke="#f97316" stroke-width="1"/>
+                                <text x="510" y="267" text-anchor="middle" fill="#f97316" font-size="10" font-weight="600">Seuil: 85%</text>
+                            </svg>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Phase</th>
+                                        <th data-lang="fr">Commande</th>
+                                        <th data-lang="en">Command</th>
+                                        <th>Output</th>
+                                        <th>Model</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Init</strong></td>
+                                        <td><code>/business-analyse:1-init</code></td>
+                                        <td><code>config.json, glossary.md</code></td>
+                                        <td>Haiku</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Discover</strong></td>
+                                        <td><code>/business-analyse:2-discover</code></td>
+                                        <td><code>discovery.md</code></td>
+                                        <td>Sonnet + ultrathink</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Analyse</strong></td>
+                                        <td><code>/business-analyse:3-analyse</code></td>
+                                        <td><code>BRD.md, process-model.md</code></td>
+                                        <td><strong>Opus</strong> + ultrathink</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Specify</strong></td>
+                                        <td><code>/business-analyse:4-specify</code></td>
+                                        <td><code>FRD.md</code></td>
+                                        <td><strong>Opus</strong> + ultrathink</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Document</strong></td>
+                                        <td><code>/business-analyse:5-document</code></td>
+                                        <td><code>data-dictionary.md</code></td>
+                                        <td>Sonnet</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>6. Handoff</strong></td>
+                                        <td><code>/business-analyse:6-handoff</code></td>
+                                        <td><code>DEV-PROMPT.md</code></td>
+                                        <td><strong>Opus</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Interactive Workflow Diagram -->
+                        <h3 data-lang="fr">Flux d'execution</h3>
+                        <h3 data-lang="en">Execution Flow</h3>
+
+                        <div class="svg-diagram">
+                            <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Inter', system-ui, sans-serif;">
+                                <defs>
+                                    <linearGradient id="userInputGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#22c55e"/>
+                                        <stop offset="100%" style="stop-color:#15803d"/>
+                                    </linearGradient>
+                                    <linearGradient id="phaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3b82f6"/>
+                                        <stop offset="100%" style="stop-color:#1d4ed8"/>
+                                    </linearGradient>
+                                    <linearGradient id="opusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ec4899"/>
+                                        <stop offset="100%" style="stop-color:#be185d"/>
+                                    </linearGradient>
+                                    <linearGradient id="outputFileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f97316"/>
+                                        <stop offset="100%" style="stop-color:#c2410c"/>
+                                    </linearGradient>
+                                    <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+
+                                <!-- Title and User Input -->
+                                <g transform="translate(20, 20)">
+                                    <!-- User icon -->
+                                    <circle cx="30" cy="35" r="25" fill="url(#userInputGrad)" filter="url(#glowEffect)"/>
+                                    <text x="30" y="42" text-anchor="middle" fill="white" font-size="20" font-weight="bold">U</text>
+
+                                    <!-- Arrow -->
+                                    <path d="M 60 35 L 100 35" stroke="#22c55e" stroke-width="3"/>
+                                    <polygon points="98,28 115,35 98,42" fill="#22c55e"/>
+
+                                    <!-- Main command box -->
+                                    <rect x="120" y="10" width="380" height="50" rx="10" fill="none" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="310" y="30" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="700" font-family="monospace">/business-analyse</text>
+                                    <text x="310" y="48" text-anchor="middle" fill="#94a3b8" font-size="11">"Gestion des abonnements utilisateurs"</text>
+
+                                    <!-- Arrow down -->
+                                    <path d="M 310 65 L 310 95" stroke="#64748b" stroke-width="2"/>
+                                    <polygon points="303,93 310,108 317,93" fill="#64748b"/>
+                                </g>
+
+                                <!-- Legend -->
+                                <g transform="translate(540, 15)">
+                                    <rect x="0" y="0" width="340" height="70" rx="8" fill="none" stroke="#475569" stroke-width="2"/>
+                                    <text x="170" y="20" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="700">LEGENDE</text>
+
+                                    <rect x="20" y="35" width="18" height="18" rx="4" fill="url(#phaseGrad)"/>
+                                    <text x="45" y="49" fill="#94a3b8" font-size="10">Sonnet</text>
+
+                                    <rect x="100" y="35" width="18" height="18" rx="4" fill="url(#opusGrad)"/>
+                                    <text x="125" y="49" fill="#94a3b8" font-size="10">Opus</text>
+
+                                    <rect x="175" y="35" width="18" height="18" rx="4" fill="#06b6d4"/>
+                                    <text x="200" y="49" fill="#94a3b8" font-size="10">Interaction</text>
+
+                                    <rect x="275" y="35" width="18" height="18" rx="4" fill="url(#outputFileGrad)"/>
+                                    <text x="300" y="49" fill="#94a3b8" font-size="10">Output</text>
+                                </g>
+
+                                <!-- Automatic execution zone -->
+                                <rect x="40" y="110" width="820" height="390" rx="12" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="8,4"/>
+                                <rect x="350" y="115" width="200" height="22" rx="4" fill="#6366f1"/>
+                                <text x="450" y="131" text-anchor="middle" fill="white" font-size="11" font-weight="700">EXECUTION AUTOMATIQUE</text>
+
+                                <!-- Phase 1: INIT -->
+                                <g transform="translate(60, 150)">
+                                    <rect x="0" y="0" width="140" height="70" rx="10" fill="url(#phaseGrad)"/>
+                                    <text x="70" y="25" text-anchor="middle" fill="white" font-size="13" font-weight="700">1. INIT</text>
+                                    <text x="70" y="42" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="9">Haiku</text>
+                                    <text x="70" y="56" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Structure projet</text>
+
+                                    <!-- Output -->
+                                    <rect x="155" y="15" width="85" height="40" rx="6" fill="url(#outputFileGrad)"/>
+                                    <text x="197" y="32" text-anchor="middle" fill="white" font-size="8" font-weight="600">config.json</text>
+                                    <text x="197" y="45" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">glossary.md</text>
+                                </g>
+
+                                <!-- Arrow 1->2 -->
+                                <path d="M 305 185 L 350 185" stroke="#64748b" stroke-width="2"/>
+                                <polygon points="348,180 360,185 348,190" fill="#64748b"/>
+
+                                <!-- Phase 2: DISCOVER -->
+                                <g transform="translate(370, 150)">
+                                    <rect x="0" y="0" width="140" height="70" rx="10" fill="url(#phaseGrad)"/>
+                                    <text x="70" y="25" text-anchor="middle" fill="white" font-size="13" font-weight="700">2. DISCOVER</text>
+                                    <text x="70" y="42" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="9">Sonnet + ultrathink</text>
+                                    <text x="70" y="56" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Questions adaptatives</text>
+
+                                    <!-- Interaction indicator -->
+                                    <rect x="145" y="5" width="40" height="60" rx="6" fill="#06b6d4" stroke="#22d3ee" stroke-width="2"/>
+                                    <text x="165" y="28" text-anchor="middle" fill="white" font-size="18" font-weight="700">?</text>
+                                    <text x="165" y="45" text-anchor="middle" fill="white" font-size="8" font-weight="600">6-30+</text>
+                                    <text x="165" y="58" text-anchor="middle" fill="white" font-size="7">questions</text>
+
+                                    <!-- Output -->
+                                    <rect x="195" y="15" width="80" height="40" rx="6" fill="url(#outputFileGrad)"/>
+                                    <text x="235" y="38" text-anchor="middle" fill="white" font-size="8" font-weight="600">discovery.md</text>
+                                </g>
+
+                                <!-- Arrow 2->3 -->
+                                <path d="M 650 185 L 700 185 L 700 260 L 130 260 L 130 290" stroke="#64748b" stroke-width="2" fill="none"/>
+                                <polygon points="125,288 130,300 135,288" fill="#64748b"/>
+
+                                <!-- Phase 3: ANALYSE (Opus) -->
+                                <g transform="translate(60, 300)">
+                                    <rect x="0" y="0" width="140" height="70" rx="10" fill="url(#opusGrad)" stroke="#f472b6" stroke-width="2"/>
+                                    <text x="70" y="25" text-anchor="middle" fill="white" font-size="13" font-weight="700">3. ANALYSE</text>
+                                    <text x="70" y="42" text-anchor="middle" fill="white" font-size="9" font-weight="600">OPUS + ultrathink</text>
+                                    <text x="70" y="56" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">BRD Generation</text>
+
+                                    <!-- Output -->
+                                    <rect x="155" y="10" width="85" height="50" rx="6" fill="url(#outputFileGrad)"/>
+                                    <text x="197" y="30" text-anchor="middle" fill="white" font-size="8" font-weight="600">BRD.md</text>
+                                    <text x="197" y="45" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">process-model.md</text>
+                                </g>
+
+                                <!-- Arrow 3->4 -->
+                                <path d="M 305 335 L 350 335" stroke="#64748b" stroke-width="2"/>
+                                <polygon points="348,330 360,335 348,340" fill="#64748b"/>
+
+                                <!-- Phase 4: SPECIFY (Opus) -->
+                                <g transform="translate(370, 300)">
+                                    <rect x="0" y="0" width="140" height="70" rx="10" fill="url(#opusGrad)" stroke="#f472b6" stroke-width="2"/>
+                                    <text x="70" y="25" text-anchor="middle" fill="white" font-size="13" font-weight="700">4. SPECIFY</text>
+                                    <text x="70" y="42" text-anchor="middle" fill="white" font-size="9" font-weight="600">OPUS + ultrathink</text>
+                                    <text x="70" y="56" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">FRD, Use Cases</text>
+
+                                    <!-- 85% check -->
+                                    <rect x="145" y="10" width="40" height="50" rx="6" fill="#f97316" stroke="#fb923c" stroke-width="2"/>
+                                    <text x="165" y="35" text-anchor="middle" fill="white" font-size="12" font-weight="700">85%</text>
+                                    <text x="165" y="50" text-anchor="middle" fill="white" font-size="8">seuil</text>
+
+                                    <!-- Output -->
+                                    <rect x="195" y="10" width="80" height="50" rx="6" fill="url(#outputFileGrad)"/>
+                                    <text x="235" y="30" text-anchor="middle" fill="white" font-size="8" font-weight="600">FRD.md</text>
+                                    <text x="235" y="45" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7">wireframes</text>
+                                </g>
+
+                                <!-- Arrow 4->5 -->
+                                <path d="M 650 335 L 680 335" stroke="#64748b" stroke-width="2"/>
+                                <polygon points="678,330 690,335 678,340" fill="#64748b"/>
+
+                                <!-- Phase 5: DOCUMENT -->
+                                <g transform="translate(700, 300)">
+                                    <rect x="0" y="0" width="130" height="70" rx="10" fill="url(#phaseGrad)"/>
+                                    <text x="65" y="25" text-anchor="middle" fill="white" font-size="12" font-weight="700">5. DOCUMENT</text>
+                                    <text x="65" y="42" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="9">Sonnet</text>
+                                    <text x="65" y="56" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Doc transverse</text>
+                                </g>
+
+                                <!-- Arrow 5->6 -->
+                                <path d="M 765 375 L 765 405 L 130 405 L 130 430" stroke="#64748b" stroke-width="2" fill="none"/>
+                                <polygon points="125,428 130,440 135,428" fill="#64748b"/>
+
+                                <!-- Phase 6: HANDOFF (Opus) -->
+                                <g transform="translate(60, 440)">
+                                    <rect x="0" y="0" width="160" height="55" rx="10" fill="url(#opusGrad)" stroke="#f472b6" stroke-width="2"/>
+                                    <text x="80" y="22" text-anchor="middle" fill="white" font-size="13" font-weight="700">6. HANDOFF</text>
+                                    <text x="80" y="38" text-anchor="middle" fill="white" font-size="9" font-weight="600">OPUS</text>
+                                    <text x="80" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8">Prompt autonome</text>
+                                </g>
+
+                                <!-- Arrow to final output -->
+                                <path d="M 225 467 L 280 467" stroke="#64748b" stroke-width="2"/>
+                                <polygon points="278,462 290,467 278,472" fill="#64748b"/>
+
+                                <!-- Final Output -->
+                                <g transform="translate(300, 440)">
+                                    <rect x="0" y="0" width="200" height="55" rx="10" fill="#22c55e" stroke="#4ade80" stroke-width="3" filter="url(#glowEffect)"/>
+                                    <text x="100" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">DEV-PROMPT.md</text>
+                                    <text x="100" y="43" text-anchor="middle" fill="white" font-size="10">Specification complete</text>
+                                </g>
+
+                                <!-- Usage hint -->
+                                <g transform="translate(520, 440)">
+                                    <rect x="0" y="0" width="320" height="55" rx="8" fill="none" stroke="#475569" stroke-width="2"/>
+                                    <text x="160" y="22" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600">Utilisable par un developpeur ou Claude :</text>
+                                    <text x="160" y="42" text-anchor="middle" fill="#4ade80" font-size="12" font-family="monospace" font-weight="600">cat DEV-PROMPT.md | claude</text>
+                                </g>
+                            </svg>
+                        </div>
+                    </section>
+
+                    <!-- Phase 1: Init -->
+                    <section id="phase-1">
+                        <h2>
+                            <span style="color: #3b82f6;">1.</span> Init
+                        </h2>
+
+                        <p data-lang="fr">
+                            Initialise la structure <code>.business-analyse/</code> avec une organisation hierarchique application/module/feature.
+                        </p>
+                        <p data-lang="en">
+                            Initializes the <code>.business-analyse/</code> structure with a hierarchical application/module/feature organization.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:1-init</code>
+                                <span class="tag tag-command">Setup</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:1-init
+
+# Structure creee :
+.business-analyse/
++-- config.json              # Configuration globale
++-- glossary.md              # Termes metier
++-- .claudeignore            # Fichiers a ignorer
++-- applications/
+    +-- {app-name}/
+        +-- modules/
+            +-- {module}/
+                +-- features/
+                    +-- {feature}/
+                        +-- discovery.md
+                        +-- BRD.md
+                        +-- FRD.md
+                        +-- DEV-PROMPT.md</code></pre>
+                                </div>
+
+                                <div class="feature-grid">
+                                    <div class="feature-item">
+                                        <span class="feature-icon">&#128194;</span>
+                                        <span class="feature-text" data-lang="fr">Structure hierarchique</span>
+                                        <span class="feature-text" data-lang="en">Hierarchical structure</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-icon">&#128218;</span>
+                                        <span class="feature-text" data-lang="fr">Glossaire metier</span>
+                                        <span class="feature-text" data-lang="en">Business glossary</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-icon">&#128683;</span>
+                                        <span class="feature-text" data-lang="fr">.claudeignore</span>
+                                        <span class="feature-text" data-lang="en">.claudeignore</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-icon">&#9881;</span>
+                                        <span class="feature-text" data-lang="fr">Configuration projet</span>
+                                        <span class="feature-text" data-lang="en">Project configuration</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 2: Discover -->
+                    <section id="phase-2">
+                        <h2>
+                            <span style="color: #8b5cf6;">2.</span> Discover
+                            <span class="tag tag-workflow" style="margin-left: 0.5rem; vertical-align: middle;">ultrathink</span>
+                        </h2>
+
+                        <p data-lang="fr">
+                            Questionnaire adaptatif selon la complexite. Utilise <strong>ultrathink</strong> pour une analyse profonde du besoin.
+                        </p>
+                        <p data-lang="en">
+                            Adaptive questionnaire based on complexity. Uses <strong>ultrathink</strong> for deep requirement analysis.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:2-discover</code>
+                                <span class="tag tag-workflow">Discovery</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:2-discover "Gestion des abonnements utilisateurs"</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Questions adaptatives</h4>
+                                <h4 data-lang="en">Adaptive questions</h4>
+
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-lang="fr">Complexite</th>
+                                                <th data-lang="en">Complexity</th>
+                                                <th>Questions</th>
+                                                <th data-lang="fr">Domaines</th>
+                                                <th data-lang="en">Areas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>CRUD simple</td>
+                                                <td>6-8</td>
+                                                <td data-lang="fr">Contexte, Donnees, Permissions</td>
+                                                <td data-lang="en">Context, Data, Permissions</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Standard</td>
+                                                <td>12-15</td>
+                                                <td data-lang="fr">+ Regles metier, UI</td>
+                                                <td data-lang="en">+ Business rules, UI</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Complexe</td>
+                                                <td>20-25</td>
+                                                <td data-lang="fr">+ Edge cases, Integrations</td>
+                                                <td data-lang="en">+ Edge cases, Integrations</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Critique</td>
+                                                <td>30+</td>
+                                                <td data-lang="fr">Tous les domaines</td>
+                                                <td data-lang="en">All areas</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="alert alert-info">
+                                    <span class="alert-icon">&#127919;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Detection automatique</h5>
+                                        <h5 data-lang="en">Automatic detection</h5>
+                                        <p data-lang="fr">
+                                            La complexite est detectee automatiquement selon les mots-cles : paiement, securite, integration = complexe. CRUD, liste, formulaire = simple.
+                                        </p>
+                                        <p data-lang="en">
+                                            Complexity is automatically detected based on keywords: payment, security, integration = complex. CRUD, list, form = simple.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 3: Analyse -->
+                    <section id="phase-3">
+                        <h2>
+                            <span style="color: #ec4899;">3.</span> Analyse
+                            <span class="tag tag-workflow" style="margin-left: 0.5rem; vertical-align: middle;">ultrathink</span>
+                        </h2>
+
+                        <p data-lang="fr">
+                            Generation du BRD (Business Requirements Document) et modelisation des processus. Utilise <strong>ultrathink</strong> pour une analyse approfondie.
+                        </p>
+                        <p data-lang="en">
+                            BRD (Business Requirements Document) generation and process modeling. Uses <strong>ultrathink</strong> for deep analysis.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:3-analyse</code>
+                                <span class="tag tag-workflow">Analysis</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:3-analyse</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Livrables</h4>
+                                <h4 data-lang="en">Deliverables</h4>
+
+                                <ul>
+                                    <li data-lang="fr"><strong>BRD.md</strong> - Document exigences metier (BABOK-aligned)</li>
+                                    <li data-lang="en"><strong>BRD.md</strong> - Business Requirements Document (BABOK-aligned)</li>
+                                    <li data-lang="fr"><strong>process-model.md</strong> - Diagrammes Mermaid des processus</li>
+                                    <li data-lang="en"><strong>process-model.md</strong> - Mermaid process diagrams</li>
+                                    <li data-lang="fr">Matrice des stakeholders</li>
+                                    <li data-lang="en">Stakeholder matrix</li>
+                                    <li data-lang="fr">Analyse d'impact</li>
+                                    <li data-lang="en">Impact analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 4: Specify -->
+                    <section id="phase-4">
+                        <h2>
+                            <span style="color: #f97316;">4.</span> Specify
+                            <span class="tag tag-workflow" style="margin-left: 0.5rem; vertical-align: middle;">ultrathink</span>
+                        </h2>
+
+                        <p data-lang="fr">
+                            Generation du FRD (Functional Requirements Document) avec cas d'utilisation, wireframes ASCII et criteres Gherkin. Seuil de completude : <strong>85%</strong>.
+                        </p>
+                        <p data-lang="en">
+                            FRD (Functional Requirements Document) generation with use cases, ASCII wireframes and Gherkin criteria. Completeness threshold: <strong>85%</strong>.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:4-specify</code>
+                                <span class="tag tag-workflow">Specification</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:4-specify</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Contenu du FRD</h4>
+                                <h4 data-lang="en">FRD Contents</h4>
+
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-lang="fr">Section</th>
+                                                <th data-lang="en">Section</th>
+                                                <th data-lang="fr">Description</th>
+                                                <th data-lang="en">Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Use Cases</td>
+                                                <td data-lang="fr">Format UC-XXX avec preconditions/postconditions</td>
+                                                <td data-lang="en">UC-XXX format with pre/postconditions</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Data Model</td>
+                                                <td data-lang="fr">Schema Mermaid erDiagram</td>
+                                                <td data-lang="en">Mermaid erDiagram schema</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wireframes</td>
+                                                <td data-lang="fr">Maquettes ASCII des ecrans</td>
+                                                <td data-lang="en">ASCII screen mockups</td>
+                                            </tr>
+                                            <tr>
+                                                <td>API Endpoints</td>
+                                                <td data-lang="fr">Matrice REST avec payloads</td>
+                                                <td data-lang="en">REST matrix with payloads</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gherkin</td>
+                                                <td data-lang="fr">Criteres d'acceptation Given/When/Then</td>
+                                                <td data-lang="en">Given/When/Then acceptance criteria</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="best-practice">
+                                    <h4>
+                                        <span class="bp-icon">&#127919;</span>
+                                        <span data-lang="fr">Seuil de validation : 85%</span>
+                                        <span data-lang="en">Validation threshold: 85%</span>
+                                    </h4>
+                                    <p data-lang="fr">
+                                        Les specifications doivent atteindre 85% de completude avant le handoff. Une checklist de validation est utilisee pour verifier chaque section.
+                                    </p>
+                                    <p data-lang="en">
+                                        Specifications must reach 85% completeness before handoff. A validation checklist is used to verify each section.
+                                    </p>
+                                </div>
+
+                                <h4 data-lang="fr">Plan d'implementation (si complexite &gt; Standard)</h4>
+                                <h4 data-lang="en">Implementation Plan (if complexity &gt; Standard)</h4>
+
+                                <div class="alert alert-info">
+                                    <span class="alert-icon">&#128736;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Decoupage en phases testables</h5>
+                                        <h5 data-lang="en">Testable phase breakdown</h5>
+                                        <p data-lang="fr">
+                                            Pour les features complexes ou critiques, le FRD inclut un plan d'implementation decoupe en phases testables independamment.
+                                        </p>
+                                        <p data-lang="en">
+                                            For complex or critical features, the FRD includes an implementation plan broken down into independently testable phases.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Phase</th>
+                                                <th>Scope</th>
+                                                <th>Tests</th>
+                                                <th data-lang="fr">Validation</th>
+                                                <th data-lang="en">Validation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>1. Data</strong></td>
+                                                <td data-lang="fr">Entites, Migrations</td>
+                                                <td data-lang="en">Entities, Migrations</td>
+                                                <td>Unit + Migration</td>
+                                                <td>EF OK</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>2. API</strong></td>
+                                                <td>Endpoints, Services</td>
+                                                <td>Integration</td>
+                                                <td>Swagger OK</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>3. UI</strong></td>
+                                                <td>Composants, Forms</td>
+                                                <td>E2E</td>
+                                                <td>Gherkin OK</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>4. Integration</strong></td>
+                                                <td>Wiring, Perf</td>
+                                                <td>Full E2E</td>
+                                                <td>UAT OK</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th data-lang="fr">Complexite</th>
+                                                <th data-lang="en">Complexity</th>
+                                                <th data-lang="fr">Decoupage</th>
+                                                <th data-lang="en">Phasing</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>CRUD simple</td>
+                                                <td data-lang="fr">Pas de decoupage</td>
+                                                <td data-lang="en">No phasing</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Standard</td>
+                                                <td data-lang="fr">Optionnel</td>
+                                                <td data-lang="en">Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Complexe</td>
+                                                <td data-lang="fr"><strong>Obligatoire</strong></td>
+                                                <td data-lang="en"><strong>Required</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Critique</td>
+                                                <td data-lang="fr"><strong>Obligatoire + Reviews</strong></td>
+                                                <td data-lang="en"><strong>Required + Reviews</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 5: Document -->
+                    <section id="phase-5">
+                        <h2>
+                            <span style="color: #22c55e;">5.</span> Document
+                        </h2>
+
+                        <p data-lang="fr">
+                            Documentation transverse : glossaire, dictionnaire de donnees, flux d'integration.
+                        </p>
+                        <p data-lang="en">
+                            Cross-cutting documentation: glossary, data dictionary, integration flows.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:5-document</code>
+                                <span class="tag tag-command">Docs</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:5-document</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Documents generes</h4>
+                                <h4 data-lang="en">Generated documents</h4>
+
+                                <ul>
+                                    <li data-lang="fr"><strong>data-dictionary.md</strong> - Toutes les entites avec types et contraintes</li>
+                                    <li data-lang="en"><strong>data-dictionary.md</strong> - All entities with types and constraints</li>
+                                    <li data-lang="fr"><strong>glossary.md</strong> - Mise a jour du glossaire metier</li>
+                                    <li data-lang="en"><strong>glossary.md</strong> - Updated business glossary</li>
+                                    <li data-lang="fr"><strong>integration-flows.md</strong> - Flux entre systemes</li>
+                                    <li data-lang="en"><strong>integration-flows.md</strong> - System integration flows</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 6: Handoff -->
+                    <section id="phase-6">
+                        <h2>
+                            <span style="color: #06b6d4;">6.</span> Handoff
+                        </h2>
+
+                        <p data-lang="fr">
+                            Generation du prompt de developpement autonome. Ce prompt contient tout le contexte necessaire pour qu'un developpeur (ou Claude) puisse implementer sans poser de questions.
+                        </p>
+                        <p data-lang="en">
+                            Autonomous development prompt generation. This prompt contains all the context needed for a developer (or Claude) to implement without asking questions.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:6-handoff</code>
+                                <span class="tag tag-agent">Handoff</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:6-handoff</code></pre>
+                                </div>
+
+                                <div class="alert alert-success">
+                                    <span class="alert-icon">&#9989;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Prompt autonome</h5>
+                                        <h5 data-lang="en">Autonomous prompt</h5>
+                                        <p data-lang="fr">
+                                            Le DEV-PROMPT.md genere contient : contexte projet, specs techniques, modele de donnees, endpoints API, regles metier, criteres de validation. Le developpeur peut implementer immediatement.
+                                        </p>
+                                        <p data-lang="en">
+                                            The generated DEV-PROMPT.md contains: project context, technical specs, data model, API endpoints, business rules, validation criteria. The developer can implement immediately.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code># Pour implementer avec Claude :
+/apex DEV-PROMPT.md
+
+# Ou manuellement :
+cat .business-analyse/applications/.../DEV-PROMPT.md</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 7: Dev -->
+                    <section id="phase-7">
+                        <h2>
+                            <span style="color: #f59e0b;">7.</span> Dev
+                        </h2>
+
+                        <p data-lang="fr">
+                            Implementation guidee par phases avec validation utilisateur obligatoire avant chaque etape. Aucune execution automatique.
+                        </p>
+                        <p data-lang="en">
+                            Guided implementation by phases with mandatory user validation before each step. No automatic execution.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:7-dev</code>
+                                <span class="tag tag-command">Implementation</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:7-dev FEAT-001
+/business-analyse:7-dev FEAT-001 data
+/business-analyse:7-dev FEAT-001 api
+/business-analyse:7-dev FEAT-001 ui
+/business-analyse:7-dev FEAT-001 integration</code></pre>
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <span class="alert-icon">&#9888;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Validation obligatoire</h5>
+                                        <h5 data-lang="en">Mandatory validation</h5>
+                                        <p data-lang="fr">
+                                            <strong>AUCUNE phase ne s'execute automatiquement.</strong> L'utilisateur doit valider explicitement avant chaque phase et confirmer les resultats avant de passer a la suivante.
+                                        </p>
+                                        <p data-lang="en">
+                                            <strong>NO phase executes automatically.</strong> The user must explicitly validate before each phase and confirm results before moving to the next.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <h4 data-lang="fr">Phases d'implementation</h4>
+                                <h4 data-lang="en">Implementation phases</h4>
+
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Phase</th>
+                                                <th>Scope</th>
+                                                <th data-lang="fr">Validation</th>
+                                                <th data-lang="en">Validation</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>1. Data</strong></td>
+                                                <td data-lang="fr">Entites, Migrations, Repositories</td>
+                                                <td data-lang="en">Entities, Migrations, Repositories</td>
+                                                <td>EF/Migration OK</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>2. API</strong></td>
+                                                <td data-lang="fr">Endpoints, Services, DTOs</td>
+                                                <td data-lang="en">Endpoints, Services, DTOs</td>
+                                                <td>Swagger OK</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>3. UI</strong></td>
+                                                <td data-lang="fr">Composants, Formulaires, State</td>
+                                                <td data-lang="en">Components, Forms, State</td>
+                                                <td>E2E OK</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>4. Integration</strong></td>
+                                                <td data-lang="fr">Wiring, Tests complets</td>
+                                                <td data-lang="en">Wiring, Full tests</td>
+                                                <td>UAT OK</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h4 data-lang="fr">Workflow</h4>
+                                <h4 data-lang="en">Workflow</h4>
+
+                                <ol>
+                                    <li data-lang="fr">Affichage du plan d'implementation</li>
+                                    <li data-lang="en">Display implementation plan</li>
+                                    <li data-lang="fr">Demande de quelle phase executer</li>
+                                    <li data-lang="en">Ask which phase to execute</li>
+                                    <li data-lang="fr">Double confirmation avant execution</li>
+                                    <li data-lang="en">Double confirmation before execution</li>
+                                    <li data-lang="fr">Execution de la phase</li>
+                                    <li data-lang="en">Execute the phase</li>
+                                    <li data-lang="fr">Validation des resultats</li>
+                                    <li data-lang="en">Validate results</li>
+                                    <li data-lang="fr">Passage a la phase suivante (si valide)</li>
+                                    <li data-lang="en">Move to next phase (if validated)</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Bug Tracking -->
+                    <section id="bug-tracking">
+                        <h2>
+                            <span data-lang="fr">Bug Tracking</span>
+                            <span data-lang="en">Bug Tracking</span>
+                        </h2>
+
+                        <p data-lang="fr">
+                            Documentation et specification de bugs avec analyse root cause et criteres de resolution.
+                        </p>
+                        <p data-lang="en">
+                            Bug documentation and specification with root cause analysis and resolution criteria.
+                        </p>
+
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:bug</code>
+                                <span class="tag tag-danger">Bug</span>
+                            </div>
+                            <div class="command-body">
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:bug "L'utilisateur ne peut pas se connecter apres reset password"</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Structure du rapport</h4>
+                                <h4 data-lang="en">Report structure</h4>
+
+                                <ul>
+                                    <li data-lang="fr"><strong>Identification</strong> - ID, severite, priorite, version</li>
+                                    <li data-lang="en"><strong>Identification</strong> - ID, severity, priority, version</li>
+                                    <li data-lang="fr"><strong>Reproduction</strong> - Steps to reproduce, environnement</li>
+                                    <li data-lang="en"><strong>Reproduction</strong> - Steps to reproduce, environment</li>
+                                    <li data-lang="fr"><strong>Root Cause</strong> - Analyse de la cause racine</li>
+                                    <li data-lang="en"><strong>Root Cause</strong> - Root cause analysis</li>
+                                    <li data-lang="fr"><strong>Solution</strong> - Specification de la correction</li>
+                                    <li data-lang="en"><strong>Solution</strong> - Fix specification</li>
+                                    <li data-lang="fr"><strong>Validation</strong> - Criteres Gherkin de resolution</li>
+                                    <li data-lang="en"><strong>Validation</strong> - Gherkin resolution criteria</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+            </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn">&#9776;</button>
+    <div class="overlay"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
