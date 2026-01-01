@@ -1,11 +1,38 @@
 ---
 description: Phase 4 - Generate integration plan with versioning and EF Core analysis
+agent: gitflow-plan
 model: sonnet
 ---
 
 # Phase 4: PLAN - Integration Planning
 
 Tu es expert GitFlow et EF Core. Cree un plan d'integration pour la branche courante.
+
+---
+
+## Pre-validation (OBLIGATOIRE)
+
+**Verifier la branche courante AVANT toute action:**
+
+```bash
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Branches autorisees: feature/*, release/*, hotfix/*
+if [[ ! $BRANCH =~ ^(feature|release|hotfix)/ ]]; then
+  echo "ERREUR: Cette commande ne peut etre executee que depuis une branche GitFlow"
+  echo ""
+  echo "Branche actuelle: $BRANCH"
+  echo "Branches autorisees: feature/*, release/*, hotfix/*"
+  echo ""
+  echo "Pour creer une branche:"
+  echo "  /gitflow:10-start feature \"description\""
+  echo "  /gitflow:10-start release \"v1.x.0\""
+  echo "  /gitflow:10-start hotfix \"correctif\""
+  exit 1
+fi
+```
+
+**Si branche invalide:** Afficher l'erreur et STOPPER. Ne pas continuer le workflow.
 
 ---
 

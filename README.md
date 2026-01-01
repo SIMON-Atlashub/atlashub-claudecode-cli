@@ -16,38 +16,30 @@ Claude Code automation toolkit - GitFlow, APEX, EF Core migrations, prompts and 
 
 ## Installation
 
-### Depuis GitHub (Recommande)
+### Installation globale (recommandé)
 
 ```bash
-# Installation globale directe depuis GitHub
-npm install -g github:atlashub/claude-tools
-
-# Ou depuis une branche specifique
-npm install -g github:atlashub/claude-tools#develop
-
-# Ou depuis un tag
-npm install -g github:atlashub/claude-tools#v1.0.0
-```
-
-### Depuis GitHub Packages (npm)
-
-```bash
-# Configure npm for GitHub Packages
-npm config set @atlashub:registry https://npm.pkg.github.com
-npm config set //npm.pkg.github.com/:_authToken YOUR_GITHUB_TOKEN
-
-# Install globally
 npm install -g @atlashub/claude-tools
 ```
 
-### Comme dependance de projet
+Puis utilisez les commandes `claude-tools` ou `ct` :
 
 ```bash
-# Ajouter au projet
-npm install -D github:atlashub/claude-tools
+claude-tools --help
+ct --help
+```
 
-# Utiliser via npx
-npx claude-tools install --local --skip-license
+### Installation dans un projet
+
+```bash
+npm install -D @atlashub/claude-tools
+npx claude-tools install --local
+```
+
+### Exécution directe (sans installation)
+
+```bash
+npx @atlashub/claude-tools install --local
 ```
 
 ## Quick Start
@@ -124,7 +116,7 @@ claude-tools uninstall --yes
 | `/gitflow` | Full GitFlow workflow orchestrator |
 | `/gitflow:1-init` | Initialize GitFlow structure |
 | `/gitflow:2-status` | Show detailed GitFlow status |
-| `/gitflow:3-commit` | Smart commit with migration handling |
+| `/gitflow:3-commit` | Smart commit with migration handling + auto-push for worktrees |
 | `/gitflow:4-plan` | Create integration plan |
 | `/gitflow:5-exec` | Execute integration plan |
 | `/gitflow:6-abort` | Rollback operations |
@@ -139,6 +131,22 @@ claude-tools uninstall --yes
 | `/apex:3-execute` | Implement the plan |
 | `/apex:4-examine` | Validate and test |
 | `/apex:5-tasks` | Divide into task files |
+
+### Business Analyse (Specification to Implementation)
+
+| Command | Description |
+|---------|-------------|
+| `/business-analyse` | Full BA workflow (7 phases) |
+| `/business-analyse:1-init` | Initialize .business-analyse/ structure |
+| `/business-analyse:2-discover` | Adaptive questionnaire (ultrathink) |
+| `/business-analyse:3-analyse` | BRD generation (ultrathink) |
+| `/business-analyse:4-specify` | FRD with use cases & wireframes (ultrathink) |
+| `/business-analyse:5-document` | Cross-cutting documentation |
+| `/business-analyse:6-handoff` | Generate autonomous dev prompt |
+| `/business-analyse:7-dev` | Guided implementation with user validation |
+| `/business-analyse:bug` | Bug documentation & specification |
+
+> **Note**: Phases 1-6 produce specifications only. Phase 7 implements with mandatory user validation before each step.
 
 ### EF Core Migrations
 

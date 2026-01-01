@@ -1,5 +1,6 @@
 ---
 description: Phase 5 - Execute plan with versioning auto-increment
+agent: gitflow-exec
 model: sonnet
 args: [plan_file]
 ---
@@ -9,6 +10,30 @@ args: [plan_file]
 Tu es expert GitFlow et EF Core. Execute le plan d'integration de maniere securisee.
 
 **Argument:** `$ARGUMENTS` = chemin plan (optionnel, prend le plus recent)
+
+---
+
+## Pre-validation (OBLIGATOIRE)
+
+**Verifier la branche courante AVANT toute action:**
+
+```bash
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Branches autorisees: feature/*, release/*, hotfix/*
+if [[ ! $BRANCH =~ ^(feature|release|hotfix)/ ]]; then
+  echo "ERREUR: Cette commande ne peut etre executee que depuis une branche GitFlow"
+  echo ""
+  echo "Branche actuelle: $BRANCH"
+  echo "Branches autorisees: feature/*, release/*, hotfix/*"
+  echo ""
+  echo "Vous devez etre sur la branche source du plan pour l'executer."
+  echo "Utilisez: git checkout {branche-source}"
+  exit 1
+fi
+```
+
+**Si branche invalide:** Afficher l'erreur et STOPPER. Ne pas continuer le workflow.
 
 ---
 
@@ -26,11 +51,17 @@ Tu es expert GitFlow et EF Core. Execute le plan d'integration de maniere securi
 - Build OK
 - Plan valide
 
-### 3. Creer checkpoint
+### 3. Creer checkpoint (sur source branch)
 
 Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
 - Branche, commit, plan, status
 - Backup migrations si presentes
+- **IMPORTANT: Commit le checkpoint sur la branche source AVANT le merge**
+
+```bash
+git add .claude/gitflow/logs/checkpoint_{timestamp}.json
+git commit -m "chore(gitflow): create integration checkpoint"
+```
 
 ### 4. Executer etapes
 
@@ -40,7 +71,7 @@ Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
 - Si conflit ModelSnapshot: accept theirs + regenerer migration
 
 **Merge:**
-- Checkout target
+- Checkout target (utiliser worktree si necessaire: `git -C {worktree_path}`)
 - Pull
 - Merge --no-ff source
 
@@ -56,17 +87,35 @@ Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
 - Tag
 - Merge main sur develop
 
-### 5. Validation
+### 5. Archiver plan (sur target branch)
+
+**IMPORTANT: Toujours archiver et commiter sur la branche cible AVANT le push**
+
+```bash
+# Sur target branch (develop)
+mv .claude/gitflow/plans/{plan}.md .claude/gitflow/plans/{plan}_DONE_{timestamp}.md
+# Mettre a jour checkpoint avec status "completed"
+git add .claude/gitflow/logs/ .claude/gitflow/plans/
+git commit -m "chore(gitflow): archive integration plan and checkpoint"
+```
+
+### 6. Push
+
+- Push target branch
+- Push tag(s)
+- Verifier CI/CD declenche
+
+### 7. Validation
 
 - Build OK
 - Tests OK (si disponibles)
 - Migrations list correcte
 - Historique git correct
 
-### 6. Finaliser
+### 8. Finaliser
 
-- Archiver plan (suffix `_DONE_{timestamp}`)
 - Afficher resume et prochaines etapes
+- Suggerer nettoyage branche source si applicable
 
 ---
 
