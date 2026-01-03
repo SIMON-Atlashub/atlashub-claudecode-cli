@@ -73,6 +73,9 @@ claude-tools install --local
 
 # Check status
 claude-tools status
+
+# Open interactive documentation
+claude-tools docs
 ```
 
 ## CLI Commands
@@ -84,6 +87,7 @@ claude-tools status
 | `uninstall` | `u` | Remove commands, agents, and hooks |
 | `status` | `s` | Show license and installation status |
 | `update` | - | Update commands to latest version |
+| `docs` | `d` | Open interactive documentation |
 
 ### Install Options
 
