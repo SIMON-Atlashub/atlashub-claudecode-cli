@@ -53,6 +53,7 @@ Senior Business Analyst expert. Complete business analysis without writing code.
 | 4 | `/business-analyse:4-specify` | Functional specifications FRD (ultrathink) | `3-functional-specification.md` |
 | 5 | `/business-analyse:5-validate` | User validation gate | `validation.json` |
 | 6 | `/business-analyse:6-handoff` | Development prompt (ultrathink) | `4-development-handoff.md` |
+| → | **`/implement FEAT-XXX`** | **Implement from handoff (skip explore)** | Code files |
 | 7 | `/business-analyse:7-document` | User-readable documentation (post-handoff) | Glossary, Dictionary, Diagrams |
 | + | `/business-analyse:bug` | Bug documentation | `tracking/bugs/BUG-XXX.md` |
 | ⚡ | `/business-analyse:7-hotfix` | Urgent fix (lightweight template) | `tracking/bugs/{{BUG-ID}}.md` |
@@ -217,8 +218,23 @@ Senior Business Analyst expert. Complete business analysis without writing code.
 # 6. Generate dev prompt (after approval)
 /business-analyse:6-handoff FEAT-001
 
-# 7. Optional: User-readable documentation (after implementation)
+# 7. IMPLEMENT the feature from handoff (RECOMMENDED)
+/implement FEAT-001
+#    → Reads handoff, discovers patterns, generates code
+#    → Skips exploration (already done by BA)
+#    → Options: --phase=1|2|3|4 for partial implementation
+
+# 8. Optional: User-readable documentation (after implementation)
 /business-analyse:7-document FEAT-001
+```
+
+## Post-Implementation Changes
+
+```bash
+# If changes needed after implementation:
+/business-analyse:8-change-request FEAT-001 "Add preview feature to page X"
+#    → Documents change, generates implementation prompt
+#    → For small changes: offers immediate implementation
 ```
 
 ## Next
