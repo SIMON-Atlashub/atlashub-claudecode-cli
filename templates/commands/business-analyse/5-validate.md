@@ -1,5 +1,6 @@
 ---
 description: Phase 5 - User validation of specifications
+model: haiku
 ---
 
 # Business Analyse - Validate

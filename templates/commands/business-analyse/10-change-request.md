@@ -1,5 +1,6 @@
 ---
 description: Phase 10 - Change Request - Formal specification change during development
+model: sonnet
 ---
 
 # Business Analyse - Change Request

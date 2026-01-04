@@ -1,5 +1,6 @@
 ---
 description: Phase 4 - Functional specifications FRD (ULTRATHINK)
+model: sonnet
 ---
 
 # Business Analyse - Specify

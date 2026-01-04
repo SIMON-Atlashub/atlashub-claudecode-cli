@@ -1,5 +1,6 @@
 ---
 description: Phase 6 - Development prompt generation (ULTRATHINK)
+model: opus
 ---
 
 # Business Analyse - Handoff

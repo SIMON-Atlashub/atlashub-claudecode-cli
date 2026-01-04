@@ -1,5 +1,6 @@
 ---
 description: Phase 3 - Business analysis and BRD (ULTRATHINK)
+model: sonnet
 ---
 
 # Business Analyse - Analyse

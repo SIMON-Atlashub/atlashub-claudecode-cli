@@ -20,7 +20,7 @@ Implement a feature directly from its validated Business Analyst handoff.
 |  3. Generated 4-development-handoff.md                                       |
 |                                                                              |
 |  DO NOT USE FOR:                                                             |
-|  - Quick fixes (use /oneshot or /business-analyse:8-change-request)          |
+|  - Quick fixes (use /oneshot or /business-analyse:10-change-request)          |
 |  - Features without handoff (use /epct)                                      |
 |  - Exploration tasks (use /explore)                                          |
 |                                                                              |

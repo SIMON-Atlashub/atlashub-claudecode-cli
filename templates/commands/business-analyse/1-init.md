@@ -1,5 +1,6 @@
 ---
 description: Phase 1 - Initialize Business Analysis structure (ULTRATHINK)
+model: haiku
 ---
 
 # Business Analysis - Init

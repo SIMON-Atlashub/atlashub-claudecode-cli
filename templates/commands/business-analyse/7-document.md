@@ -1,5 +1,6 @@
 ---
 description: Phase 7 - User-readable documentation (after handoff)
+model: haiku
 ---
 
 # Business Analyse - Document

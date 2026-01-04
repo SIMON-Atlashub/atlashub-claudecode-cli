@@ -1,5 +1,6 @@
 ---
 description: Phase 2 - Discovery and requirements elicitation (ULTRATHINK)
+model: opus
 ---
 
 # Business Analyse - Discover

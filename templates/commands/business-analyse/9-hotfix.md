@@ -1,5 +1,6 @@
 ---
 description: Phase 9 - Hotfix/Bugfix - Lightweight urgent fix documentation
+model: haiku
 ---
 
 # Business Analyse - Hotfix
