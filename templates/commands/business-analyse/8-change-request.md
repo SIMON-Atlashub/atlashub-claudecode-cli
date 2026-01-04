@@ -9,7 +9,7 @@ Formal change request process for when specifications need to change AFTER devel
 ## Arguments
 
 ```
-/business-analyse:change-request [feature-id] "[change-description]"
+/business-analyse:8-change-request [feature-id] "[change-description]"
 ```
 
 - `feature-id`: Feature identifier (e.g., FEAT-001)

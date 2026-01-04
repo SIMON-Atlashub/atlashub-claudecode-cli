@@ -9,7 +9,7 @@ Senior BA expert in modeling. ULTRATHINK mode mandatory.
 ## Arguments
 
 ```
-/business-analyse:analyse [feature-id]
+/business-analyse:3-analyse [feature-id]
 ```
 
 - `feature-id`: Feature identifier (e.g., FEAT-001)
@@ -19,7 +19,7 @@ Senior BA expert in modeling. ULTRATHINK mode mandatory.
 ```bash
 # Verify that discovery exists
 test -f ".business-analyse/applications/*/modules/*/features/$ARGUMENTS/1-discovery.md" || \
-  echo "Execute /business-analyse:discover first"
+  echo "Execute /business-analyse:2-discover first"
 ```
 
 ## ULTRATHINK Mode
@@ -413,7 +413,7 @@ flowchart TD
 ## 12. Next Steps
 
 1. [ ] BRD validation by {{STAKEHOLDER}}
-2. [ ] Execute `/business-analyse:specify {{FEAT-XXX}}`
+2. [ ] Execute `/business-analyse:4-specify {{FEAT-XXX}}`
 
 ---
 
@@ -445,7 +445,7 @@ Glossary:    +{{N}} terms added
 ═══════════════════════════════════════════════════════════
 Document: .../{{FEAT-XXX}}/2-business-requirements.md
 ═══════════════════════════════════════════════════════════
-Next: /business-analyse:specify {{FEAT-XXX}}
+Next: /business-analyse:4-specify {{FEAT-XXX}}
 ```
 
 ## Rules

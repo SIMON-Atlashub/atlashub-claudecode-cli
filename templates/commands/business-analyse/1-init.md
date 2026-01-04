@@ -22,7 +22,7 @@ Approach to adopt:
 ## Arguments
 
 ```
-/business-analyse:init [app-name]
+/business-analyse:1-init [app-name]
 ```
 
 - `app-name` (optional): Application name. If absent, ask.
@@ -265,7 +265,7 @@ Structure created:
   ✓ .business-analyse/templates/
   ✓ .business-analyse/documentation/
 ═══════════════════════════════════════════════════════════
-Next: /business-analyse:discover <module> "description"
+Next: /business-analyse:2-discover <module> "description"
 ```
 
 ## Error Handling

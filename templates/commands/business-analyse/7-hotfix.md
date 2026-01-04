@@ -31,7 +31,7 @@ Lightweight template for urgent bug fixes. Use when full BA workflow is too heav
 ## Arguments
 
 ```
-/business-analyse:hotfix [bug-id] "[brief-description]"
+/business-analyse:7-hotfix [bug-id] "[brief-description]"
 ```
 
 - `bug-id`: Bug identifier (e.g., BUG-001, JIRA-123)

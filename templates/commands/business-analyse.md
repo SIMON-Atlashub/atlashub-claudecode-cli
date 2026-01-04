@@ -47,16 +47,16 @@ Senior Business Analyst expert. Complete business analysis without writing code.
 
 | Phase | Command | Description | Output |
 |-------|----------|-------------|--------|
-| 1 | `/business-analyse:init` | Initialize project structure + code scan | `config.json`, structure |
-| 2 | `/business-analyse:discover` | Requirements elicitation (ultrathink) | `1-discovery.md` |
-| 3 | `/business-analyse:analyse` | Business analysis BRD + doc scan (ultrathink) | `2-business-requirements.md` |
-| 4 | `/business-analyse:specify` | Functional specifications FRD (ultrathink) | `3-functional-specification.md` |
-| 5 | `/business-analyse:validate` | User validation gate | `validation.json` |
-| 6 | `/business-analyse:handoff` | Development prompt (ultrathink) | `4-development-handoff.md` |
-| 7 | `/business-analyse:document` | User-readable documentation (post-handoff) | Glossary, Dictionary, Diagrams |
+| 1 | `/business-analyse:1-init` | Initialize project structure + code scan | `config.json`, structure |
+| 2 | `/business-analyse:2-discover` | Requirements elicitation (ultrathink) | `1-discovery.md` |
+| 3 | `/business-analyse:3-analyse` | Business analysis BRD + doc scan (ultrathink) | `2-business-requirements.md` |
+| 4 | `/business-analyse:4-specify` | Functional specifications FRD (ultrathink) | `3-functional-specification.md` |
+| 5 | `/business-analyse:5-validate` | User validation gate | `validation.json` |
+| 6 | `/business-analyse:6-handoff` | Development prompt (ultrathink) | `4-development-handoff.md` |
+| 7 | `/business-analyse:7-document` | User-readable documentation (post-handoff) | Glossary, Dictionary, Diagrams |
 | + | `/business-analyse:bug` | Bug documentation | `tracking/bugs/BUG-XXX.md` |
-| ⚡ | `/business-analyse:hotfix` | Urgent fix (lightweight template) | `tracking/bugs/{{BUG-ID}}.md` |
-| 🔄 | `/business-analyse:change-request` | Formal spec change during dev | `tracking/changes/CR-XXX.md` |
+| ⚡ | `/business-analyse:7-hotfix` | Urgent fix (lightweight template) | `tracking/bugs/{{BUG-ID}}.md` |
+| 🔄 | `/business-analyse:8-change-request` | Formal spec change during dev | `tracking/changes/CR-XXX.md` |
 
 ## Artifact Structure
 
@@ -199,26 +199,26 @@ Senior Business Analyst expert. Complete business analysis without writing code.
 
 ```bash
 # 1. Initialize project (scans code structure)
-/business-analyse:init
+/business-analyse:1-init
 
 # 2. New feature - Discovery
-/business-analyse:discover ModuleX "Need description"
+/business-analyse:2-discover ModuleX "Need description"
 
 # 3. Analyze (scans existing docs for consistency)
-/business-analyse:analyse FEAT-001
+/business-analyse:3-analyse FEAT-001
 
 # 4. Specify functional requirements
-/business-analyse:specify FEAT-001
+/business-analyse:4-specify FEAT-001
 
 # 5. User validates (REQUIRED before handoff)
-/business-analyse:validate FEAT-001
-#    → If NOK: Return to /business-analyse:analyse with feedback
+/business-analyse:5-validate FEAT-001
+#    → If NOK: Return to /business-analyse:3-analyse with feedback
 
 # 6. Generate dev prompt (after approval)
-/business-analyse:handoff FEAT-001
+/business-analyse:6-handoff FEAT-001
 
 # 7. Optional: User-readable documentation (after implementation)
-/business-analyse:document FEAT-001
+/business-analyse:7-document FEAT-001
 ```
 
 ## Next
@@ -226,5 +226,5 @@ Senior Business Analyst expert. Complete business analysis without writing code.
 Execute the following command to begin:
 
 ```
-/business-analyse:init
+/business-analyse:1-init
 ```

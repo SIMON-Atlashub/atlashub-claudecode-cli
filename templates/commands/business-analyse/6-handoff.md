@@ -154,7 +154,7 @@ Approach to adopt:
 ## Arguments
 
 ```
-/business-analyse:handoff [feature-id]
+/business-analyse:6-handoff [feature-id]
 ```
 
 - `feature-id`: Feature identifier (e.g., FEAT-001)
@@ -164,11 +164,11 @@ Approach to adopt:
 ```bash
 # Verify that FRD exists
 test -f ".business-analyse/applications/*/modules/*/features/$ARGUMENTS/3-functional-specification.md" || \
-  echo "ERROR: FRD not found. Execute /business-analyse:specify $ARGUMENTS first"
+  echo "ERROR: FRD not found. Execute /business-analyse:4-specify $ARGUMENTS first"
 
 # Verify that validation is complete (status must be APPROVED)
 grep -q '"status": "approved"' ".business-analyse/applications/*/modules/*/features/$ARGUMENTS/validation.json" || \
-  echo "ERROR: FRD not validated. Execute /business-analyse:validate $ARGUMENTS first"
+  echo "ERROR: FRD not validated. Execute /business-analyse:5-validate $ARGUMENTS first"
 ```
 
 ```
@@ -177,20 +177,20 @@ grep -q '"status": "approved"' ".business-analyse/applications/*/modules/*/featu
 ╠══════════════════════════════════════════════════════════════════════════╣
 ║                                                                          ║
 ║  "FRD not found"                                                         ║
-║  → Run: /business-analyse:specify {{FEAT-XXX}}                           ║
+║  → Run: /business-analyse:4-specify {{FEAT-XXX}}                         ║
 ║                                                                          ║
 ║  "FRD not validated"                                                     ║
-║  → Run: /business-analyse:validate {{FEAT-XXX}}                          ║
-║  → If previously rejected, run /business-analyse:analyse first           ║
+║  → Run: /business-analyse:5-validate {{FEAT-XXX}}                        ║
+║  → If previously rejected, run /business-analyse:3-analyse first         ║
 ║                                                                          ║
 ║  "Validation rejected"                                                   ║
 ║  → Review feedback in revision-N.md                                      ║
-║  → Run: /business-analyse:analyse {{FEAT-XXX}} to address issues         ║
+║  → Run: /business-analyse:3-analyse {{FEAT-XXX}} to address issues       ║
 ║                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 ```
 
-**Important**: This phase can only be executed after user validation (phase 5). If the FRD was rejected, execute `/business-analyse:analyse` to revise based on feedback.
+**Important**: This phase can only be executed after user validation (phase 5). If the FRD was rejected, execute `/business-analyse:3-analyse` to revise based on feedback.
 
 ## Handoff Philosophy
 
@@ -1806,7 +1806,7 @@ USAGE (One-Shot Implementation):
     The developer takes over for implementation.
     NO FURTHER QUESTIONS should be needed.
 ═══════════════════════════════════════════════════════════
-Optional: /business-analyse:document {{FEAT-XXX}}
+Optional: /business-analyse:7-document {{FEAT-XXX}}
   (Generate user-readable documentation after implementation)
 ```
 

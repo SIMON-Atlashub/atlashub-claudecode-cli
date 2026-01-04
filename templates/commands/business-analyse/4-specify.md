@@ -9,7 +9,7 @@ Senior BA expert in specifications. ULTRATHINK mode mandatory.
 ## Arguments
 
 ```
-/business-analyse:specify [feature-id]
+/business-analyse:4-specify [feature-id]
 ```
 
 - `feature-id`: Feature identifier (e.g., FEAT-001)
@@ -19,7 +19,7 @@ Senior BA expert in specifications. ULTRATHINK mode mandatory.
 ```bash
 # Verify that BRD exists
 test -f ".business-analyse/applications/*/modules/*/features/$ARGUMENTS/2-business-requirements.md" || \
-  echo "Execute /business-analyse:analyse first"
+  echo "Execute /business-analyse:3-analyse first"
 ```
 
 ## ULTRATHINK Mode
@@ -1352,7 +1352,7 @@ Threshold:           85% (26/30) ✓/✗
 ═══════════════════════════════════════════════════════════
 Document: .../{{FEAT-XXX}}/3-functional-specification.md
 ═══════════════════════════════════════════════════════════
-Next: /business-analyse:document {{FEAT-XXX}}
+Next: /business-analyse:5-validate {{FEAT-XXX}}
 ```
 
 ## Rules
