@@ -1,59 +1,59 @@
 ---
 description: Phase 1 - Initialize GitFlow structure with versioning and EF Core configuration
 agent: gitflow-init
-model: haiku
+model: sonnet
 ---
 
 # Phase 1: INIT - Project Initialization
 
-You are a GitFlow and EF Core expert. Initialize a project for the GitFlow workflow.
-
-**Workflow:** Analysis → Generate plan → User validates → Execute with `--exec`
+> **⛔⛔⛔ READ THIS FIRST - MANDATORY INSTRUCTIONS ⛔⛔⛔**
+>
+> **BEFORE doing ANYTHING else**, check if `$ARGUMENTS` contains a URL (https:// or git@).
+>
+> **IF URL DETECTED → YOU MUST ASK 3 QUESTIONS BEFORE ANY ACTION:**
+>
+> 1. **ASK:** "Where do you want to create this project?" (Location)
+> 2. **ASK:** "What should we name this project folder?" (Name)
+> 3. **ASK:** "Create GitFlow project with these settings?" (Confirm)
+>
+> **⛔ DO NOT skip these questions. DO NOT use defaults. WAIT for user response each time.**
+>
+> **Only AFTER user confirms all 3 questions, proceed with creation.**
 
 **Arguments:** `$ARGUMENTS` = `[repository_url] [target_folder] [--exec] [--yes] [--no-worktrees]`
 
 ---
 
-## Detect Init Mode
+## STEP 0: Check for URL in Arguments (DO THIS FIRST)
 
-Parse `$ARGUMENTS` to determine the initialization mode:
+```bash
+# Check if first argument looks like a URL
+if [[ "$1" =~ ^https?:// ]] || [[ "$1" =~ ^git@ ]]; then
+  # URL DETECTED → Go to MODE A (Clone from URL)
+  # ⛔ YOU MUST ASK THE 3 MANDATORY QUESTIONS BELOW
+  MODE="A"
+else
+  # No URL → Check other modes
+  MODE="B_or_C"
+fi
+```
 
-| Mode | Detection | Example |
-|------|-----------|---------|
-| **Clone from URL** | URL pattern (https:// or git@) | `/gitflow:1-init https://github.com/org/repo.git c:/dev` |
-| **Interactive** | NOT inside a git repo AND no URL provided | `/gitflow:1-init` (from empty folder) |
-| **Existing repo** | Inside a git repository | `/gitflow:1-init` |
-| **New local** | Target folder without URL | `/gitflow:1-init c:/dev/my-project` |
-
-**Detection order:**
-1. Check if `$ARGUMENTS` contains a URL → MODE A (Clone from URL)
-2. Check if current directory is a git repo (`git rev-parse --git-dir`) → MODE B (Existing repo)
-3. Otherwise → MODE C (Interactive - ask for repo URL)
-
----
-
-## MODE A: Clone from URL (New)
-
-**Trigger:** `$ARGUMENTS` contains a repository URL
+**⛔ IF MODE="A" (URL detected), you MUST execute the 3 AskUserQuestion calls below BEFORE any file operation.**
 
 ---
 
-### ⛔ MANDATORY INTERACTIVE FLOW - BLOCKING INSTRUCTIONS
+## MODE A: Clone from URL
 
-> **CLAUDE INSTRUCTION:** The `AskUserQuestion({...})` blocks below are instructions for using
-> the `AskUserQuestion` tool **interactively**. You MUST execute the tool with these parameters
-> to get the user's response BEFORE continuing. DO NOT display this code - EXECUTE IT and WAIT for response.
->
-> **⛔ CRITICAL RULES - NO EXCEPTIONS:**
-> 1. You MUST ask for TARGET_FOLDER - even if user didn't provide it
-> 2. You MUST ask for PROJECT_NAME confirmation - even if extractable from URL
-> 3. You MUST get final confirmation before ANY file system operation
-> 4. You MUST NOT use current directory as default without explicit user choice
-> 5. You MUST NOT skip any question - ALL THREE are mandatory
+**Trigger:** `$ARGUMENTS` contains a repository URL (https:// or git@)
+
+### ⛔⛔⛔ MANDATORY: ASK THESE 3 QUESTIONS FIRST ⛔⛔⛔
+
+**You MUST call `AskUserQuestion` 3 times and WAIT for each response.**
+**DO NOT proceed without user answers. DO NOT use default values.**
 
 ---
 
-### A.1 Extract URL Only (DO NOT EXECUTE ANYTHING YET)
+### A.1 Extract URL (information only - NO file operations yet)
 
 ```bash
 # ONLY extract the URL - DO NOT create any folders yet
