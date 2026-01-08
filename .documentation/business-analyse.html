@@ -12,7 +12,7 @@
         <header class="global-header">
             <div class="logo">CT</div>
             <span class="site-title">Claude Tools</span>
-            <span class="version-badge">v1.8.8</span>
+            <span class="version-badge">v1.9.0</span>
             <div class="header-divider"></div>
             <span class="page-title">Business Analyse</span>
             <nav class="breadcrumb">
@@ -88,14 +88,21 @@
                         <nav class="sidebar-toc">
                             <a href="#introduction" class="sidebar-toc-link">Introduction</a>
                             <a href="#workflow" class="sidebar-toc-link">Workflow</a>
-                            <a href="#architecture" class="sidebar-toc-link">Architecture</a>
-                            <a href="#tracks" class="sidebar-toc-link">Quick vs Full</a>
-                            <a href="#phase-1" class="sidebar-toc-link">1. Explore</a>
-                            <a href="#phase-2" class="sidebar-toc-link">2. Spec</a>
-                            <a href="#phase-3" class="sidebar-toc-link">3. Handoff</a>
+                            <a href="#phases" class="sidebar-toc-link">
+                                <span data-lang="fr">Les 6 Phases</span>
+                                <span data-lang="en">The 6 Phases</span>
+                            </a>
+                            <a href="#phase-1" class="sidebar-toc-link">1. Discover</a>
+                            <a href="#phase-2" class="sidebar-toc-link">2. Explore</a>
+                            <a href="#phase-3" class="sidebar-toc-link">3. Analyse</a>
+                            <a href="#phase-4" class="sidebar-toc-link">4. Specify</a>
+                            <a href="#phase-5" class="sidebar-toc-link">5. Validate</a>
+                            <a href="#phase-6" class="sidebar-toc-link">6. Handoff</a>
                             <a href="#agents" class="sidebar-toc-link">Agents</a>
-                            <a href="#options" class="sidebar-toc-link">Options</a>
-                            <a href="#optimization" class="sidebar-toc-link">Optimization</a>
+                            <a href="#files" class="sidebar-toc-link">
+                                <span data-lang="fr">Fichiers</span>
+                                <span data-lang="en">Files</span>
+                            </a>
                             <a href="#example" class="sidebar-toc-link">
                                 <span data-lang="fr">Exemple</span>
                                 <span data-lang="en">Example</span>
@@ -134,10 +141,10 @@
                     <section id="introduction">
                         <h2>Introduction</h2>
                         <p data-lang="fr">
-                            Le workflow <strong>Business Analyse</strong> est un systeme optimise pour produire deux types de livrables : une <strong>documentation technico-fonctionnelle</strong> pour validation humaine, et un <strong>prompt de developpement</strong> pour implementation oneshot par Claude Code.
+                            Le workflow <strong>Business Analyse v2</strong> est un systeme complet en <strong>6 phases</strong> pour transformer une demande utilisateur vague en une implementation precise. Il separe clairement l'analyse du besoin (WHAT) de la specification technique (HOW).
                         </p>
                         <p data-lang="en">
-                            The <strong>Business Analyse</strong> workflow is an optimized system to produce two types of deliverables: a <strong>functional-technical documentation</strong> for human validation, and a <strong>development prompt</strong> for oneshot implementation by Claude Code.
+                            The <strong>Business Analyse v2</strong> workflow is a complete <strong>6-phase</strong> system to transform a vague user request into a precise implementation. It clearly separates need analysis (WHAT) from technical specification (HOW).
                         </p>
 
                         <div class="alert alert-warning">
@@ -146,24 +153,23 @@
                                 <h5 data-lang="fr">Principe fondamental</h5>
                                 <h5 data-lang="en">Core Principle</h5>
                                 <p data-lang="fr">
-                                    Le BA est un <strong>expert technique</strong> qui comprend le code. Il produit des specifications suffisamment precises pour une implementation <strong>oneshot</strong> sans questions.
+                                    <strong>Comprendre avant de specifier.</strong> Les phases 1-3 se concentrent sur le BESOIN (langage utilisateur), les phases 4-6 sur la SOLUTION (langage technique).
                                 </p>
                                 <p data-lang="en">
-                                    The BA is a <strong>technical expert</strong> who understands code. It produces specifications precise enough for <strong>oneshot</strong> implementation without questions.
+                                    <strong>Understand before specifying.</strong> Phases 1-3 focus on the NEED (user language), phases 4-6 on the SOLUTION (technical language).
                                 </p>
                             </div>
                         </div>
 
                         <div class="alert alert-success">
-                            <span class="alert-icon">&#128176;</span>
+                            <span class="alert-icon">&#129504;</span>
                             <div class="alert-content">
-                                <h5 data-lang="fr">Optimise pour les tokens</h5>
-                                <h5 data-lang="en">Token Optimized</h5>
+                                <h5>ULTRATHINK</h5>
                                 <p data-lang="fr">
-                                    Agents conditionnels, sections dynamiques, options opt-in. Economie de <strong>40-70%</strong> des tokens par rapport a une approche exhaustive.
+                                    Les phases critiques (1, 3, 4, 6) utilisent <strong>ULTRATHINK</strong> pour une reflexion approfondie. Les phases simples (2, 5) utilisent des modeles plus legers.
                                 </p>
                                 <p data-lang="en">
-                                    Conditional agents, dynamic sections, opt-in options. <strong>40-70%</strong> token savings compared to exhaustive approach.
+                                    Critical phases (1, 3, 4, 6) use <strong>ULTRATHINK</strong> for deep reasoning. Simple phases (2, 5) use lighter models.
                                 </p>
                             </div>
                         </div>
@@ -174,46 +180,36 @@
                         <h2>Workflow</h2>
 
                         <div class="svg-diagram">
-                            <svg viewBox="0 0 700 520" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Inter', system-ui, sans-serif;">
+                            <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" style="font-family: 'Inter', system-ui, sans-serif;">
                                 <defs>
-                                    <!-- Gradients -->
-                                    <linearGradient id="startGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#64748b"/>
-                                        <stop offset="100%" style="stop-color:#475569"/>
-                                    </linearGradient>
-                                    <linearGradient id="detectGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <linearGradient id="discoverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#8b5cf6"/>
                                         <stop offset="100%" style="stop-color:#6d28d9"/>
                                     </linearGradient>
-                                    <linearGradient id="quickGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#22c55e"/>
-                                        <stop offset="100%" style="stop-color:#15803d"/>
-                                    </linearGradient>
-                                    <linearGradient id="fullGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <linearGradient id="exploreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#3b82f6"/>
                                         <stop offset="100%" style="stop-color:#1d4ed8"/>
                                     </linearGradient>
-                                    <linearGradient id="specGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <linearGradient id="analyseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ec4899"/>
+                                        <stop offset="100%" style="stop-color:#be185d"/>
+                                    </linearGradient>
+                                    <linearGradient id="specifyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#a855f7"/>
                                         <stop offset="100%" style="stop-color:#7c3aed"/>
                                     </linearGradient>
                                     <linearGradient id="validateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#eab308"/>
-                                        <stop offset="100%" style="stop-color:#ca8a04"/>
+                                        <stop offset="0%" style="stop-color:#22c55e"/>
+                                        <stop offset="100%" style="stop-color:#15803d"/>
                                     </linearGradient>
                                     <linearGradient id="handoffGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#f97316"/>
-                                        <stop offset="100%" style="stop-color:#c2410c"/>
+                                        <stop offset="100%" style="stop-color:#ea580c"/>
                                     </linearGradient>
                                     <linearGradient id="implementGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#06b6d4"/>
                                         <stop offset="100%" style="stop-color:#0891b2"/>
                                     </linearGradient>
-                                    <linearGradient id="fileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#334155"/>
-                                        <stop offset="100%" style="stop-color:#1e293b"/>
-                                    </linearGradient>
-                                    <!-- Glow filter -->
                                     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                                         <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
                                         <feMerge>
@@ -221,523 +217,623 @@
                                             <feMergeNode in="SourceGraphic"/>
                                         </feMerge>
                                     </filter>
-                                    <!-- Arrow marker -->
                                     <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                        <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
                                     </marker>
-                                    <!-- File arrow marker -->
-                                    <marker id="fileArrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                                        <polygon points="0 0, 8 3, 0 6" fill="#64748b"/>
+                                    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
                                     </marker>
                                 </defs>
 
-                                <!-- Background: File storage area -->
-                                <rect x="10" y="140" width="120" height="340" rx="8" fill="rgba(30,41,59,0.5)" stroke="#334155" stroke-width="1" stroke-dasharray="4,2"/>
-                                <text x="70" y="160" text-anchor="middle" fill="#64748b" font-size="9" font-weight="500">.claude/ba/feature/</text>
+                                <!-- USER REQUEST -->
+                                <g transform="translate(300, 20)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="45" rx="10" fill="#475569"/>
+                                    <text x="100" y="28" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="500">User Request</text>
+                                </g>
+                                <line x1="400" y1="65" x2="400" y2="85" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 
-                                <!-- Connecting lines -->
-                                <!-- Start to Detect -->
-                                <line x1="350" y1="55" x2="350" y2="75" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
-                                <!-- Detect to QUICK (left) -->
-                                <path d="M 280 115 L 200 115 L 200 165" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
-                                <!-- Detect to FULL (right) -->
-                                <path d="M 420 115 L 500 115 L 500 165" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
-                                <!-- QUICK to Implement -->
-                                <path d="M 200 235 L 200 450 L 280 450" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
-                                <!-- Full flow -->
-                                <line x1="500" y1="235" x2="500" y2="260" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
-                                <line x1="500" y1="330" x2="500" y2="355" stroke="#a855f7" stroke-width="2" marker-end="url(#arrow)"/>
-                                <line x1="500" y1="405" x2="500" y2="420" stroke="#f97316" stroke-width="2" marker-end="url(#arrow)"/>
-                                <path d="M 500 420 L 500 450 L 420 450" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+                                <!-- PHASE 1: DISCOVER -->
+                                <g transform="translate(300, 90)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#discoverGrad)"/>
+                                    <text x="100" y="24" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">1. DISCOVER</text>
+                                    <text x="100" y="42" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">Elicitation + Similarity</text>
+                                    <rect x="160" y="5" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="177" y="15" text-anchor="middle" fill="#fff" font-size="8" font-weight="600">ULTRA</text>
+                                </g>
+                                <line x1="400" y1="150" x2="400" y2="165" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 
-                                <!-- File output lines -->
-                                <path d="M 145 200 L 70 200 L 70 220" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#fileArrow)"/>
-                                <path d="M 425 295 L 130 295 L 130 310" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#fileArrow)"/>
-                                <path d="M 425 380 L 130 380 L 130 395" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#fileArrow)"/>
+                                <!-- PHASE 2: EXPLORE -->
+                                <g transform="translate(300, 170)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#exploreGrad)"/>
+                                    <text x="100" y="24" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">2. EXPLORE</text>
+                                    <text x="100" y="42" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">Technical Context</text>
+                                    <rect x="160" y="5" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="177" y="15" text-anchor="middle" fill="#fff" font-size="8" font-weight="600">HAIKU</text>
+                                </g>
+                                <line x1="400" y1="230" x2="400" y2="245" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 
-                                <!-- START: User Request -->
-                                <g transform="translate(275, 15)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="150" height="40" rx="8" fill="url(#startGrad)"/>
-                                    <text x="75" y="25" text-anchor="middle" fill="#e0e7ef" font-size="12" font-weight="500">User Request</text>
+                                <!-- PHASE 3: ANALYSE -->
+                                <g transform="translate(300, 250)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#analyseGrad)"/>
+                                    <text x="100" y="24" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">3. ANALYSE</text>
+                                    <text x="100" y="42" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">Enriched Requirements</text>
+                                    <rect x="160" y="5" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="177" y="15" text-anchor="middle" fill="#fff" font-size="8" font-weight="600">ULTRA</text>
+                                </g>
+                                <line x1="400" y1="310" x2="400" y2="325" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+                                <!-- PHASE 4: SPECIFY -->
+                                <g transform="translate(300, 330)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#specifyGrad)"/>
+                                    <text x="100" y="24" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">4. SPECIFY</text>
+                                    <text x="100" y="42" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">Functional Spec (FRD)</text>
+                                    <rect x="160" y="5" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="177" y="15" text-anchor="middle" fill="#fff" font-size="8" font-weight="600">ULTRA</text>
+                                </g>
+                                <line x1="400" y1="390" x2="400" y2="405" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+                                <!-- PHASE 5: VALIDATE -->
+                                <g transform="translate(300, 410)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#validateGrad)"/>
+                                    <text x="100" y="24" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">5. VALIDATE</text>
+                                    <text x="100" y="42" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">User Approval</text>
+                                    <rect x="160" y="5" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="177" y="15" text-anchor="middle" fill="#fff" font-size="8" font-weight="600">SONNET</text>
                                 </g>
 
-                                <!-- Auto-Detect -->
-                                <g transform="translate(280, 80)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="140" height="50" rx="10" fill="url(#detectGrad)"/>
-                                    <text x="70" y="22" text-anchor="middle" fill="#e0e7ef" font-size="11" font-weight="600">/business-analyse</text>
-                                    <text x="70" y="38" text-anchor="middle" fill="#9ca3af" font-size="9">Auto-detect track</text>
+                                <!-- Validation loop back to Phase 3 -->
+                                <path d="M 300 440 L 220 440 L 220 280 L 295 280" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowRed)"/>
+                                <rect x="180" y="350" width="60" height="20" rx="4" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="1"/>
+                                <text x="210" y="364" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="600">CHANGES</text>
+
+                                <!-- Arrow to Phase 6 -->
+                                <line x1="400" y1="470" x2="400" y2="485" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+                                <!-- PHASE 6: HANDOFF -->
+                                <g transform="translate(300, 490)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#handoffGrad)"/>
+                                    <text x="100" y="24" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">6. HANDOFF</text>
+                                    <text x="100" y="42" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">Implementation Brief</text>
+                                    <rect x="160" y="5" width="35" height="14" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="177" y="15" text-anchor="middle" fill="#fff" font-size="8" font-weight="600">ULTRA</text>
+                                </g>
+                                <line x1="400" y1="550" x2="400" y2="565" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+                                <!-- /IMPLEMENT -->
+                                <g transform="translate(300, 570)" filter="url(#glow)">
+                                    <rect x="0" y="0" width="200" height="50" rx="10" fill="url(#implementGrad)"/>
+                                    <text x="100" y="20" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="700">/implement</text>
+                                    <text x="100" y="38" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="11">Execute Code</text>
                                 </g>
 
-                                <!-- QUICK Track (left branch) -->
-                                <g transform="translate(145, 170)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="110" height="60" rx="10" fill="url(#quickGrad)"/>
-                                    <text x="55" y="20" text-anchor="middle" fill="#e0e7ef" font-size="10" font-weight="600">QUICK</text>
-                                    <text x="55" y="35" text-anchor="middle" fill="#e0e7ef" font-size="11" font-weight="500">:quick</text>
-                                    <text x="55" y="50" text-anchor="middle" fill="#9ca3af" font-size="8">Spec + Handoff</text>
+                                <!-- Side annotations -->
+                                <!-- Left: WHAT (User Focus) -->
+                                <rect x="60" y="90" width="100" height="220" rx="8" fill="rgba(139, 92, 246, 0.1)" stroke="rgba(139, 92, 246, 0.3)" stroke-width="1"/>
+                                <text x="110" y="115" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">WHAT</text>
+                                <text x="110" y="132" text-anchor="middle" fill="#a78bfa" font-size="9">User Focus</text>
+                                <text x="110" y="200" text-anchor="middle" fill="#a78bfa" font-size="9">Business</text>
+                                <text x="110" y="215" text-anchor="middle" fill="#a78bfa" font-size="9">Requirements</text>
+
+                                <!-- Right: HOW (Technical Focus) -->
+                                <rect x="640" y="330" width="100" height="220" rx="8" fill="rgba(249, 115, 22, 0.1)" stroke="rgba(249, 115, 22, 0.3)" stroke-width="1"/>
+                                <text x="690" y="355" text-anchor="middle" fill="#fb923c" font-size="12" font-weight="700">HOW</text>
+                                <text x="690" y="372" text-anchor="middle" fill="#fb923c" font-size="9">Technical Focus</text>
+                                <text x="690" y="440" text-anchor="middle" fill="#fb923c" font-size="9">Functional</text>
+                                <text x="690" y="455" text-anchor="middle" fill="#fb923c" font-size="9">Specification</text>
+
+                                <!-- Legend -->
+                                <g transform="translate(550, 100)">
+                                    <text x="0" y="0" fill="#94a3b8" font-size="11" font-weight="600">Legend:</text>
+                                    <rect x="0" y="10" width="30" height="12" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="15" y="19" text-anchor="middle" fill="#fff" font-size="7">ULTRA</text>
+                                    <text x="40" y="19" fill="#94a3b8" font-size="9">= ULTRATHINK</text>
+                                    <rect x="0" y="30" width="30" height="12" rx="3" fill="rgba(255,255,255,0.2)"/>
+                                    <text x="15" y="39" text-anchor="middle" fill="#fff" font-size="7">HAIKU</text>
+                                    <text x="40" y="39" fill="#94a3b8" font-size="9">= Fast agents</text>
+                                    <line x1="0" y1="55" x2="30" y2="55" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,3"/>
+                                    <text x="40" y="58" fill="#94a3b8" font-size="9">= Loop back</text>
                                 </g>
-
-                                <!-- File: quick.md -->
-                                <g transform="translate(20, 225)">
-                                    <rect x="0" y="0" width="100" height="28" rx="4" fill="url(#fileGrad)" stroke="#475569" stroke-width="1"/>
-                                    <text x="50" y="18" text-anchor="middle" fill="#94a3b8" font-size="9">quick.md</text>
-                                </g>
-
-                                <!-- FULL Track (right branch) -->
-                                <!-- 1-explore -->
-                                <g transform="translate(445, 170)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="110" height="60" rx="10" fill="url(#fullGrad)"/>
-                                    <text x="55" y="20" text-anchor="middle" fill="#e0e7ef" font-size="10" font-weight="600">EXPLORE</text>
-                                    <text x="55" y="35" text-anchor="middle" fill="#e0e7ef" font-size="11" font-weight="500">:1-explore</text>
-                                    <text x="55" y="50" text-anchor="middle" fill="#9ca3af" font-size="8">Agents</text>
-                                </g>
-
-                                <!-- 2-spec -->
-                                <g transform="translate(445, 265)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="110" height="60" rx="10" fill="url(#specGrad)"/>
-                                    <text x="55" y="20" text-anchor="middle" fill="#e0e7ef" font-size="10" font-weight="600">SPEC</text>
-                                    <text x="55" y="35" text-anchor="middle" fill="#e0e7ef" font-size="11" font-weight="500">:2-spec</text>
-                                    <text x="55" y="50" text-anchor="middle" fill="#9ca3af" font-size="8">For humans</text>
-                                </g>
-
-                                <!-- File: spec.md -->
-                                <g transform="translate(20, 315)">
-                                    <rect x="0" y="0" width="100" height="28" rx="4" fill="url(#fileGrad)" stroke="#a855f7" stroke-width="1"/>
-                                    <text x="50" y="18" text-anchor="middle" fill="#a855f7" font-size="9">spec.md</text>
-                                </g>
-
-                                <!-- Human validation -->
-                                <g transform="translate(445, 360)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="110" height="40" rx="8" fill="url(#validateGrad)"/>
-                                    <text x="55" y="16" text-anchor="middle" fill="#1e293b" font-size="8" font-weight="600">VALIDATION</text>
-                                    <text x="55" y="30" text-anchor="middle" fill="#1e293b" font-size="9">Human review</text>
-                                </g>
-
-                                <!-- File: handoff.md -->
-                                <g transform="translate(20, 400)">
-                                    <rect x="0" y="0" width="100" height="28" rx="4" fill="url(#fileGrad)" stroke="#f97316" stroke-width="1"/>
-                                    <text x="50" y="18" text-anchor="middle" fill="#f97316" font-size="9">handoff.md</text>
-                                </g>
-
-                                <!-- 3-handoff label -->
-                                <text x="575" y="445" text-anchor="start" fill="#f97316" font-size="9" font-weight="500">:3-handoff</text>
-
-                                <!-- IMPLEMENT (bottom, convergence point) -->
-                                <g transform="translate(280, 430)" filter="url(#glow)">
-                                    <rect x="0" y="0" width="140" height="50" rx="10" fill="url(#implementGrad)"/>
-                                    <text x="70" y="22" text-anchor="middle" fill="#e0e7ef" font-size="11" font-weight="600">/implement</text>
-                                    <text x="70" y="38" text-anchor="middle" fill="#9ca3af" font-size="9">Oneshot execution</text>
-                                </g>
-
-                                <!-- Labels for branches -->
-                                <text x="175" y="105" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="500">≤3 files</text>
-                                <text x="525" y="105" text-anchor="middle" fill="#3b82f6" font-size="9" font-weight="500">Complex</text>
-
-                                <!-- Arrow from handoff.md to implement -->
-                                <path d="M 70 432 L 70 455 L 280 455" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#fileArrow)"/>
-                                <text x="170" y="468" text-anchor="middle" fill="#64748b" font-size="8">reads handoff.md</text>
                             </svg>
                         </div>
+                    </section>
 
-                        <p data-lang="fr">Le workflow s'adapte automatiquement a la complexite de la demande :</p>
-                        <p data-lang="en">The workflow automatically adapts to the request complexity:</p>
+                    <!-- The 6 Phases -->
+                    <section id="phases">
+                        <h2>
+                            <span data-lang="fr">Les 6 Phases</span>
+                            <span data-lang="en">The 6 Phases</span>
+                        </h2>
 
                         <div class="table-container">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Track</th>
-                                        <th data-lang="fr">Criteres</th>
-                                        <th data-lang="en">Criteria</th>
-                                        <th data-lang="fr">Phases</th>
-                                        <th data-lang="en">Phases</th>
+                                        <th>#</th>
+                                        <th>Phase</th>
+                                        <th data-lang="fr">Commande</th>
+                                        <th data-lang="en">Command</th>
+                                        <th data-lang="fr">Modele</th>
+                                        <th data-lang="en">Model</th>
+                                        <th data-lang="fr">Mission</th>
+                                        <th data-lang="en">Mission</th>
+                                        <th data-lang="fr">Fichier de sortie</th>
+                                        <th data-lang="en">Output File</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr style="background: rgba(139, 92, 246, 0.1);">
+                                        <td><strong>1</strong></td>
+                                        <td><strong>DISCOVER</strong></td>
+                                        <td><code>:1-discover</code></td>
+                                        <td>ULTRATHINK</td>
+                                        <td data-lang="fr">Elicitation + detection similarite</td>
+                                        <td data-lang="en">Elicitation + similarity detection</td>
+                                        <td><code>01-business-requirements.md</code></td>
+                                    </tr>
+                                    <tr style="background: rgba(59, 130, 246, 0.1);">
+                                        <td><strong>2</strong></td>
+                                        <td><strong>EXPLORE</strong></td>
+                                        <td><code>:2-explore</code></td>
+                                        <td>Haiku</td>
+                                        <td data-lang="fr">Contexte technique (agents)</td>
+                                        <td data-lang="en">Technical context (agents)</td>
+                                        <td><code>02-technical-context.md</code></td>
+                                    </tr>
+                                    <tr style="background: rgba(236, 72, 153, 0.1);">
+                                        <td><strong>3</strong></td>
+                                        <td><strong>ANALYSE</strong></td>
+                                        <td><code>:3-analyse</code></td>
+                                        <td>ULTRATHINK</td>
+                                        <td data-lang="fr">Synthese besoin + technique</td>
+                                        <td data-lang="en">Merge need + technical context</td>
+                                        <td><code>03-enriched-requirements.md</code></td>
+                                    </tr>
+                                    <tr style="background: rgba(168, 85, 247, 0.1);">
+                                        <td><strong>4</strong></td>
+                                        <td><strong>SPECIFY</strong></td>
+                                        <td><code>:4-specify</code></td>
+                                        <td>ULTRATHINK</td>
+                                        <td data-lang="fr">Specification fonctionnelle (FRD)</td>
+                                        <td data-lang="en">Functional specification (FRD)</td>
+                                        <td><code>04-functional-spec.md</code></td>
+                                    </tr>
                                     <tr style="background: rgba(34, 197, 94, 0.1);">
-                                        <td><strong>QUICK</strong></td>
-                                        <td data-lang="fr">≤3 fichiers, pas de nouvelle entite, pas de nouvelle page</td>
-                                        <td data-lang="en">≤3 files, no new entity, no new page</td>
-                                        <td colspan="2"><code>:quick</code> → <code>/implement</code></td>
+                                        <td><strong>5</strong></td>
+                                        <td><strong>VALIDATE</strong></td>
+                                        <td><code>:5-validate</code></td>
+                                        <td>Sonnet</td>
+                                        <td data-lang="fr">Validation utilisateur (loop → 3)</td>
+                                        <td data-lang="en">User validation (loop → 3)</td>
+                                        <td><code>05-feedback-v[N].md</code></td>
                                     </tr>
-                                    <tr style="background: rgba(99, 102, 241, 0.1);">
-                                        <td><strong>FULL</strong></td>
-                                        <td data-lang="fr">Nouvelle entite, nouvelle page, module complet</td>
-                                        <td data-lang="en">New entity, new page, full module</td>
-                                        <td colspan="2"><code>:1-explore</code> → <code>:2-spec</code> → <code>:3-handoff</code> → <code>/implement</code></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <!-- Architecture -->
-                    <section id="architecture">
-                        <h2>Architecture</h2>
-
-                        <p data-lang="fr">
-                            Business Analyse stocke ses fichiers dans <code>.claude/ba/</code> avec un sous-dossier par feature. Cette structure permet de garder l'historique des specifications et de les reutiliser pour les evolutions.
-                        </p>
-                        <p data-lang="en">
-                            Business Analyse stores its files in <code>.claude/ba/</code> with a subfolder per feature. This structure keeps specification history and allows reuse for future evolutions.
-                        </p>
-
-                        <div class="code-block">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code>my-project/
-├── <a href=".claude/ba/" class="file-link">.claude/ba/</a>                   # Business Analysis folder
-│   ├── user-authentication/       # Feature: User Authentication
-│   │   ├── explore.md             # Exploration results (agents output)
-│   │   ├── spec.md                # Technical-functional specification
-│   │   ├── handoff.md             # Implementation brief for Claude Code
-│   │   └── mockup.html            # (optional) HTML mockup if --mockup
-│   │
-│   ├── payment-gateway/           # Feature: Payment Gateway
-│   │   ├── explore.md
-│   │   ├── spec.md
-│   │   └── handoff.md
-│   │
-│   └── quick/                     # Quick fixes (no subfolder)
-│       ├── add-logout-button.md   # Combined spec+handoff
-│       └── fix-validation.md
-│
-└── src/                           # Source code (target of /implement)</code></pre>
-                        </div>
-
-                        <h3 data-lang="fr">Fichiers generes</h3>
-                        <h3 data-lang="en">Generated Files</h3>
-
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th data-lang="fr">Fichier</th>
-                                        <th data-lang="en">File</th>
-                                        <th data-lang="fr">Genere par</th>
-                                        <th data-lang="en">Generated by</th>
-                                        <th data-lang="fr">Lu par</th>
-                                        <th data-lang="en">Read by</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><code>explore.md</code></td>
-                                        <td><code>:1-explore</code></td>
-                                        <td><code>:2-spec</code></td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>spec.md</code></td>
-                                        <td><code>:2-spec</code></td>
-                                        <td data-lang="fr">Humain (validation)</td>
-                                        <td data-lang="en">Human (validation)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>handoff.md</code></td>
-                                        <td><code>:3-handoff</code></td>
-                                        <td><code>/implement</code></td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>mockup.html</code></td>
-                                        <td><code>:2-spec --mockup</code></td>
-                                        <td data-lang="fr">Humain (preview)</td>
-                                        <td data-lang="en">Human (preview)</td>
+                                    <tr style="background: rgba(249, 115, 22, 0.1);">
+                                        <td><strong>6</strong></td>
+                                        <td><strong>HANDOFF</strong></td>
+                                        <td><code>:6-handoff</code></td>
+                                        <td>ULTRATHINK</td>
+                                        <td data-lang="fr">Brief d'implementation (anglais)</td>
+                                        <td data-lang="en">Implementation brief (English)</td>
+                                        <td><code>06-implementation-brief.md</code></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-
-                        <div class="alert alert-info">
-                            <span class="alert-icon">&#128161;</span>
-                            <div class="alert-content">
-                                <h5 data-lang="fr">Creation automatique</h5>
-                                <h5 data-lang="en">Automatic Creation</h5>
-                                <p data-lang="fr">
-                                    Le dossier <code>.claude/ba/</code> et les sous-dossiers sont crees automatiquement lors de la premiere utilisation de <code>/business-analyse</code>.
-                                </p>
-                                <p data-lang="en">
-                                    The <code>.claude/ba/</code> folder and subfolders are automatically created on first use of <code>/business-analyse</code>.
-                                </p>
-                            </div>
-                        </div>
                     </section>
 
-                    <!-- Tracks -->
-                    <section id="tracks">
-                        <h2 data-lang="fr">Quick vs Full Track</h2>
-                        <h2 data-lang="en">Quick vs Full Track</h2>
-
-                        <h3>QUICK Track</h3>
-                        <p data-lang="fr">Pour les petites modifications (≤3 fichiers, pas de nouvelle entite DB, pas de nouvelle page).</p>
-                        <p data-lang="en">For small changes (≤3 files, no new DB entity, no new page).</p>
-
-                        <div class="command-card">
-                            <div class="command-header">
-                                <code class="command-name">/business-analyse:quick</code>
-                                <span class="badge badge-green">~80 lignes</span>
-                            </div>
-                            <div class="command-body">
-                                <p data-lang="fr">
-                                    Combine spec + handoff en une seule sortie compacte. Lance uniquement l'agent <code>explore-api</code> pour le contexte rapide. Le fichier est sauvegarde dans <code>.claude/ba/quick/[feature-name].md</code>. Ideal pour : ajouter un bouton, corriger un bug, petite modification UI.
-                                </p>
-                                <p data-lang="en">
-                                    Combines spec + handoff in a single compact output. Launches only the <code>explore-api</code> agent for quick context. The file is saved to <code>.claude/ba/quick/[feature-name].md</code>. Ideal for: adding a button, fixing a bug, small UI modification.
-                                </p>
-                                <div class="code-block">
-                                    <button class="copy-btn">Copy</button>
-                                    <pre><code># Quick analysis for simple changes
-/business-analyse:quick Add logout button to header
-
-# Then implement directly
-/implement .claude/ba/quick/add-logout-button.md</code></pre>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h3>FULL Track</h3>
-                        <p data-lang="fr">Pour les features complexes (nouvelle entite, nouvelle page, module complet).</p>
-                        <p data-lang="en">For complex features (new entity, new page, full module).</p>
-
-                        <table class="reference-table">
-                            <thead>
-                                <tr>
-                                    <th>Phase</th>
-                                    <th>Commande</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1. Explore</td>
-                                    <td><code>/business-analyse:1-explore</code></td>
-                                    <td data-lang="fr">Lance les agents conditionnels en parallele</td>
-                                    <td data-lang="en">Launches conditional agents in parallel</td>
-                                </tr>
-                                <tr>
-                                    <td>2. Spec</td>
-                                    <td><code>/business-analyse:2-spec</code></td>
-                                    <td data-lang="fr">Genere la documentation pour validation humaine</td>
-                                    <td data-lang="en">Generates documentation for human validation</td>
-                                </tr>
-                                <tr>
-                                    <td>3. Handoff</td>
-                                    <td><code>/business-analyse:3-handoff</code></td>
-                                    <td data-lang="fr">Genere le prompt d'implementation (format diff-like)</td>
-                                    <td data-lang="en">Generates implementation prompt (diff-like format)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-
-                    <!-- Phase 1: Explore -->
+                    <!-- Phase 1: Discover -->
                     <section id="phase-1">
-                        <h2>Phase 1: Explore</h2>
+                        <h2>Phase 1: DISCOVER</h2>
                         <div class="command-card">
                             <div class="command-header">
-                                <code class="command-name">/business-analyse:1-explore</code>
-                                <span class="badge badge-blue">FULL Track</span>
+                                <code class="command-name">/business-analyse:1-discover</code>
+                                <span class="badge badge-purple">ULTRATHINK</span>
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Cette commande lance les agents d'exploration en parallele pour collecter tout le contexte necessaire. Elle analyse les mots-cles de la demande pour selectionner automatiquement les agents pertinents (maximum 3 pour optimiser les tokens). L'agent <code>explore-api</code> est toujours inclus comme base. Les resultats sont consolides dans <code>.claude/ba/[feature]/explore.md</code> avec des references file:line pour chaque pattern trouve.
+                                    <strong>Mission</strong> : Comprendre le vrai besoin utilisateur avant toute exploration technique.
                                 </p>
                                 <p data-lang="en">
-                                    This command launches exploration agents in parallel to collect all necessary context. It analyzes request keywords to automatically select relevant agents (maximum 3 to optimize tokens). The <code>explore-api</code> agent is always included as base. Results are consolidated in <code>.claude/ba/[feature]/explore.md</code> with file:line references for each pattern found.
+                                    <strong>Mission</strong>: Understand the real user need before any technical exploration.
                                 </p>
+
+                                <h4 data-lang="fr">Etapes</h4>
+                                <h4 data-lang="en">Steps</h4>
+                                <ol>
+                                    <li data-lang="fr"><strong>Similarity Check</strong> : Lance l'agent <code>ba-similarity</code> pour detecter les doublons</li>
+                                    <li data-lang="en"><strong>Similarity Check</strong>: Launches <code>ba-similarity</code> agent to detect duplicates</li>
+                                    <li data-lang="fr"><strong>Elicitation</strong> : Pose des questions ciblees (max 5)</li>
+                                    <li data-lang="en"><strong>Elicitation</strong>: Asks targeted questions (max 5)</li>
+                                    <li data-lang="fr"><strong>Business Requirements</strong> : Formalise le besoin en langage utilisateur</li>
+                                    <li data-lang="en"><strong>Business Requirements</strong>: Formalizes need in user language</li>
+                                </ol>
+
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
-                                    <pre><code>/business-analyse:1-explore Add user management with roles and permissions</code></pre>
+                                    <pre><code>/business-analyse:1-discover Je veux pouvoir exporter mes donnees clients</code></pre>
                                 </div>
-                            </div>
-                        </div>
 
-                        <h4 data-lang="fr">Selection automatique des agents</h4>
-                        <h4 data-lang="en">Automatic agent selection</h4>
-
-                        <table class="reference-table">
-                            <thead>
-                                <tr>
-                                    <th data-lang="fr">Type de feature</th>
-                                    <th data-lang="en">Feature type</th>
-                                    <th>Agents</th>
-                                    <th>Tokens</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>UI only</td>
-                                    <td><code>explore-theme</code>, <code>explore-api</code></td>
-                                    <td>~2,400</td>
-                                </tr>
-                                <tr>
-                                    <td>Data feature</td>
-                                    <td><code>explore-schema</code>, <code>explore-api</code></td>
-                                    <td>~2,700</td>
-                                </tr>
-                                <tr>
-                                    <td>New page</td>
-                                    <td><code>explore-navigation</code>, <code>explore-theme</code>, <code>explore-api</code></td>
-                                    <td>~3,600</td>
-                                </tr>
-                                <tr>
-                                    <td>Security</td>
-                                    <td><code>explore-permissions</code>, <code>explore-api</code></td>
-                                    <td>~2,200</td>
-                                </tr>
-                                <tr>
-                                    <td>Full module</td>
-                                    <td><code>explore-schema</code>, <code>explore-permissions</code>, <code>explore-api</code></td>
-                                    <td>~3,700</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="alert alert-info">
-                            <span class="alert-icon">&#128161;</span>
-                            <div class="alert-content">
-                                <h5 data-lang="fr">Fichier de sortie</h5>
-                                <h5 data-lang="en">Output file</h5>
-                                <p data-lang="fr">
-                                    Les resultats sont sauvegardes dans <code>.claude/ba/[feature]/explore.md</code> et automatiquement lus par la phase suivante.
-                                </p>
-                                <p data-lang="en">
-                                    Results are saved to <code>.claude/ba/[feature]/explore.md</code> and automatically read by the next phase.
-                                </p>
+                                <h4 data-lang="fr">Resultats de similarite</h4>
+                                <h4 data-lang="en">Similarity Results</h4>
+                                <table class="reference-table">
+                                    <thead>
+                                        <tr>
+                                            <th data-lang="fr">Resultat</th>
+                                            <th data-lang="en">Result</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>DUPLICATE</strong></td>
+                                            <td data-lang="fr">STOP - Reference spec existante</td>
+                                            <td data-lang="en">STOP - Reference existing spec</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>EXTEND</strong></td>
+                                            <td data-lang="fr">Note feature existante a etendre</td>
+                                            <td data-lang="en">Note existing feature to extend</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>NEW</strong></td>
+                                            <td data-lang="fr">Proceder normalement</td>
+                                            <td data-lang="en">Proceed normally</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Phase 2: Spec -->
+                    <!-- Phase 2: Explore -->
                     <section id="phase-2">
-                        <h2>Phase 2: Specification</h2>
+                        <h2>Phase 2: EXPLORE</h2>
                         <div class="command-card">
                             <div class="command-header">
-                                <code class="command-name">/business-analyse:2-spec</code>
-                                <span class="badge badge-purple">Pour humains</span>
+                                <code class="command-name">/business-analyse:2-explore</code>
+                                <span class="badge badge-blue">Haiku Agents</span>
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Cette commande genere la documentation technico-fonctionnelle destinee a la validation humaine (PO, Tech Lead, Client). Elle lit <code>explore.md</code> et produit un document structure avec uniquement les sections pertinentes. Les options <code>--mockup</code> et <code>--plantuml</code> permettent d'ajouter des visuels si necessaire. Le fichier est sauvegarde dans <code>.claude/ba/[feature]/spec.md</code>.
+                                    <strong>Mission</strong> : Collecter le contexte technique avec des agents paralleles.
                                 </p>
                                 <p data-lang="en">
-                                    This command generates functional-technical documentation for human validation (PO, Tech Lead, Client). It reads <code>explore.md</code> and produces a structured document with only relevant sections. The <code>--mockup</code> and <code>--plantuml</code> options add visuals if needed. The file is saved to <code>.claude/ba/[feature]/spec.md</code>.
+                                    <strong>Mission</strong>: Collect technical context with parallel agents.
                                 </p>
+
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:2-explore [feature-name]</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Selection automatique des agents</h4>
+                                <h4 data-lang="en">Automatic agent selection</h4>
+
+                                <table class="reference-table">
+                                    <thead>
+                                        <tr>
+                                            <th data-lang="fr">Type de feature</th>
+                                            <th data-lang="en">Feature type</th>
+                                            <th>Agents</th>
+                                            <th>Tokens</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>UI only</td>
+                                            <td><code>explore-theme</code>, <code>explore-api</code></td>
+                                            <td>~2,400</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Data feature</td>
+                                            <td><code>explore-schema</code>, <code>explore-api</code></td>
+                                            <td>~2,700</td>
+                                        </tr>
+                                        <tr>
+                                            <td>New page</td>
+                                            <td><code>explore-navigation</code>, <code>explore-theme</code>, <code>explore-api</code></td>
+                                            <td>~3,600</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Security</td>
+                                            <td><code>explore-permissions</code>, <code>explore-api</code></td>
+                                            <td>~2,200</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Full module</td>
+                                            <td><code>explore-schema</code>, <code>explore-permissions</code>, <code>explore-api</code></td>
+                                            <td>~3,700</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="alert alert-info">
+                                    <span class="alert-icon">&#128161;</span>
+                                    <div class="alert-content">
+                                        <p data-lang="fr"><strong>Maximum 3 agents</strong> pour optimiser les tokens.</p>
+                                        <p data-lang="en"><strong>Maximum 3 agents</strong> to optimize tokens.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 3: Analyse -->
+                    <section id="phase-3">
+                        <h2>Phase 3: ANALYSE</h2>
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:3-analyse</code>
+                                <span class="badge badge-pink">ULTRATHINK</span>
+                            </div>
+                            <div class="command-body">
+                                <p data-lang="fr">
+                                    <strong>Mission</strong> : Fusionner le besoin utilisateur avec le contexte technique. Identifier les gaps et conflits.
+                                </p>
+                                <p data-lang="en">
+                                    <strong>Mission</strong>: Merge user need with technical context. Identify gaps and conflicts.
+                                </p>
+
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:3-analyse [feature-name]</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Analyse des gaps</h4>
+                                <h4 data-lang="en">Gap Analysis</h4>
+                                <ul>
+                                    <li data-lang="fr"><strong>Feasibility Check</strong> : Ce que l'utilisateur veut vs ce que le systeme peut faire</li>
+                                    <li data-lang="en"><strong>Feasibility Check</strong>: What user wants vs what system can do</li>
+                                    <li data-lang="fr"><strong>Conflicts</strong> : Contradictions entre besoin et contraintes techniques</li>
+                                    <li data-lang="en"><strong>Conflicts</strong>: Contradictions between need and technical constraints</li>
+                                    <li data-lang="fr"><strong>Opportunities</strong> : Features existantes qui peuvent aider</li>
+                                    <li data-lang="en"><strong>Opportunities</strong>: Existing features that can help</li>
+                                </ul>
+
+                                <div class="alert alert-warning">
+                                    <span class="alert-icon">&#9888;</span>
+                                    <div class="alert-content">
+                                        <p data-lang="fr">
+                                            Si des gaps ou conflits existent, des <strong>questions ciblees</strong> sont posees a l'utilisateur avant de continuer.
+                                        </p>
+                                        <p data-lang="en">
+                                            If gaps or conflicts exist, <strong>targeted questions</strong> are asked to the user before continuing.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Phase 4: Specify -->
+                    <section id="phase-4">
+                        <h2>Phase 4: SPECIFY</h2>
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:4-specify</code>
+                                <span class="badge badge-purple">ULTRATHINK</span>
+                            </div>
+                            <div class="command-body">
+                                <p data-lang="fr">
+                                    <strong>Mission</strong> : Produire le FRD (Functional Requirements Document) detaille pour validation humaine.
+                                </p>
+                                <p data-lang="en">
+                                    <strong>Mission</strong>: Produce detailed FRD (Functional Requirements Document) for human validation.
+                                </p>
+
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code># Generate specification
-/business-analyse:2-spec
+/business-analyse:4-specify [feature-name]
 
-# With HTML mockup (adds ~2000 tokens)
-/business-analyse:2-spec --mockup
+# With HTML mockup
+/business-analyse:4-specify [feature-name] --mockup
 
-# With PlantUML ER diagram (adds ~800 tokens)
-/business-analyse:2-spec --plantuml
-
-# Both options
-/business-analyse:2-spec --mockup --plantuml</code></pre>
+# With PlantUML diagrams
+/business-analyse:4-specify [feature-name] --plantuml</code></pre>
                                 </div>
-                            </div>
-                        </div>
 
-                        <h4 data-lang="fr">Sections dynamiques</h4>
-                        <h4 data-lang="en">Dynamic sections</h4>
+                                <h4 data-lang="fr">Sections dynamiques</h4>
+                                <h4 data-lang="en">Dynamic sections</h4>
+                                <table class="reference-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Section</th>
+                                            <th data-lang="fr">Incluse quand</th>
+                                            <th data-lang="en">Included when</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Context</td><td colspan="2">Always</td></tr>
+                                        <tr><td>Functional Requirements</td><td colspan="2">Always</td></tr>
+                                        <tr><td>Data Model</td><td data-lang="fr">Changements DB</td><td data-lang="en">DB changes</td></tr>
+                                        <tr><td>UI Specification</td><td data-lang="fr">Changements UI</td><td data-lang="en">UI changes</td></tr>
+                                        <tr><td>Navigation</td><td data-lang="fr">Nouvelle page</td><td data-lang="en">New page</td></tr>
+                                        <tr><td>Permissions</td><td data-lang="fr">Nouvelles permissions</td><td data-lang="en">New permissions</td></tr>
+                                        <tr><td>User Flow</td><td data-lang="fr">Workflow complexe</td><td data-lang="en">Complex workflow</td></tr>
+                                        <tr><td>API Specification</td><td data-lang="fr">Changements backend</td><td data-lang="en">Backend changes</td></tr>
+                                        <tr><td>Acceptance Criteria</td><td colspan="2">Always</td></tr>
+                                    </tbody>
+                                </table>
 
-                        <table class="reference-table">
-                            <thead>
-                                <tr>
-                                    <th>Section</th>
-                                    <th data-lang="fr">Incluse quand</th>
-                                    <th data-lang="en">Included when</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Context</td><td colspan="2">Always</td></tr>
-                                <tr><td>Requirements</td><td colspan="2">Always</td></tr>
-                                <tr><td>Data Model</td><td data-lang="fr">Changements DB</td><td data-lang="en">DB changes</td></tr>
-                                <tr><td>UI Specification</td><td data-lang="fr">Changements UI</td><td data-lang="en">UI changes</td></tr>
-                                <tr><td>Navigation</td><td data-lang="fr">Nouvelle page/route</td><td data-lang="en">New page/route</td></tr>
-                                <tr><td>Permissions</td><td data-lang="fr">Nouvelles permissions</td><td data-lang="en">New permissions</td></tr>
-                                <tr><td>User Flow</td><td data-lang="fr">Workflow complexe</td><td data-lang="en">Complex workflow</td></tr>
-                                <tr><td>Acceptance</td><td colspan="2">Always</td></tr>
-                            </tbody>
-                        </table>
-
-                        <div class="alert alert-warning">
-                            <span class="alert-icon">&#9888;</span>
-                            <div class="alert-content">
-                                <h5 data-lang="fr">Validation requise</h5>
-                                <h5 data-lang="en">Validation required</h5>
-                                <p data-lang="fr">
-                                    <strong>Attendez la validation humaine</strong> avant de passer a la phase 3. Le fichier <code>spec.md</code> doit etre relu et approuve.
-                                </p>
-                                <p data-lang="en">
-                                    <strong>Wait for human validation</strong> before proceeding to phase 3. The <code>spec.md</code> file must be reviewed and approved.
-                                </p>
+                                <h4>Options</h4>
+                                <table class="reference-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Option</th>
+                                            <th data-lang="fr">Effet</th>
+                                            <th data-lang="en">Effect</th>
+                                            <th>Tokens</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>--mockup</code></td>
+                                            <td data-lang="fr">Maquette HTML avec CSS projet</td>
+                                            <td data-lang="en">HTML mockup with project CSS</td>
+                                            <td>+2,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>--plantuml</code></td>
+                                            <td data-lang="fr">Diagrammes ER/sequence</td>
+                                            <td data-lang="en">ER/sequence diagrams</td>
+                                            <td>+800</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Phase 3: Handoff -->
-                    <section id="phase-3">
-                        <h2>Phase 3: Handoff</h2>
+                    <!-- Phase 5: Validate -->
+                    <section id="phase-5">
+                        <h2>Phase 5: VALIDATE</h2>
                         <div class="command-card">
                             <div class="command-header">
-                                <code class="command-name">/business-analyse:3-handoff</code>
-                                <span class="badge badge-orange">Pour Claude Code</span>
+                                <code class="command-name">/business-analyse:5-validate</code>
+                                <span class="badge badge-green">Sonnet</span>
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Cette commande transforme la specification validee en un brief d'implementation concis pour Claude Code. Elle utilise un format <strong>diff-like</strong> avec des instructions precises : fichiers a creer/modifier, numeros de ligne, patterns a copier, et commandes a executer. Le fichier est sauvegarde dans <code>.claude/ba/[feature]/handoff.md</code> et peut etre passe directement a <code>/implement</code>.
+                                    <strong>Mission</strong> : Presenter le FRD a l'utilisateur et collecter son feedback.
                                 </p>
                                 <p data-lang="en">
-                                    This command transforms the validated specification into a concise implementation brief for Claude Code. It uses a <strong>diff-like</strong> format with precise instructions: files to create/modify, line numbers, patterns to copy, and commands to run. The file is saved to <code>.claude/ba/[feature]/handoff.md</code> and can be passed directly to <code>/implement</code>.
+                                    <strong>Mission</strong>: Present FRD to user and collect feedback.
                                 </p>
+
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
-                                    <pre><code># Generate handoff after human validation
-/business-analyse:3-handoff
+                                    <pre><code>/business-analyse:5-validate [feature-name]</code></pre>
+                                </div>
 
-# Then implement with Claude Code
-/implement .claude/ba/user-management/handoff.md</code></pre>
+                                <h4 data-lang="fr">Options de validation</h4>
+                                <h4 data-lang="en">Validation Options</h4>
+                                <table class="reference-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Option</th>
+                                            <th data-lang="fr">Action</th>
+                                            <th data-lang="en">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background: rgba(34, 197, 94, 0.1);">
+                                            <td><strong>APPROVED</strong></td>
+                                            <td data-lang="fr">Passer a Phase 6 (Handoff)</td>
+                                            <td data-lang="en">Proceed to Phase 6 (Handoff)</td>
+                                        </tr>
+                                        <tr style="background: rgba(234, 179, 8, 0.1);">
+                                            <td><strong>MINOR CHANGES</strong></td>
+                                            <td data-lang="fr">Modifications directes dans le FRD</td>
+                                            <td data-lang="en">Direct modifications in FRD</td>
+                                        </tr>
+                                        <tr style="background: rgba(239, 68, 68, 0.1);">
+                                            <td><strong>MAJOR CHANGES</strong></td>
+                                            <td data-lang="fr">Retour a Phase 3 (Analyse)</td>
+                                            <td data-lang="en">Return to Phase 3 (Analyse)</td>
+                                        </tr>
+                                        <tr style="background: rgba(107, 114, 128, 0.1);">
+                                            <td><strong>REJECTED</strong></td>
+                                            <td data-lang="fr">Archiver et recommencer</td>
+                                            <td data-lang="en">Archive and start over</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="alert alert-info">
+                                    <span class="alert-icon">&#128260;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Boucle de validation</h5>
+                                        <h5 data-lang="en">Validation Loop</h5>
+                                        <p data-lang="fr">
+                                            En cas de <strong>MAJOR CHANGES</strong>, le workflow retourne a la Phase 3 pour re-analyser avec les nouvelles informations.
+                                        </p>
+                                        <p data-lang="en">
+                                            On <strong>MAJOR CHANGES</strong>, the workflow returns to Phase 3 to re-analyze with new information.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </section>
 
-                        <h4 data-lang="fr">Format de sortie</h4>
-                        <h4 data-lang="en">Output format</h4>
+                    <!-- Phase 6: Handoff -->
+                    <section id="phase-6">
+                        <h2>Phase 6: HANDOFF</h2>
+                        <div class="command-card">
+                            <div class="command-header">
+                                <code class="command-name">/business-analyse:6-handoff</code>
+                                <span class="badge badge-orange">ULTRATHINK</span>
+                            </div>
+                            <div class="command-body">
+                                <p data-lang="fr">
+                                    <strong>Mission</strong> : Transformer le FRD valide en brief d'implementation pour Claude Code. Le brief est genere en <strong>anglais</strong> pour optimiser les tokens et la comprehension du modele.
+                                </p>
+                                <p data-lang="en">
+                                    <strong>Mission</strong>: Transform validated FRD into implementation brief for Claude Code. The brief is generated in <strong>English</strong> to optimize tokens and model comprehension.
+                                </p>
 
-                        <div class="code-block">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code># IMPL: [Feature Name]
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code>/business-analyse:6-handoff [feature-name]</code></pre>
+                                </div>
+
+                                <h4 data-lang="fr">Format de sortie (diff-like)</h4>
+                                <h4 data-lang="en">Output format (diff-like)</h4>
+
+                                <div class="code-block">
+                                    <button class="copy-btn">Copy</button>
+                                    <pre><code># IMPLEMENTATION BRIEF: [Feature Name]
 
 ## Files
 
+### Backend
+
 CREATE `src/Domain/Entities/Feature.cs`
   COPY: `src/Domain/Entities/User.cs`
-  CHANGE: class name, properties
+  CHANGE: class name, properties per spec
 
 MODIFY `src/Infrastructure/Data/AppDbContext.cs`
   AT: line 45
   ADD: `public DbSet&lt;Feature&gt; Features =&gt; Set&lt;Feature&gt;();`
 
+### Frontend
+
+CREATE `src/app/module/feature/feature.component.ts`
+  RUN FIRST: `ng generate component module/feature`
+  COPY PATTERN: `src/app/existing/existing.component.ts`
+
 ## Commands
+
+```bash
 dotnet build src/Api
 dotnet ef migrations add AddFeatureTable
+npm run build
+npm run lint
+```
 
 ## Verify
-- [ ] Build passes
-- [ ] Navigate to /features works</code></pre>
-                        </div>
 
-                        <div class="alert alert-success">
-                            <span class="alert-icon">&#128640;</span>
-                            <div class="alert-content">
-                                <h5 data-lang="fr">Pret pour oneshot</h5>
-                                <h5 data-lang="en">Ready for oneshot</h5>
-                                <p data-lang="fr">
-                                    Le format diff-like permet a Claude Code d'implementer la feature en une seule passe sans poser de questions. Toutes les informations necessaires sont presentes.
-                                </p>
-                                <p data-lang="en">
-                                    The diff-like format allows Claude Code to implement the feature in a single pass without asking questions. All necessary information is present.
-                                </p>
+- [ ] Build passes
+- [ ] Navigate to /feature works
+- [ ] CRUD operations work</code></pre>
+                                </div>
+
+                                <div class="alert alert-success">
+                                    <span class="alert-icon">&#128640;</span>
+                                    <div class="alert-content">
+                                        <h5 data-lang="fr">Pret pour implementation</h5>
+                                        <h5 data-lang="en">Ready for implementation</h5>
+                                        <p data-lang="fr">
+                                            Le brief peut etre passe directement a <code>/implement</code> pour une execution oneshot.
+                                        </p>
+                                        <p data-lang="en">
+                                            The brief can be passed directly to <code>/implement</code> for oneshot execution.
+                                        </p>
+                                        <div class="code-block" style="margin-top: 0.5rem;">
+                                            <pre><code>/implement .claude/ba/[feature]/06-implementation-brief.md</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -753,144 +849,113 @@ dotnet ef migrations add AddFeatureTable
                                     <th>Agent</th>
                                     <th data-lang="fr">Mission</th>
                                     <th data-lang="en">Mission</th>
-                                    <th data-lang="fr">Mots-cles</th>
-                                    <th data-lang="en">Keywords</th>
+                                    <th data-lang="fr">Utilise en</th>
+                                    <th data-lang="en">Used in</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr style="background: rgba(139, 92, 246, 0.1);">
+                                    <td><code>ba-similarity</code></td>
+                                    <td data-lang="fr">Detecte les features similaires ou doublons</td>
+                                    <td data-lang="en">Detects similar features or duplicates</td>
+                                    <td>Phase 1</td>
+                                </tr>
                                 <tr>
                                     <td><code>explore-api</code></td>
                                     <td data-lang="fr">Endpoints, controllers, DTOs, patterns API</td>
                                     <td data-lang="en">Endpoints, controllers, DTOs, API patterns</td>
-                                    <td>endpoint, API, controller, service</td>
+                                    <td>Phase 2</td>
                                 </tr>
                                 <tr>
                                     <td><code>explore-schema</code></td>
-                                    <td data-lang="fr">Schema DB, entites, PlantUML</td>
-                                    <td data-lang="en">DB schema, entities, PlantUML</td>
-                                    <td>entity, table, column, database</td>
+                                    <td data-lang="fr">Schema DB, entites, configurations</td>
+                                    <td data-lang="en">DB schema, entities, configurations</td>
+                                    <td>Phase 2</td>
                                 </tr>
                                 <tr>
                                     <td><code>explore-permissions</code></td>
-                                    <td data-lang="fr">RBAC, roles, autorisations, gaps securite</td>
-                                    <td data-lang="en">RBAC, roles, authorizations, security gaps</td>
-                                    <td>permission, role, access, authorize</td>
+                                    <td data-lang="fr">RBAC, roles, autorisations</td>
+                                    <td data-lang="en">RBAC, roles, authorizations</td>
+                                    <td>Phase 2</td>
                                 </tr>
                                 <tr>
                                     <td><code>explore-navigation</code></td>
-                                    <td data-lang="fr">Menus DB, routes, pages orphelines</td>
-                                    <td data-lang="en">DB menus, routes, orphan pages</td>
-                                    <td>menu, navigation, sidebar, route</td>
+                                    <td data-lang="fr">Menus, routes, pages</td>
+                                    <td data-lang="en">Menus, routes, pages</td>
+                                    <td>Phase 2</td>
                                 </tr>
                                 <tr>
                                     <td><code>explore-theme</code></td>
                                     <td data-lang="fr">UI patterns, composants, design system</td>
                                     <td data-lang="en">UI patterns, components, design system</td>
-                                    <td>table, form, modal, UI, button</td>
+                                    <td>Phase 2</td>
                                 </tr>
                             </tbody>
                         </table>
-
-                        <div class="alert alert-info">
-                            <span class="alert-icon">&#128161;</span>
-                            <div class="alert-content">
-                                <p data-lang="fr">
-                                    <code>explore-api</code> est TOUJOURS inclus comme agent de base.
-                                </p>
-                                <p data-lang="en">
-                                    <code>explore-api</code> is ALWAYS included as base agent.
-                                </p>
-                            </div>
-                        </div>
                     </section>
 
-                    <!-- Options -->
-                    <section id="options">
-                        <h2>Options</h2>
-                        <p data-lang="fr">Options disponibles pour <code>/business-analyse:2-spec</code> :</p>
-                        <p data-lang="en">Options available for <code>/business-analyse:2-spec</code>:</p>
+                    <!-- Files -->
+                    <section id="files">
+                        <h2>
+                            <span data-lang="fr">Structure des fichiers</span>
+                            <span data-lang="en">File Structure</span>
+                        </h2>
 
-                        <table class="reference-table">
-                            <thead>
-                                <tr>
-                                    <th>Option</th>
-                                    <th data-lang="fr">Effet</th>
-                                    <th data-lang="en">Effect</th>
-                                    <th data-lang="fr">Cout tokens</th>
-                                    <th data-lang="en">Token cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>--mockup</code></td>
-                                    <td data-lang="fr">Genere une maquette HTML avec le CSS du projet</td>
-                                    <td data-lang="en">Generates HTML mockup with project CSS</td>
-                                    <td>+2,000</td>
-                                </tr>
-                                <tr>
-                                    <td><code>--plantuml</code></td>
-                                    <td data-lang="fr">Genere un diagramme ER PlantUML</td>
-                                    <td data-lang="en">Generates PlantUML ER diagram</td>
-                                    <td>+800</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="alert alert-warning">
-                            <span class="alert-icon">&#9888;</span>
-                            <div class="alert-content">
-                                <p data-lang="fr">
-                                    Ces options sont <strong>opt-in</strong> pour economiser les tokens. Utilisez-les uniquement quand necessaire.
-                                </p>
-                                <p data-lang="en">
-                                    These options are <strong>opt-in</strong> to save tokens. Use them only when necessary.
-                                </p>
-                            </div>
+                        <div class="code-block">
+                            <button class="copy-btn">Copy</button>
+                            <pre><code>.claude/ba/
+└── [feature-name]/
+    ├── 01-business-requirements.md    # Phase 1: DISCOVER
+    ├── 02-technical-context.md        # Phase 2: EXPLORE
+    ├── 03-enriched-requirements.md    # Phase 3: ANALYSE
+    ├── 04-functional-spec.md          # Phase 4: SPECIFY
+    ├── 05-feedback-v1.md              # Phase 5: VALIDATE (si changes)
+    ├── 05-feedback-v2.md              # (iterations)
+    └── 06-implementation-brief.md     # Phase 6: HANDOFF</code></pre>
                         </div>
-                    </section>
 
-                    <!-- Optimization -->
-                    <section id="optimization">
-                        <h2 data-lang="fr">Optimisation tokens</h2>
-                        <h2 data-lang="en">Token Optimization</h2>
-
-                        <table class="reference-table">
-                            <thead>
-                                <tr>
-                                    <th data-lang="fr">Technique</th>
-                                    <th data-lang="en">Technique</th>
-                                    <th data-lang="fr">Economie</th>
-                                    <th data-lang="en">Savings</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td data-lang="fr">Agents conditionnels</td>
-                                    <td data-lang="en">Conditional agents</td>
-                                    <td>40-60%</td>
-                                </tr>
-                                <tr>
-                                    <td data-lang="fr">Mockup HTML opt-in</td>
-                                    <td data-lang="en">Opt-in HTML mockup</td>
-                                    <td>60-80%</td>
-                                </tr>
-                                <tr>
-                                    <td data-lang="fr">PlantUML opt-in</td>
-                                    <td data-lang="en">Opt-in PlantUML</td>
-                                    <td>30-50%</td>
-                                </tr>
-                                <tr>
-                                    <td data-lang="fr">Sections spec dynamiques</td>
-                                    <td data-lang="en">Dynamic spec sections</td>
-                                    <td>50-70%</td>
-                                </tr>
-                                <tr>
-                                    <td data-lang="fr">Handoff format diff-like</td>
-                                    <td data-lang="en">Diff-like handoff format</td>
-                                    <td>60-70%</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th data-lang="fr">Fichier</th>
+                                        <th data-lang="en">File</th>
+                                        <th data-lang="fr">Genere par</th>
+                                        <th data-lang="en">Generated by</th>
+                                        <th data-lang="fr">Lu par</th>
+                                        <th data-lang="en">Read by</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>01-business-requirements.md</code></td>
+                                        <td>Phase 1</td>
+                                        <td>Phase 2, 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>02-technical-context.md</code></td>
+                                        <td>Phase 2</td>
+                                        <td>Phase 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>03-enriched-requirements.md</code></td>
+                                        <td>Phase 3</td>
+                                        <td>Phase 4</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>04-functional-spec.md</code></td>
+                                        <td>Phase 4</td>
+                                        <td data-lang="fr">Humain (validation), Phase 6</td>
+                                        <td data-lang="en">Human (validation), Phase 6</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>06-implementation-brief.md</code></td>
+                                        <td>Phase 6</td>
+                                        <td><code>/implement</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
 
                     <!-- Complete Example -->
@@ -900,59 +965,51 @@ dotnet ef migrations add AddFeatureTable
                             <span data-lang="en">Complete Example</span>
                         </h2>
 
-                        <p data-lang="fr">Voici un exemple complet du workflow Business Analyse pour une feature complexe :</p>
-                        <p data-lang="en">Here's a complete example of the Business Analyse workflow for a complex feature:</p>
-
                         <div class="code-block">
                             <button class="copy-btn">Copy</button>
-                            <pre><code># 1. Start with /business-analyse (auto-detects FULL track)
-/business-analyse Add user management with roles and permissions
+                            <pre><code># Phase 1: Comprendre le besoin
+/business-analyse:1-discover Je veux gerer les utilisateurs avec des roles
 
-# Output:
-# TRACK: FULL
-# REASON: New entity (User), new page, permissions required
-# AGENTS: explore-schema, explore-permissions, explore-api
-# → Run /business-analyse:1-explore to start
+# → Questions d'elicitation posees
+# → Agent ba-similarity verifie les doublons
+# → Cree: .claude/ba/user-management/01-business-requirements.md
 
-# 2. Explore the codebase (agents run in parallel)
-/business-analyse:1-explore
+# Phase 2: Explorer le contexte technique
+/business-analyse:2-explore user-management
 
-# → Creates .claude/ba/user-management/explore.md
-# → Contains: existing patterns, file:line references, recommendations
+# → Lance agents: explore-schema, explore-permissions, explore-api
+# → Cree: .claude/ba/user-management/02-technical-context.md
 
-# 3. Generate specification for human review
-/business-analyse:2-spec --plantuml
+# Phase 3: Analyser et enrichir
+/business-analyse:3-analyse user-management
 
-# → Creates .claude/ba/user-management/spec.md
-# → Contains: requirements, data model, UI spec, permissions, PlantUML diagram
-# → STOP: Wait for human validation
+# → Fusionne besoin + technique
+# → Identifie gaps et conflits
+# → Cree: .claude/ba/user-management/03-enriched-requirements.md
 
-# 4. After validation, generate implementation brief
-/business-analyse:3-handoff
+# Phase 4: Specifier (FRD)
+/business-analyse:4-specify user-management --plantuml
 
-# → Creates .claude/ba/user-management/handoff.md
-# → Contains: CREATE/MODIFY instructions, line numbers, commands
+# → Genere le FRD complet avec diagrammes
+# → Cree: .claude/ba/user-management/04-functional-spec.md
 
-# 5. Implement with Claude Code (oneshot)
-/implement .claude/ba/user-management/handoff.md
+# Phase 5: Valider avec l'utilisateur
+/business-analyse:5-validate user-management
 
-# → Claude Code reads handoff.md and implements everything in one pass
-# → No questions asked - all info is in the handoff</code></pre>
-                        </div>
+# → Presente resume pour validation
+# → Si APPROVED → Phase 6
+# → Si MAJOR CHANGES → Retour Phase 3
 
-                        <h3 data-lang="fr">Exemple QUICK Track</h3>
-                        <h3 data-lang="en">QUICK Track Example</h3>
+# Phase 6: Generer le brief d'implementation
+/business-analyse:6-handoff user-management
 
-                        <div class="code-block">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code># Simple change - auto-detects QUICK track
-/business-analyse:quick Add logout button to navigation header
+# → Transforme FRD en brief diff-like (anglais)
+# → Cree: .claude/ba/user-management/06-implementation-brief.md
 
-# → Creates .claude/ba/quick/add-logout-button.md
-# → Contains combined spec + handoff (~80 lines)
+# Implementation
+/implement .claude/ba/user-management/06-implementation-brief.md
 
-# Implement directly
-/implement .claude/ba/quick/add-logout-button.md</code></pre>
+# → Claude Code execute le brief en oneshot</code></pre>
                         </div>
 
                         <div class="alert alert-info">
@@ -961,10 +1018,10 @@ dotnet ef migrations add AddFeatureTable
                                 <h5 data-lang="fr">Conseil</h5>
                                 <h5 data-lang="en">Pro Tip</h5>
                                 <p data-lang="fr">
-                                    Les fichiers dans <code>.claude/ba/</code> peuvent etre reutilises pour documenter les evolutions futures. Conservez-les dans votre repository pour l'historique des specifications.
+                                    Les fichiers dans <code>.claude/ba/</code> constituent un historique precieux. Conservez-les pour documenter les evolutions futures et faciliter la maintenance.
                                 </p>
                                 <p data-lang="en">
-                                    Files in <code>.claude/ba/</code> can be reused to document future evolutions. Keep them in your repository for specification history.
+                                    Files in <code>.claude/ba/</code> are valuable history. Keep them to document future evolutions and facilitate maintenance.
                                 </p>
                             </div>
                         </div>
@@ -975,7 +1032,6 @@ dotnet ef migrations add AddFeatureTable
         </div>
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/search.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
