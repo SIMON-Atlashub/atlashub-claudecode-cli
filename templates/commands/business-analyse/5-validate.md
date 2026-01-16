@@ -1,455 +1,251 @@
 ---
-description: Phase 5 - User validation of specifications
-model: haiku
+description: Business Analysis Phase 5 - User validation and feedback loop
+argument-hint: [feature-name]
 ---
 
-# Business Analyse - Validate
+# Business Analysis - PHASE 5: VALIDATE
 
-Senior BA expert. User validation of functional specifications (FRD).
+**Model: Sonnet (interaction-focused, no deep analysis needed)**
 
-## Arguments
+## Mission
 
-```
-/business-analyse:5-validate [feature-id]
-```
+Present the FRD to user for validation.
+Collect feedback and route to appropriate phase.
 
-- `feature-id`: Feature identifier (e.g., FEAT-001)
+---
 
 ## Prerequisites
 
-```bash
-# Verify that FRD exists
-test -f ".business-analyse/applications/*/modules/*/features/$ARGUMENTS/3-functional-specification.md" || \
-  echo "Execute /business-analyse:4-specify first"
-```
+- Phase 4: `.claude/ba/[feature-name]/04-functional-spec.md`
 
-## Purpose
+---
 
-```
-+==============================================================================+
-|  USER VALIDATION - GATE BEFORE DEVELOPMENT                                  |
-+==============================================================================+
-|                                                                              |
-|  This phase is a MANDATORY checkpoint before generating the dev prompt.     |
-|                                                                              |
-|  The user MUST review and approve the FRD before proceeding.                |
-|  If rejected, feedback is collected and we return to ANALYSE phase.         |
-|                                                                              |
-+==============================================================================+
-```
+## Step 1: Present Summary
 
-## Iteration Limits & Escalation
-
-```
-╔══════════════════════════════════════════════════════════════════════════╗
-║  ITERATION CONTROL: Preventing infinite revision loops                   ║
-╠══════════════════════════════════════════════════════════════════════════╣
-║                                                                          ║
-║  MAXIMUM ITERATIONS: 3 major revisions                                   ║
-║                                                                          ║
-║  Iteration 1: Normal revision cycle                                      ║
-║  Iteration 2: Requires BA review of feedback quality                     ║
-║  Iteration 3: FINAL - Must escalate if still not approved                ║
-║                                                                          ║
-║  AFTER 3 ITERATIONS:                                                     ║
-║  → Escalate to Product Owner / Stakeholder meeting                       ║
-║  → Consider feature scope reduction                                      ║
-║  → Document blockers in escalation report                                ║
-║  → Option to abandon or defer feature                                    ║
-║                                                                          ║
-╚══════════════════════════════════════════════════════════════════════════╝
-```
-
-### Escalation Protocol (after 3 iterations)
-
-If validation fails 3 times:
-
-1. **Stop iteration** - Do not return to ANALYSE automatically
-2. **Create escalation report**:
+Read the FRD and present a concise summary for validation:
 
 ```markdown
-# Escalation Report - {{FEAT-XXX}}
+## Specification Ready for Validation
 
-**Date**: {{DATE}}
-**Iterations**: 3 (maximum reached)
-**Status**: REQUIRES STAKEHOLDER DECISION
+**Feature**: [Feature Name]
+**Version**: 1.0
+**Status**: Pending Validation
 
-## Iteration History
+### Quick Summary
 
-| # | Date | Decision | Main Feedback |
-|---|------|----------|---------------|
-| 1 | {{DATE}} | Major Revision | {{SUMMARY}} |
-| 2 | {{DATE}} | Major Revision | {{SUMMARY}} |
-| 3 | {{DATE}} | Major Revision | {{SUMMARY}} |
+**What it does**:
+[2-3 sentences describing the feature]
 
-## Root Cause Analysis
+**Key Requirements**:
+1. [Must-have 1]
+2. [Must-have 2]
+3. [Must-have 3]
 
-- [ ] Requirements unclear from start
-- [ ] Scope creep during iterations
-- [ ] Stakeholder disagreement
-- [ ] Technical constraints not understood
-- [ ] Other: {{SPECIFY}}
+**Scope**:
+- Included: [brief list]
+- Excluded: [brief list]
 
-## Recommended Actions
+**Files Created**:
+- `.claude/ba/[feature-name]/04-functional-spec.md` (full specification)
 
-- [ ] **REDUCE SCOPE**: Split into smaller features
-- [ ] **STAKEHOLDER MEETING**: Align on requirements
-- [ ] **DEFER**: Move to future iteration
-- [ ] **ABANDON**: Feature not viable
+---
 
-## Decision Required From
+### Validation Options
 
-- Product Owner: {{NAME}}
-- Technical Lead: {{NAME}}
-- Business Stakeholder: {{NAME}}
+Please review and choose:
+
+1. **APPROVED** - Specification is correct, proceed to handoff
+2. **MINOR CHANGES** - Small adjustments needed (list them)
+3. **MAJOR CHANGES** - Significant changes to requirements (back to Phase 3)
+4. **REJECTED** - Start over with different approach
 ```
 
-3. **Notify stakeholders** - Feature requires executive decision
-4. **Block handoff** - Cannot proceed until escalation resolved
+---
 
-## Stakeholder Sign-off
+## Step 2: Process Feedback
 
-```
-╔══════════════════════════════════════════════════════════════════════════╗
-║  STAKEHOLDER IDENTIFICATION: Who approves what                           ║
-╠══════════════════════════════════════════════════════════════════════════╣
-║                                                                          ║
-║  FEATURE COMPLEXITY determines required approvers:                       ║
-║                                                                          ║
-║  SIMPLE (CRUD, UI changes):                                              ║
-║  → Single approver (Product Owner OR Tech Lead)                          ║
-║                                                                          ║
-║  STANDARD (New feature, multiple components):                            ║
-║  → Product Owner (business approval)                                     ║
-║  → Tech Lead (technical feasibility)                                     ║
-║                                                                          ║
-║  CRITICAL (Security, compliance, cross-team):                            ║
-║  → Product Owner                                                         ║
-║  → Tech Lead                                                             ║
-║  → Security/Compliance (if applicable)                                   ║
-║  → Affected team leads (if cross-team)                                   ║
-║                                                                          ║
-╚══════════════════════════════════════════════════════════════════════════╝
-```
+Based on user response:
 
-### Validation record with stakeholder identity
-
-Update validation.json to capture approver details:
-
-```json
-{
-  "feature_id": "{{FEAT-XXX}}",
-  "status": "approved",
-  "validated_at": "{{ISO_DATE}}",
-  "iteration": 1,
-  "complexity": "simple|standard|critical",
-  "approvers": [
-    {
-      "role": "Product Owner",
-      "name": "{{NAME}}",
-      "approved_at": "{{ISO_DATE}}",
-      "comments": ""
-    }
-  ],
-  "pending_approvers": []
-}
-```
-
-### Multi-stakeholder approval flow (for CRITICAL features)
-
-```
-AskUserQuestion({
-  questions: [
-    {
-      question: "Who is approving this specification?",
-      header: "Approver",
-      options: [
-        { label: "Product Owner", description: "Business requirements approval" },
-        { label: "Tech Lead", description: "Technical feasibility approval" },
-        { label: "Security Lead", description: "Security/compliance approval" },
-        { label: "Other Stakeholder", description: "Specify role and name" }
-      ],
-      multiSelect: false
-    }
-  ]
-})
-```
-
-For CRITICAL features, repeat approval flow until all required approvers have signed off.
-
-## Workflow
-
-### Step 1: Load FRD for review
-
-```bash
-cat ".business-analyse/applications/*/modules/*/features/$FEATURE_ID/3-functional-specification.md"
-```
-
-### Step 2: Present summary to user
-
-Display a concise summary of the FRD:
-
-```
-+==============================================================================+
-|  SPECIFICATION REVIEW - {{FEAT-XXX}}                                        |
-+==============================================================================+
-
-FEATURE: {{FEATURE_NAME}}
-STATUS:  Pending validation
-
-+------------------------------------------------------------------------------+
-|  SUMMARY                                                                     |
-+------------------------------------------------------------------------------+
-
-SCOPE:
-  - Included: {{IN_SCOPE_ITEMS}}
-  - Excluded: {{OUT_SCOPE_ITEMS}}
-
-ENTITIES: {{X}} entities
-  {{LIST_ENTITIES}}
-
-ENDPOINTS: {{Y}} APIs
-  {{LIST_ENDPOINTS}}
-
-SCREENS: {{Z}} pages
-  {{LIST_SCREENS}}
-
-BUSINESS RULES: {{W}} rules
-  {{LIST_RULES}}
-
-COMPLETENESS SCORE: {{SCORE}}%
-
-+------------------------------------------------------------------------------+
-|  DOCUMENTS TO REVIEW                                                         |
-+------------------------------------------------------------------------------+
-
-  1. BRD: .../2-business-requirements.md
-  2. FRD: .../3-functional-specification.md (MAIN DOCUMENT)
-
-+==============================================================================+
-```
-
-### Step 3: Ask for validation
-
-```
-AskUserQuestion({
-  questions: [
-    {
-      question: "Do you approve this specification for development?",
-      header: "Validation",
-      options: [
-        { label: "Approved", description: "Specification is complete and correct - proceed to handoff" },
-        { label: "Minor changes", description: "Small adjustments needed - I'll provide feedback" },
-        { label: "Major revision", description: "Significant issues - return to analysis phase" },
-        { label: "Rejected", description: "Specification does not meet requirements" }
-      ],
-      multiSelect: false
-    }
-  ]
-})
-```
-
-### Step 4: Handle response
-
-#### If APPROVED:
+### Option 1: APPROVED
 
 ```markdown
-Update FRD status:
-- Status: **Validated**
-- Validated by: {{USER}}
-- Validation date: {{DATE}}
+## Validation Complete
 
-Create validation record in `.business-analyse/applications/.../features/{{FEAT-XXX}}/validation.json`:
+**Status**: APPROVED
+**Validated by**: [User]
+**Date**: [Date]
 
-{
-  "feature_id": "{{FEAT-XXX}}",
-  "status": "approved",
-  "validated_at": "{{ISO_DATE}}",
-  "validated_by": "user",
-  "comments": "",
-  "iteration": 1
-}
+Proceeding to Phase 6 (Handoff).
+
+Next command:
+/business-analyse:6-handoff [feature-name]
 ```
 
-**Output:**
-```
-+==============================================================================+
-|  VALIDATION APPROVED                                                         |
-+==============================================================================+
+Update FRD status to "Validated".
 
-Feature:     {{FEAT-XXX}} - {{NAME}}
-Status:      VALIDATED
-Date:        {{DATE}}
-
-Next step:   /business-analyse:6-handoff {{FEAT-XXX}}
-
-+==============================================================================+
-```
-
-#### If MINOR CHANGES:
-
-Ask for specific feedback:
-
-```
-AskUserQuestion({
-  questions: [
-    {
-      question: "What changes are needed?",
-      header: "Feedback",
-      options: [
-        { label: "Entity attributes", description: "Missing or incorrect attributes" },
-        { label: "Business rules", description: "Rules need adjustment" },
-        { label: "API design", description: "Endpoints need modification" },
-        { label: "UI/UX", description: "Screen designs need changes" }
-      ],
-      multiSelect: true
-    }
-  ]
-})
-```
-
-Then ask for details in free text.
-
-**Action:** Update FRD with minor changes, then re-validate.
-
-#### If MAJOR REVISION:
-
-```
-+==============================================================================+
-|  MAJOR REVISION REQUIRED                                                     |
-+==============================================================================+
-
-The specification requires significant changes.
-
-Please provide your feedback:
-- What is incorrect or missing?
-- What needs to be re-analyzed?
-- Any new requirements discovered?
-
-+==============================================================================+
-```
-
-Ask for detailed feedback, then:
+### Option 2: MINOR CHANGES
 
 ```markdown
-Create revision request in `.business-analyse/applications/.../features/{{FEAT-XXX}}/revision-{{N}}.md`:
+## Minor Changes Requested
 
-# Revision Request #{{N}} - {{FEAT-XXX}}
+**Changes**:
+1. [Change 1]
+2. [Change 2]
 
-**Date**: {{DATE}}
-**Status**: Major revision required
-
-## User Feedback
-
-{{USER_FEEDBACK}}
-
-## Changes Required
-
-- [ ] {{CHANGE_1}}
-- [ ] {{CHANGE_2}}
-- [ ] {{CHANGE_3}}
-
-## Next Action
-
-Return to: `/business-analyse:3-analyse {{FEAT-XXX}}`
+I'll update the specification now...
 ```
 
-**Output:**
-```
-+==============================================================================+
-|  RETURNING TO ANALYSIS                                                       |
-+==============================================================================+
+Apply changes directly to `04-functional-spec.md`, then re-present for validation.
 
-Feature:     {{FEAT-XXX}} - {{NAME}}
-Reason:      Major revision required
-Iteration:   {{N + 1}}
+**DO NOT go back to Phase 3 for minor changes.**
 
-Feedback saved to: .../revision-{{N}}.md
-
-Next step:   /business-analyse:3-analyse {{FEAT-XXX}}
-
-The analysis phase will incorporate your feedback.
-
-+==============================================================================+
-```
-
-#### If REJECTED:
-
-```
-+==============================================================================+
-|  SPECIFICATION REJECTED                                                      |
-+==============================================================================+
-
-Feature:     {{FEAT-XXX}} - {{NAME}}
-Status:      REJECTED
-
-Please provide the reason for rejection.
-The feature will be marked as rejected and archived.
-
-+==============================================================================+
-```
-
-Update status to rejected and archive.
-
-### Step 5: Update tracking
-
-Update `.business-analyse/applications/.../features/{{FEAT-XXX}}/README.md`:
+### Option 3: MAJOR CHANGES
 
 ```markdown
-| Phase | Document | Status | Date |
-|-------|----------|--------|------|
-| Discovery | 1-discovery.md | Done | {{DATE}} |
-| Analysis | 2-business-requirements.md | Done | {{DATE}} |
-| Specification | 3-functional-specification.md | Done | {{DATE}} |
-| **Validation** | validation.json | **{{STATUS}}** | **{{DATE}}** |
-| Handoff | 4-development-handoff.md | Pending | - |
+## Major Changes Required
+
+**Reason**: [User explanation]
+
+**Impact**: Requirements need re-analysis
+
+Returning to Phase 3 to re-analyze with new information.
+
+Next command:
+/business-analyse:3-analyse [feature-name]
 ```
 
-## Validation Criteria
+Save feedback to: `.claude/ba/[feature-name]/05-feedback-v[N].md`
 
-The FRD should be validated against these criteria:
+### Option 4: REJECTED
 
-| Criterion | Weight | Check |
-|-----------|--------|-------|
-| Scope is clear | 20% | In/Out scope defined |
-| Entities complete | 20% | All attributes, relations |
-| APIs documented | 20% | All endpoints, payloads |
-| Rules defined | 20% | All BR-XXX documented |
-| UI specified | 10% | Wireframes, behaviors |
-| Acceptance criteria | 10% | Testable criteria |
+```markdown
+## Specification Rejected
 
-**Minimum score for approval: 85%**
+**Reason**: [User explanation]
 
-## Summary
+**Options**:
+1. Start fresh with `/business-analyse:1-discover [new-request]`
+2. Archive this attempt and discuss alternative approach
 
-```
-VALIDATION PHASE COMPLETE
-+==============================================================================+
-Feature:     {{FEAT-XXX}} - {{NAME}}
-+==============================================================================+
-
-Result:      {{APPROVED / MINOR_CHANGES / MAJOR_REVISION / REJECTED}}
-Iteration:   {{N}}
-Score:       {{SCORE}}%
-
-{{IF APPROVED}}
-  Next: /business-analyse:6-handoff {{FEAT-XXX}}
-{{ELSE IF MINOR_CHANGES}}
-  Action: Updating FRD, then re-validate
-{{ELSE IF MAJOR_REVISION}}
-  Next: /business-analyse:3-analyse {{FEAT-XXX}}
-  Feedback saved for analysis phase
-{{ELSE}}
-  Feature archived
-{{END}}
-
-+==============================================================================+
+What would you like to do?
 ```
 
-## Rules
+Move folder to: `.claude/ba/_archived/[feature-name]-[date]/`
 
-1. **User decides** - Only the user can approve/reject
-2. **Feedback captured** - All feedback is documented
-3. **Iteration tracked** - Number of revision cycles logged
-4. **No skip** - Cannot proceed to handoff without validation
-5. **Traceability** - Validation record kept for audit
+---
+
+## Step 3: Update Status
+
+After validation, update the FRD header:
+
+```markdown
+| Field | Value |
+|-------|-------|
+| Version | 1.0 |
+| Status | **Validated** |
+| Validated By | [User] |
+| Validation Date | [Date] |
+```
+
+---
+
+## Feedback Log Template
+
+For MAJOR CHANGES, save feedback:
+
+```markdown
+# Validation Feedback: [Feature Name]
+
+| Field | Value |
+|-------|-------|
+| Version | [N] |
+| Date | [Date] |
+| Result | Major Changes |
+
+## Changes Requested
+
+1. **[Area]**: [What needs to change]
+   - Current: [What spec says]
+   - Requested: [What user wants]
+
+2. **[Area]**: [What needs to change]
+   - Current: [What spec says]
+   - Requested: [What user wants]
+
+## Impact Analysis
+
+- [ ] Affects scope
+- [ ] Affects data model
+- [ ] Affects UI
+- [ ] Affects permissions
+- [ ] Affects API
+
+## Next Steps
+
+Return to Phase 3 with this context.
+```
+
+---
+
+## Validation Checklist
+
+Present to user if they want guided validation:
+
+```markdown
+## Validation Checklist
+
+### Functional Completeness
+- [ ] All user needs are addressed
+- [ ] No missing requirements
+- [ ] Business rules are accurate
+
+### Scope Accuracy
+- [ ] In-scope items are correct
+- [ ] Out-of-scope items are acceptable
+- [ ] No scope creep
+
+### UI/UX (if applicable)
+- [ ] Layout matches expectations
+- [ ] Interactions are intuitive
+- [ ] Navigation is logical
+
+### Data (if applicable)
+- [ ] Data model is correct
+- [ ] Relationships make sense
+- [ ] No missing fields
+
+### Acceptance Criteria
+- [ ] Criteria are clear
+- [ ] Criteria are testable
+- [ ] Criteria match requirements
+```
+
+---
+
+## Output Rules
+
+1. **Concise presentation** - Don't dump the entire FRD
+2. **Clear options** - Make next steps obvious
+3. **Fast iteration** - Minor changes applied immediately
+4. **Audit trail** - Save feedback for major changes
+
+## File Outputs
+
+- Update: `.claude/ba/[feature-name]/04-functional-spec.md` (status)
+- Create (if major changes): `.claude/ba/[feature-name]/05-feedback-v[N].md`
+
+---
+
+## Next Phase
+
+After APPROVED:
+
+```
+/business-analyse:6-handoff [feature-name]
+```
+
+Phase 6 will generate the implementation prompt.
+
+---
+
+User: $ARGUMENTS

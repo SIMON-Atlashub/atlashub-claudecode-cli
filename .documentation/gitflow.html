@@ -12,7 +12,7 @@
         <header class="global-header">
             <div class="logo">CT</div>
             <span class="site-title">Claude Tools</span>
-            <span class="version-badge">v1.8.8</span>
+            <span class="version-badge">v1.0.0</span>
             <div class="header-divider"></div>
             <span class="page-title">GitFlow Workflow</span>
             <nav class="breadcrumb">
@@ -792,376 +792,477 @@
                             <span data-lang="en">When to use which command?</span>
                         </h3>
 
-                        <!-- Decision Flowchart SVG -->
-                        <div class="decision-diagram" style="margin: 2rem 0; overflow-x: auto;">
-                            <svg viewBox="0 0 900 570" style="width: 100%; max-width: 900px; height: auto; display: block; margin: 0 auto;">
+                        <!-- Integration Methods Explanation -->
+                        <div class="alert alert-warning" style="margin-bottom: 2rem;">
+                            <span class="alert-icon">&#128161;</span>
+                            <div class="alert-content">
+                                <h5 data-lang="fr">Deux methodes d'integration</h5>
+                                <h5 data-lang="en">Two Integration Methods</h5>
+                                <div data-lang="fr">
+                                    <p><strong>1. Methode PR (Recommandee)</strong> : <code>/gitflow:7-pull-request</code> &#8594; <code>/gitflow:11-finish</code></p>
+                                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                        <li>Cree une Pull Request pour revue de code</li>
+                                        <li>Apres merge de la PR, <code>/gitflow:11-finish</code> supprime la branche locale ET remote</li>
+                                        <li><strong>A utiliser pour</strong> : features, releases, hotfixes</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>2. Methode directe (Legacy)</strong> : <code>/gitflow:4-plan</code> &#8594; <code>/gitflow:5-exec</code></p>
+                                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                        <li>Merge directement sans Pull Request</li>
+                                        <li>Utile pour les projets solo ou CI/CD automatise</li>
+                                        <li><strong>Attention</strong> : Ne supprime pas la branche remote automatiquement</li>
+                                    </ul>
+                                </div>
+                                <div data-lang="en">
+                                    <p><strong>1. PR Method (Recommended)</strong>: <code>/gitflow:7-pull-request</code> &#8594; <code>/gitflow:11-finish</code></p>
+                                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                        <li>Creates a Pull Request for code review</li>
+                                        <li>After PR merge, <code>/gitflow:11-finish</code> deletes both local AND remote branches</li>
+                                        <li><strong>Use for</strong>: features, releases, hotfixes</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>2. Direct Method (Legacy)</strong>: <code>/gitflow:4-plan</code> &#8594; <code>/gitflow:5-exec</code></p>
+                                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                        <li>Merges directly without Pull Request</li>
+                                        <li>Useful for solo projects or automated CI/CD</li>
+                                        <li><strong>Warning</strong>: Does not automatically delete remote branch</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Branch Cleanup Info -->
+                        <div class="alert alert-info" style="margin-bottom: 2rem;">
+                            <span class="alert-icon">&#128465;</span>
+                            <div class="alert-content">
+                                <h5 data-lang="fr">Suppression des branches remote</h5>
+                                <h5 data-lang="en">Remote Branch Deletion</h5>
+                                <p data-lang="fr">
+                                    <code>/gitflow:11-finish</code> supprime automatiquement la branche sur le remote (<code>git push origin --delete {branch}</code>).
+                                    Pour un nettoyage complet des worktrees orphelins, utilisez <code>/gitflow:12-cleanup</code>.
+                                </p>
+                                <p data-lang="en">
+                                    <code>/gitflow:11-finish</code> automatically deletes the remote branch (<code>git push origin --delete {branch}</code>).
+                                    For complete cleanup of orphan worktrees, use <code>/gitflow:12-cleanup</code>.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Decision Flowchart SVG - Responsive -->
+                        <div class="decision-diagram" style="margin: 2rem 0;">
+                            <svg viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: auto; display: block;">
                                 <!-- Background -->
-                                <rect width="900" height="570" fill="#0f172a" rx="8"/>
+                                <rect width="1200" height="750" fill="#0f172a" rx="8"/>
 
                                 <!-- Title -->
-                                <text x="450" y="35" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="600">
+                                <text x="500" y="40" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="600">
                                     <tspan data-lang="fr">Quel est votre objectif ?</tspan>
                                     <tspan data-lang="en">What is your goal?</tspan>
                                 </text>
 
                                 <!-- Central decision diamond -->
-                                <polygon points="450,60 550,110 450,160 350,110" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
-                                <text x="450" y="115" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="500">
+                                <polygon points="500,70 620,130 500,190 380,130" fill="transparent" stroke="#6366f1" stroke-width="2.5"/>
+                                <text x="500" y="135" text-anchor="middle" fill="#f8fafc" font-size="14" font-weight="500">
                                     <tspan data-lang="fr">Objectif</tspan>
                                     <tspan data-lang="en">Goal</tspan>
                                 </text>
 
-                                <!-- FEATURE PATH (Left) -->
-                                <line x1="350" y1="110" x2="160" y2="110" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="160,110 170,105 170,115" fill="#22c55e"/>
+                                <!-- FEATURE PATH (Left) - Scaled for 1200x750 -->
+                                <line x1="380" y1="130" x2="200" y2="130" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="200,130 215,124 215,136" fill="#22c55e"/>
 
-                                <rect x="30" y="85" width="130" height="50" rx="6" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="2"/>
-                                <text x="95" y="105" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                <rect x="40" y="100" width="160" height="60" rx="8" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="2.5"/>
+                                <text x="120" y="125" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="600">
                                     <tspan data-lang="fr">Nouvelle</tspan>
                                     <tspan data-lang="en">New</tspan>
                                 </text>
-                                <text x="95" y="120" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                <text x="120" y="145" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="600">
                                     <tspan data-lang="fr">fonctionnalite</tspan>
                                     <tspan data-lang="en">feature</tspan>
                                 </text>
 
                                 <!-- Feature flow down -->
-                                <line x1="90" y1="135" x2="90" y2="175" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,175 85,165 95,165" fill="#22c55e"/>
+                                <line x1="120" y1="160" x2="120" y2="200" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="120,200 114,186 126,186" fill="#22c55e"/>
 
                                 <g class="cmd-copyable" data-cmd="/gitflow:10-start feature {nom}" style="cursor:pointer;">
-                                    <rect x="20" y="180" width="140" height="35" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="1.5"/>
-                                    <text x="90" y="202" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">/gitflow:10-start</text>
-                                    <text x="90" y="210" text-anchor="middle" fill="#94a3b8" font-size="8">feature {nom}</text>
+                                    <rect x="30" y="205" width="180" height="45" rx="6" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="120" y="230" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">/gitflow:10-start</text>
+                                    <text x="120" y="245" text-anchor="middle" fill="#94a3b8" font-size="10">feature {nom}</text>
                                 </g>
 
-                                <line x1="90" y1="215" x2="90" y2="245" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
-                                <text x="90" y="265" text-anchor="middle" fill="#64748b" font-size="10" font-style="italic">
+                                <line x1="120" y1="250" x2="120" y2="290" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="5,3"/>
+                                <text x="120" y="310" text-anchor="middle" fill="#64748b" font-size="12" font-style="italic">
                                     <tspan data-lang="fr">coder...</tspan>
                                     <tspan data-lang="en">code...</tspan>
                                 </text>
 
                                 <!-- Decision: Fini? (Done?) -->
-                                <line x1="90" y1="275" x2="90" y2="290" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,330 120,310 90,290 60,310" fill="#1e293b" stroke="#22c55e" stroke-width="1.5"/>
-                                <text x="90" y="313" text-anchor="middle" fill="#f8fafc" font-size="9" font-weight="500">
+                                <line x1="120" y1="325" x2="120" y2="345" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="120,395 160,370 120,345 80,370" fill="transparent" stroke="#22c55e" stroke-width="2"/>
+                                <text x="120" y="375" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="500">
                                     <tspan data-lang="fr">Fini?</tspan>
                                     <tspan data-lang="en">Done?</tspan>
                                 </text>
 
                                 <!-- NON path - go right to commit -->
-                                <line x1="120" y1="310" x2="145" y2="310" stroke="#64748b" stroke-width="2"/>
-                                <polygon points="145,310 135,305 135,315" fill="#64748b"/>
-                                <text x="132" y="303" text-anchor="middle" fill="#64748b" font-size="7" font-weight="600">
+                                <line x1="160" y1="370" x2="195" y2="370" stroke="#64748b" stroke-width="2.5"/>
+                                <polygon points="195,370 182,364 182,376" fill="#64748b"/>
+                                <text x="177" y="360" text-anchor="middle" fill="#64748b" font-size="9" font-weight="600">
                                     <tspan data-lang="fr">NON</tspan>
                                     <tspan data-lang="en">NO</tspan>
                                 </text>
 
                                 <g class="cmd-copyable" data-cmd="/gitflow:3-commit" style="cursor:pointer;">
-                                    <rect x="148" y="295" width="85" height="30" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
-                                    <text x="190" y="314" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="monospace">/gitflow:3-commit</text>
+                                    <rect x="198" y="352" width="110" height="36" rx="5" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+                                    <text x="253" y="375" text-anchor="middle" fill="#8b5cf6" font-size="11" font-family="monospace">/gitflow:3-commit</text>
                                 </g>
 
                                 <!-- Loop back from commit to coder -->
-                                <path d="M 190 295 L 190 260 L 120 260" stroke="#64748b" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
-                                <polygon points="120,260 130,255 130,265" fill="#64748b"/>
+                                <path d="M 253 352 L 253 305 L 160 305" stroke="#64748b" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+                                <polygon points="160,305 175,299 175,311" fill="#64748b"/>
 
-                                <!-- OUI path - continue to plan -->
-                                <line x1="90" y1="330" x2="90" y2="355" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,355 85,345 95,345" fill="#22c55e"/>
-                                <text x="75" y="345" text-anchor="end" fill="#22c55e" font-size="7" font-weight="600">
+                                <!-- OUI path - continue to PR (NEW: PR flow instead of plan/exec) -->
+                                <line x1="120" y1="395" x2="120" y2="425" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="120,425 114,411 126,411" fill="#22c55e"/>
+                                <text x="100" y="415" text-anchor="end" fill="#22c55e" font-size="9" font-weight="600">
                                     <tspan data-lang="fr">OUI</tspan>
                                     <tspan data-lang="en">YES</tspan>
                                 </text>
 
-                                <!-- Plan step -->
-                                <g class="cmd-copyable" data-cmd="/gitflow:4-plan" style="cursor:pointer;">
-                                    <rect x="20" y="358" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
-                                    <text x="90" y="378" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:4-plan</text>
+                                <!-- PR step -->
+                                <g class="cmd-copyable" data-cmd="/gitflow:7-pull-request" style="cursor:pointer;">
+                                    <rect x="30" y="430" width="180" height="32" rx="5" fill="#0f172a" stroke="#06b6d4" stroke-width="2"/>
+                                    <text x="120" y="451" text-anchor="middle" fill="#06b6d4" font-size="10" font-family="monospace">/gitflow:7-pull-request</text>
                                 </g>
 
-                                <!-- Decision diamond - Plan OK? -->
-                                <line x1="90" y1="388" x2="90" y2="400" stroke="#f97316" stroke-width="2"/>
-                                <polygon points="90,445 125,422 90,400 55,422" fill="#1e293b" stroke="#f97316" stroke-width="1.5"/>
-                                <text x="90" y="426" text-anchor="middle" fill="#f8fafc" font-size="9" font-weight="500">
-                                    <tspan data-lang="fr">Plan OK?</tspan>
-                                    <tspan data-lang="en">Plan OK?</tspan>
+                                <!-- Arrow to merge on GitHub -->
+                                <line x1="120" y1="462" x2="120" y2="478" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="120,478 114,467 126,467" fill="#22c55e"/>
+
+                                <!-- Merge on GitHub (external step) -->
+                                <rect x="30" y="483" width="180" height="38" rx="5" fill="#334155" fill-opacity="0.5" stroke="#64748b" stroke-width="2" stroke-dasharray="4,2"/>
+                                <text x="120" y="500" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="500">
+                                    <tspan data-lang="fr">Merge sur GitHub</tspan>
+                                    <tspan data-lang="en">Merge on GitHub</tspan>
+                                </text>
+                                <text x="120" y="514" text-anchor="middle" fill="#64748b" font-size="8">
+                                    <tspan data-lang="fr">(manuel ou /gitflow:9-merge)</tspan>
+                                    <tspan data-lang="en">(manual or /gitflow:9-merge)</tspan>
                                 </text>
 
-                                <!-- YES path - continue to exec -->
-                                <line x1="90" y1="445" x2="90" y2="465" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,465 85,455 95,455" fill="#22c55e"/>
-                                <text x="75" y="458" text-anchor="end" fill="#22c55e" font-size="7" font-weight="600">
-                                    <tspan data-lang="fr">OUI</tspan>
-                                    <tspan data-lang="en">YES</tspan>
-                                </text>
+                                <!-- Arrow to finish -->
+                                <line x1="120" y1="521" x2="120" y2="538" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="120,538 114,527 126,527" fill="#22c55e"/>
 
-                                <g class="cmd-copyable" data-cmd="/gitflow:5-exec" style="cursor:pointer;">
-                                    <rect x="20" y="468" width="140" height="30" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1.5"/>
-                                    <text x="90" y="488" text-anchor="middle" fill="#f97316" font-size="10" font-family="monospace">/gitflow:5-exec</text>
+                                <!-- Finish step -->
+                                <g class="cmd-copyable" data-cmd="/gitflow:11-finish" style="cursor:pointer;">
+                                    <rect x="30" y="543" width="180" height="32" rx="5" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="120" y="564" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">/gitflow:11-finish</text>
                                 </g>
 
-                                <!-- NO path - arrow back up to revise code -->
-                                <path d="M 55 422 L 15 422 L 15 260 L 55 260" stroke="#ef4444" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
-                                <polygon points="55,260 45,255 45,265" fill="#ef4444"/>
-                                <text x="5" y="345" text-anchor="middle" fill="#ef4444" font-size="7" font-weight="500" transform="rotate(-90, 5, 345)">
-                                    <tspan data-lang="fr">réviser</tspan>
-                                    <tspan data-lang="en">revise</tspan>
+                                <!-- Arrow to result -->
+                                <line x1="120" y1="575" x2="120" y2="592" stroke="#22c55e" stroke-width="2.5"/>
+                                <polygon points="120,592 114,581 126,581" fill="#22c55e"/>
+
+                                <!-- Final cleanup result -->
+                                <rect x="30" y="597" width="180" height="48" rx="8" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="2.5"/>
+                                <text x="120" y="617" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">
+                                    <tspan data-lang="fr">Cleanup</tspan>
+                                    <tspan data-lang="en">Cleanup</tspan>
+                                </text>
+                                <text x="120" y="634" text-anchor="middle" fill="#94a3b8" font-size="8">
+                                    <tspan data-lang="fr">suppression branches + worktree</tspan>
+                                    <tspan data-lang="en">delete branches + worktree</tspan>
                                 </text>
 
-                                <!-- Final merge result -->
-                                <line x1="90" y1="498" x2="90" y2="520" stroke="#22c55e" stroke-width="2"/>
-                                <polygon points="90,520 85,510 95,510" fill="#22c55e"/>
+                                <!-- RELEASE PATH (Center) - Scaled for 1200x750 -->
+                                <line x1="470" y1="190" x2="470" y2="220" stroke="#eab308" stroke-width="2.5"/>
+                                <line x1="470" y1="220" x2="400" y2="220" stroke="#eab308" stroke-width="2.5"/>
+                                <line x1="400" y1="220" x2="400" y2="250" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,250 394,236 406,236" fill="#eab308"/>
 
-                                <rect x="30" y="525" width="120" height="30" rx="6" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="2"/>
-                                <text x="90" y="545" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600">
-                                    <tspan data-lang="fr">Merge dans develop</tspan>
-                                    <tspan data-lang="en">Merged to develop</tspan>
-                                </text>
-
-                                <!-- RELEASE PATH (Center) -->
-                                <line x1="420" y1="160" x2="420" y2="180" stroke="#eab308" stroke-width="2"/>
-                                <line x1="420" y1="180" x2="350" y2="180" stroke="#eab308" stroke-width="2"/>
-                                <line x1="350" y1="180" x2="350" y2="200" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="350,200 345,190 355,190" fill="#eab308"/>
-
-                                <rect x="280" y="205" width="140" height="40" rx="6" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="2"/>
-                                <text x="350" y="230" text-anchor="middle" fill="#eab308" font-size="10" font-weight="600">
+                                <rect x="310" y="255" width="180" height="55" rx="8" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="2.5"/>
+                                <text x="400" y="280" text-anchor="middle" fill="#eab308" font-size="13" font-weight="600">
                                     <tspan data-lang="fr">Deployer en prod</tspan>
                                     <tspan data-lang="en">Deploy to prod</tspan>
                                 </text>
+                                <text x="400" y="298" text-anchor="middle" fill="#94a3b8" font-size="10">(release)</text>
 
-                                <line x1="350" y1="245" x2="350" y2="258" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="350,258 345,248 355,248" fill="#eab308"/>
+                                <line x1="400" y1="310" x2="400" y2="335" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,335 394,321 406,321" fill="#eab308"/>
 
                                 <g class="cmd-copyable" data-cmd="/gitflow:10-start release" style="cursor:pointer;">
-                                    <rect x="285" y="263" width="130" height="26" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
-                                    <text x="350" y="280" text-anchor="middle" fill="#eab308" font-size="8" font-family="monospace">/gitflow:10-start release</text>
+                                    <rect x="310" y="340" width="180" height="40" rx="6" fill="#0f172a" stroke="#eab308" stroke-width="2"/>
+                                    <text x="400" y="365" text-anchor="middle" fill="#eab308" font-size="11" font-family="monospace">/gitflow:10-start release</text>
                                 </g>
 
                                 <!-- Release: tests... -->
-                                <line x1="350" y1="289" x2="350" y2="305" stroke="#eab308" stroke-width="2" stroke-dasharray="4,2"/>
-                                <text x="350" y="318" text-anchor="middle" fill="#64748b" font-size="9" font-style="italic">
+                                <line x1="400" y1="380" x2="400" y2="410" stroke="#eab308" stroke-width="2.5" stroke-dasharray="5,3"/>
+                                <text x="400" y="430" text-anchor="middle" fill="#64748b" font-size="11" font-style="italic">
                                     <tspan data-lang="fr">tests...</tspan>
                                     <tspan data-lang="en">tests...</tspan>
                                 </text>
 
                                 <!-- Release: Fini? diamond -->
-                                <line x1="350" y1="323" x2="350" y2="335" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="350,368 378,351 350,335 322,351" fill="#1e293b" stroke="#eab308" stroke-width="1.5"/>
-                                <text x="350" y="355" text-anchor="middle" fill="#f8fafc" font-size="8" font-weight="500">
+                                <line x1="400" y1="445" x2="400" y2="460" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,505 435,482 400,460 365,482" fill="transparent" stroke="#eab308" stroke-width="2"/>
+                                <text x="400" y="487" text-anchor="middle" fill="#f8fafc" font-size="10" font-weight="500">
                                     <tspan data-lang="fr">Fini?</tspan>
                                     <tspan data-lang="en">Done?</tspan>
                                 </text>
 
                                 <!-- Release NON -> commit (shared) -->
-                                <line x1="378" y1="351" x2="430" y2="351" stroke="#64748b" stroke-width="2"/>
-                                <text x="404" y="344" text-anchor="middle" fill="#64748b" font-size="6" font-weight="600">
+                                <line x1="435" y1="482" x2="495" y2="482" stroke="#64748b" stroke-width="2.5"/>
+                                <text x="465" y="473" text-anchor="middle" fill="#64748b" font-size="8" font-weight="600">
                                     <tspan data-lang="fr">NON</tspan>
                                     <tspan data-lang="en">NO</tspan>
                                 </text>
 
                                 <!-- Shared commit box between Release and Hotfix -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:3-commit" style="cursor:pointer;">
-                                    <rect x="433" y="338" width="84" height="26" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
-                                    <text x="475" y="355" text-anchor="middle" fill="#8b5cf6" font-size="8" font-family="monospace">/gitflow:3-commit</text>
+                                    <rect x="498" y="465" width="120" height="34" rx="5" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+                                    <text x="558" y="487" text-anchor="middle" fill="#8b5cf6" font-size="10" font-family="monospace">/gitflow:3-commit</text>
                                 </g>
 
                                 <!-- Hotfix NON -> commit (shared) -->
-                                <line x1="572" y1="351" x2="520" y2="351" stroke="#64748b" stroke-width="2"/>
-                                <text x="546" y="344" text-anchor="middle" fill="#64748b" font-size="6" font-weight="600">
+                                <line x1="685" y1="482" x2="622" y2="482" stroke="#64748b" stroke-width="2.5"/>
+                                <text x="653" y="473" text-anchor="middle" fill="#64748b" font-size="8" font-weight="600">
                                     <tspan data-lang="fr">NON</tspan>
                                     <tspan data-lang="en">NO</tspan>
                                 </text>
 
                                 <!-- Release: loop back from commit -->
-                                <path d="M 450 338 L 450 305 L 378 305" stroke="#64748b" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
-                                <polygon points="378,305 388,300 388,310" fill="#64748b"/>
+                                <path d="M 520 465 L 520 420 L 440 420" stroke="#64748b" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+                                <polygon points="440,420 455,414 455,426" fill="#64748b"/>
 
                                 <!-- Hotfix: loop back from commit -->
-                                <path d="M 500 338 L 500 305 L 572 305" stroke="#64748b" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
-                                <polygon points="572,305 562,300 562,310" fill="#64748b"/>
+                                <path d="M 598 465 L 598 420 L 680 420" stroke="#64748b" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+                                <polygon points="680,420 665,414 665,426" fill="#64748b"/>
 
                                 <!-- Release OUI -> PR -> finish -->
-                                <line x1="350" y1="368" x2="350" y2="383" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="350,383 345,373 355,373" fill="#eab308"/>
-                                <text x="335" y="378" text-anchor="end" fill="#eab308" font-size="6" font-weight="600">
+                                <line x1="400" y1="505" x2="400" y2="530" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,530 394,516 406,516" fill="#eab308"/>
+                                <text x="380" y="520" text-anchor="end" fill="#eab308" font-size="9" font-weight="600">
                                     <tspan data-lang="fr">OUI</tspan>
                                     <tspan data-lang="en">YES</tspan>
                                 </text>
 
                                 <!-- Release: PR step -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:7-pull-request" style="cursor:pointer;">
-                                    <rect x="285" y="388" width="130" height="24" rx="4" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
-                                    <text x="350" y="404" text-anchor="middle" fill="#06b6d4" font-size="7" font-family="monospace">/gitflow:7-pull-request</text>
+                                    <rect x="310" y="535" width="180" height="28" rx="5" fill="#0f172a" stroke="#06b6d4" stroke-width="2"/>
+                                    <text x="400" y="554" text-anchor="middle" fill="#06b6d4" font-size="9" font-family="monospace">/gitflow:7-pull-request</text>
                                 </g>
 
-                                <line x1="350" y1="412" x2="350" y2="427" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="350,427 345,417 355,417" fill="#eab308"/>
+                                <line x1="400" y1="563" x2="400" y2="575" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,575 394,566 406,566" fill="#eab308"/>
+
+                                <!-- Merge on GitHub -->
+                                <rect x="310" y="580" width="180" height="32" rx="5" fill="#334155" fill-opacity="0.5" stroke="#64748b" stroke-width="2" stroke-dasharray="4,2"/>
+                                <text x="400" y="594" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">
+                                    <tspan data-lang="fr">Merge sur GitHub</tspan>
+                                    <tspan data-lang="en">Merge on GitHub</tspan>
+                                </text>
+                                <text x="400" y="606" text-anchor="middle" fill="#64748b" font-size="7">(manuel ou /gitflow:9-merge)</text>
+
+                                <line x1="400" y1="612" x2="400" y2="625" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,625 394,616 406,616" fill="#eab308"/>
 
                                 <g class="cmd-copyable" data-cmd="/gitflow:11-finish" style="cursor:pointer;">
-                                    <rect x="285" y="432" width="130" height="24" rx="4" fill="#0f172a" stroke="#eab308" stroke-width="1.5"/>
-                                    <text x="350" y="448" text-anchor="middle" fill="#eab308" font-size="7" font-family="monospace">/gitflow:11-finish</text>
+                                    <rect x="310" y="630" width="180" height="28" rx="5" fill="#0f172a" stroke="#eab308" stroke-width="2"/>
+                                    <text x="400" y="649" text-anchor="middle" fill="#eab308" font-size="9" font-family="monospace">/gitflow:11-finish</text>
                                 </g>
 
-                                <line x1="350" y1="456" x2="350" y2="475" stroke="#eab308" stroke-width="2"/>
-                                <polygon points="350,475 345,465 355,465" fill="#eab308"/>
+                                <line x1="400" y1="658" x2="400" y2="672" stroke="#eab308" stroke-width="2.5"/>
+                                <polygon points="400,672 394,663 406,663" fill="#eab308"/>
 
-                                <rect x="295" y="480" width="110" height="24" rx="6" fill="#eab308" fill-opacity="0.2" stroke="#eab308" stroke-width="2"/>
-                                <text x="350" y="496" text-anchor="middle" fill="#eab308" font-size="8" font-weight="600">
-                                    <tspan data-lang="fr">Tag + Prod</tspan>
-                                    <tspan data-lang="en">Tag + Prod</tspan>
+                                <rect x="310" y="677" width="180" height="45" rx="8" fill="#eab308" fill-opacity="0.2" stroke="#eab308" stroke-width="2.5"/>
+                                <text x="400" y="695" text-anchor="middle" fill="#eab308" font-size="10" font-weight="600">
+                                    <tspan data-lang="fr">Tag + merge back</tspan>
+                                    <tspan data-lang="en">Tag + merge back</tspan>
+                                </text>
+                                <text x="400" y="712" text-anchor="middle" fill="#94a3b8" font-size="8">
+                                    <tspan data-lang="fr">→ main + develop + cleanup</tspan>
+                                    <tspan data-lang="en">→ main + develop + cleanup</tspan>
                                 </text>
 
-                                <!-- HOTFIX PATH (Center-Right) -->
-                                <line x1="490" y1="160" x2="490" y2="180" stroke="#ec4899" stroke-width="2"/>
-                                <line x1="490" y1="180" x2="600" y2="180" stroke="#ec4899" stroke-width="2"/>
-                                <line x1="600" y1="180" x2="600" y2="200" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,200 595,190 605,190" fill="#ec4899"/>
+                                <!-- HOTFIX PATH (Center-Right) - Scaled for 1200x750 -->
+                                <line x1="550" y1="190" x2="550" y2="220" stroke="#ec4899" stroke-width="2.5"/>
+                                <line x1="550" y1="220" x2="720" y2="220" stroke="#ec4899" stroke-width="2.5"/>
+                                <line x1="720" y1="220" x2="720" y2="250" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,250 714,236 726,236" fill="#ec4899"/>
 
-                                <rect x="530" y="205" width="140" height="40" rx="6" fill="#ec4899" fill-opacity="0.15" stroke="#ec4899" stroke-width="2"/>
-                                <text x="600" y="230" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="600">
+                                <rect x="630" y="255" width="180" height="55" rx="8" fill="#ec4899" fill-opacity="0.15" stroke="#ec4899" stroke-width="2.5"/>
+                                <text x="720" y="280" text-anchor="middle" fill="#ec4899" font-size="13" font-weight="600">
                                     <tspan data-lang="fr">Bug urgent prod</tspan>
                                     <tspan data-lang="en">Urgent prod bug</tspan>
                                 </text>
+                                <text x="720" y="298" text-anchor="middle" fill="#94a3b8" font-size="10">(hotfix)</text>
 
-                                <line x1="600" y1="245" x2="600" y2="258" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,258 595,248 605,248" fill="#ec4899"/>
+                                <line x1="720" y1="310" x2="720" y2="335" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,335 714,321 726,321" fill="#ec4899"/>
 
                                 <g class="cmd-copyable" data-cmd="/gitflow:10-start hotfix {nom}" style="cursor:pointer;">
-                                    <rect x="535" y="263" width="130" height="26" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
-                                    <text x="600" y="280" text-anchor="middle" fill="#ec4899" font-size="8" font-family="monospace">/gitflow:10-start hotfix</text>
+                                    <rect x="630" y="340" width="180" height="40" rx="6" fill="#0f172a" stroke="#ec4899" stroke-width="2"/>
+                                    <text x="720" y="365" text-anchor="middle" fill="#ec4899" font-size="11" font-family="monospace">/gitflow:10-start hotfix</text>
                                 </g>
 
                                 <!-- Hotfix: fix... -->
-                                <line x1="600" y1="289" x2="600" y2="305" stroke="#ec4899" stroke-width="2" stroke-dasharray="4,2"/>
-                                <text x="600" y="318" text-anchor="middle" fill="#64748b" font-size="9" font-style="italic">
+                                <line x1="720" y1="380" x2="720" y2="410" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="5,3"/>
+                                <text x="720" y="430" text-anchor="middle" fill="#64748b" font-size="11" font-style="italic">
                                     <tspan data-lang="fr">fix...</tspan>
                                     <tspan data-lang="en">fix...</tspan>
                                 </text>
 
                                 <!-- Hotfix: Fini? diamond -->
-                                <line x1="600" y1="323" x2="600" y2="335" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,368 628,351 600,335 572,351" fill="#1e293b" stroke="#ec4899" stroke-width="1.5"/>
-                                <text x="600" y="355" text-anchor="middle" fill="#f8fafc" font-size="8" font-weight="500">
+                                <line x1="720" y1="445" x2="720" y2="460" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,505 755,482 720,460 685,482" fill="transparent" stroke="#ec4899" stroke-width="2"/>
+                                <text x="720" y="487" text-anchor="middle" fill="#f8fafc" font-size="10" font-weight="500">
                                     <tspan data-lang="fr">Fini?</tspan>
                                     <tspan data-lang="en">Done?</tspan>
                                 </text>
 
                                 <!-- Hotfix OUI -> PR -> finish -->
-                                <line x1="600" y1="368" x2="600" y2="383" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,383 595,373 605,373" fill="#ec4899"/>
-                                <text x="615" y="378" text-anchor="start" fill="#ec4899" font-size="6" font-weight="600">
+                                <line x1="720" y1="505" x2="720" y2="530" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,530 714,516 726,516" fill="#ec4899"/>
+                                <text x="740" y="520" text-anchor="start" fill="#ec4899" font-size="9" font-weight="600">
                                     <tspan data-lang="fr">OUI</tspan>
                                     <tspan data-lang="en">YES</tspan>
                                 </text>
 
                                 <!-- Hotfix: PR step -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:7-pull-request" style="cursor:pointer;">
-                                    <rect x="535" y="388" width="130" height="24" rx="4" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
-                                    <text x="600" y="404" text-anchor="middle" fill="#06b6d4" font-size="7" font-family="monospace">/gitflow:7-pull-request</text>
+                                    <rect x="630" y="535" width="180" height="28" rx="5" fill="#0f172a" stroke="#06b6d4" stroke-width="2"/>
+                                    <text x="720" y="554" text-anchor="middle" fill="#06b6d4" font-size="9" font-family="monospace">/gitflow:7-pull-request</text>
                                 </g>
 
-                                <line x1="600" y1="412" x2="600" y2="427" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,427 595,417 605,417" fill="#ec4899"/>
+                                <line x1="720" y1="563" x2="720" y2="575" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,575 714,566 726,566" fill="#ec4899"/>
+
+                                <!-- Merge on GitHub -->
+                                <rect x="630" y="580" width="180" height="32" rx="5" fill="#334155" fill-opacity="0.5" stroke="#64748b" stroke-width="2" stroke-dasharray="4,2"/>
+                                <text x="720" y="594" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="500">
+                                    <tspan data-lang="fr">Merge sur GitHub</tspan>
+                                    <tspan data-lang="en">Merge on GitHub</tspan>
+                                </text>
+                                <text x="720" y="606" text-anchor="middle" fill="#64748b" font-size="7">(manuel ou /gitflow:9-merge)</text>
+
+                                <line x1="720" y1="612" x2="720" y2="625" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,625 714,616 726,616" fill="#ec4899"/>
 
                                 <g class="cmd-copyable" data-cmd="/gitflow:11-finish" style="cursor:pointer;">
-                                    <rect x="535" y="432" width="130" height="24" rx="4" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/>
-                                    <text x="600" y="448" text-anchor="middle" fill="#ec4899" font-size="7" font-family="monospace">/gitflow:11-finish</text>
+                                    <rect x="630" y="630" width="180" height="28" rx="5" fill="#0f172a" stroke="#ec4899" stroke-width="2"/>
+                                    <text x="720" y="649" text-anchor="middle" fill="#ec4899" font-size="9" font-family="monospace">/gitflow:11-finish</text>
                                 </g>
 
-                                <line x1="600" y1="456" x2="600" y2="475" stroke="#ec4899" stroke-width="2"/>
-                                <polygon points="600,475 595,465 605,465" fill="#ec4899"/>
+                                <!-- Hotfix result -->
+                                <line x1="720" y1="658" x2="720" y2="672" stroke="#ec4899" stroke-width="2.5"/>
+                                <polygon points="720,672 714,663 726,663" fill="#ec4899"/>
 
-                                <rect x="545" y="480" width="110" height="24" rx="6" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="2"/>
-                                <text x="600" y="496" text-anchor="middle" fill="#ec4899" font-size="8" font-weight="600">
-                                    <tspan data-lang="fr">Fix deploye</tspan>
-                                    <tspan data-lang="en">Fix deployed</tspan>
+                                <rect x="630" y="677" width="180" height="45" rx="8" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="2.5"/>
+                                <text x="720" y="695" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="600">
+                                    <tspan data-lang="fr">Version + Tag + merge back</tspan>
+                                    <tspan data-lang="en">Version + Tag + merge back</tspan>
+                                </text>
+                                <text x="720" y="712" text-anchor="middle" fill="#94a3b8" font-size="8">
+                                    <tspan data-lang="fr">bump PATCH + main + develop</tspan>
+                                    <tspan data-lang="en">bump PATCH + main + develop</tspan>
                                 </text>
 
-                                <!-- UTILITY COMMANDS (Right) -->
-                                <line x1="550" y1="110" x2="720" y2="110" stroke="#6366f1" stroke-width="2"/>
-                                <polygon points="720,110 710,105 710,115" fill="#6366f1"/>
+                                <!-- UTILITY COMMANDS (Right) - Scaled for 1200x750 -->
+                                <line x1="620" y1="130" x2="920" y2="130" stroke="#6366f1" stroke-width="2.5"/>
+                                <polygon points="920,130 905,124 905,136" fill="#6366f1"/>
 
-                                <rect x="730" y="70" width="150" height="395" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
-                                <text x="805" y="95" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">
+                                <rect x="935" y="70" width="240" height="640" rx="10" fill="transparent" stroke="#475569" stroke-width="1.5"/>
+                                <text x="1055" y="100" text-anchor="middle" fill="#94a3b8" font-size="14" font-weight="600">
                                     <tspan data-lang="fr">Utilitaires</tspan>
                                     <tspan data-lang="en">Utilities</tspan>
                                 </text>
 
                                 <!-- Init (first - setup) -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:1-init" style="cursor:pointer;">
-                                    <rect x="745" y="108" width="120" height="26" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,2"/>
-                                    <text x="805" y="125" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">/gitflow:1-init</text>
+                                    <rect x="955" y="118" width="200" height="36" rx="5" fill="#0f172a" stroke="#475569" stroke-width="2" stroke-dasharray="4,3"/>
+                                    <text x="1055" y="141" text-anchor="middle" fill="#64748b" font-size="11" font-family="monospace">/gitflow:1-init</text>
                                 </g>
 
                                 <!-- Status -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:2-status" style="cursor:pointer;">
-                                    <rect x="745" y="142" width="120" height="26" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5"/>
-                                    <text x="805" y="159" text-anchor="middle" fill="#3b82f6" font-size="9" font-family="monospace">/gitflow:2-status</text>
+                                    <rect x="955" y="164" width="200" height="36" rx="5" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+                                    <text x="1055" y="187" text-anchor="middle" fill="#3b82f6" font-size="11" font-family="monospace">/gitflow:2-status</text>
                                 </g>
 
                                 <!-- Commit -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:3-commit" style="cursor:pointer;">
-                                    <rect x="745" y="176" width="120" height="26" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
-                                    <text x="805" y="193" text-anchor="middle" fill="#8b5cf6" font-size="9" font-family="monospace">/gitflow:3-commit</text>
+                                    <rect x="955" y="210" width="200" height="36" rx="5" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+                                    <text x="1055" y="233" text-anchor="middle" fill="#8b5cf6" font-size="11" font-family="monospace">/gitflow:3-commit</text>
                                 </g>
 
                                 <!-- Abort -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:6-abort" style="cursor:pointer;">
-                                    <rect x="745" y="210" width="120" height="26" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
-                                    <text x="805" y="227" text-anchor="middle" fill="#ef4444" font-size="9" font-family="monospace">/gitflow:6-abort</text>
+                                    <rect x="955" y="256" width="200" height="36" rx="5" fill="#0f172a" stroke="#ef4444" stroke-width="2"/>
+                                    <text x="1055" y="279" text-anchor="middle" fill="#ef4444" font-size="11" font-family="monospace">/gitflow:6-abort</text>
                                 </g>
 
                                 <!-- PR Commands Section -->
-                                <text x="805" y="254" text-anchor="middle" fill="#64748b" font-size="8" font-weight="500">
+                                <text x="1055" y="318" text-anchor="middle" fill="#64748b" font-size="10" font-weight="500">
                                     <tspan data-lang="fr">─── Pull Request ───</tspan>
                                     <tspan data-lang="en">─── Pull Request ───</tspan>
                                 </text>
 
                                 <!-- Pull Request -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:7-pull-request" style="cursor:pointer;">
-                                    <rect x="745" y="264" width="120" height="26" rx="4" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
-                                    <text x="805" y="281" text-anchor="middle" fill="#06b6d4" font-size="9" font-family="monospace">/gitflow:7-pull-request</text>
+                                    <rect x="955" y="332" width="200" height="36" rx="5" fill="#0f172a" stroke="#06b6d4" stroke-width="2"/>
+                                    <text x="1055" y="355" text-anchor="middle" fill="#06b6d4" font-size="11" font-family="monospace">/gitflow:7-pull-request</text>
                                 </g>
 
                                 <!-- Review -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:8-review" style="cursor:pointer;">
-                                    <rect x="745" y="298" width="120" height="26" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
-                                    <text x="805" y="315" text-anchor="middle" fill="#10b981" font-size="9" font-family="monospace">/gitflow:8-review</text>
+                                    <rect x="955" y="378" width="200" height="36" rx="5" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
+                                    <text x="1055" y="401" text-anchor="middle" fill="#10b981" font-size="11" font-family="monospace">/gitflow:8-review</text>
                                 </g>
 
                                 <!-- Merge -->
                                 <g class="cmd-copyable" data-cmd="/gitflow:9-merge" style="cursor:pointer;">
-                                    <rect x="745" y="332" width="120" height="26" rx="4" fill="#0f172a" stroke="#6366f1" stroke-width="1.5"/>
-                                    <text x="805" y="349" text-anchor="middle" fill="#6366f1" font-size="9" font-family="monospace">/gitflow:9-merge</text>
+                                    <rect x="955" y="424" width="200" height="36" rx="5" fill="#0f172a" stroke="#6366f1" stroke-width="2"/>
+                                    <text x="1055" y="447" text-anchor="middle" fill="#6366f1" font-size="11" font-family="monospace">/gitflow:9-merge</text>
+                                </g>
+
+                                <!-- Cleanup Commands Section -->
+                                <text x="1055" y="487" text-anchor="middle" fill="#64748b" font-size="10" font-weight="500">
+                                    <tspan data-lang="fr">─── Nettoyage ───</tspan>
+                                    <tspan data-lang="en">─── Cleanup ───</tspan>
+                                </text>
+
+                                <!-- Finish -->
+                                <g class="cmd-copyable" data-cmd="/gitflow:11-finish" style="cursor:pointer;">
+                                    <rect x="955" y="501" width="200" height="36" rx="5" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="1055" y="524" text-anchor="middle" fill="#22c55e" font-size="11" font-family="monospace">/gitflow:11-finish</text>
+                                </g>
+
+                                <!-- Cleanup -->
+                                <g class="cmd-copyable" data-cmd="/gitflow:12-cleanup" style="cursor:pointer;">
+                                    <rect x="955" y="547" width="200" height="36" rx="5" fill="#0f172a" stroke="#f97316" stroke-width="2"/>
+                                    <text x="1055" y="570" text-anchor="middle" fill="#f97316" font-size="11" font-family="monospace">/gitflow:12-cleanup</text>
                                 </g>
 
                                 <!-- Legend inside box -->
-                                <text x="805" y="378" text-anchor="middle" fill="#64748b" font-size="8" font-weight="500">
+                                <text x="1055" y="610" text-anchor="middle" fill="#64748b" font-size="10" font-weight="500">
                                     <tspan data-lang="fr">─── Couleurs ───</tspan>
                                     <tspan data-lang="en">─── Colors ───</tspan>
                                 </text>
 
-                                <circle cx="750" cy="395" r="4" fill="#22c55e"/>
-                                <text x="760" y="398" fill="#94a3b8" font-size="7">Feature</text>
-                                <circle cx="820" cy="395" r="4" fill="#eab308"/>
-                                <text x="830" y="398" fill="#94a3b8" font-size="7">Release</text>
+                                <circle cx="970" cy="635" r="5" fill="#22c55e"/>
+                                <text x="983" y="639" fill="#94a3b8" font-size="9">Feature</text>
+                                <circle cx="1080" cy="635" r="5" fill="#eab308"/>
+                                <text x="1093" y="639" fill="#94a3b8" font-size="9">Release</text>
 
-                                <circle cx="750" cy="412" r="4" fill="#ec4899"/>
-                                <text x="760" y="415" fill="#94a3b8" font-size="7">Hotfix</text>
-                                <circle cx="820" cy="412" r="4" fill="#06b6d4"/>
-                                <text x="830" y="415" fill="#94a3b8" font-size="7">PR</text>
+                                <circle cx="970" cy="658" r="5" fill="#ec4899"/>
+                                <text x="983" y="662" fill="#94a3b8" font-size="9">Hotfix</text>
+                                <circle cx="1080" cy="658" r="5" fill="#06b6d4"/>
+                                <text x="1093" y="662" fill="#94a3b8" font-size="9">PR</text>
 
-                                <circle cx="750" cy="429" r="4" fill="#f97316"/>
-                                <text x="760" y="432" fill="#94a3b8" font-size="7">Integr.</text>
-                                <circle cx="820" cy="429" r="4" fill="#6366f1"/>
-                                <text x="830" y="432" fill="#94a3b8" font-size="7">Decision</text>
-
-                                <circle cx="750" cy="446" r="4" fill="#3b82f6"/>
-                                <text x="760" y="449" fill="#94a3b8" font-size="7">Status</text>
-                                <circle cx="820" cy="446" r="4" fill="#8b5cf6"/>
-                                <text x="830" y="449" fill="#94a3b8" font-size="7">Commit</text>
+                                <circle cx="970" cy="681" r="5" fill="#3b82f6"/>
+                                <text x="983" y="685" fill="#94a3b8" font-size="9">Status</text>
+                                <circle cx="1080" cy="681" r="5" fill="#8b5cf6"/>
+                                <text x="1093" y="685" fill="#94a3b8" font-size="9">Commit</text>
                             </svg>
                         </div>
 
@@ -1171,6 +1272,229 @@
                             <span data-lang="en">Command Reference</span>
                         </h3>
 
+                        <!-- Command Hierarchy Diagram -->
+                        <div class="svg-diagram" style="margin: 1.5rem 0 2.5rem 0;">
+                            <svg viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet" style="width: 100%; max-width: 1000px; height: auto;">
+                                <!-- Title -->
+                                <text x="500" y="25" text-anchor="middle" fill="#94a3b8" font-size="14" font-weight="500">
+                                    <tspan data-lang="fr">Hierarchie des commandes</tspan>
+                                    <tspan data-lang="en">Command Hierarchy</tspan>
+                                </text>
+
+                                <!-- ===== MAIN WORKFLOW (Center) ===== -->
+                                <text x="500" y="60" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="600">
+                                    <tspan data-lang="fr">WORKFLOW PRINCIPAL</tspan>
+                                    <tspan data-lang="en">MAIN WORKFLOW</tspan>
+                                </text>
+
+                                <!-- Start -->
+                                <g transform="translate(120, 80)">
+                                    <rect x="0" y="0" width="180" height="50" rx="8" fill="transparent" stroke="#22c55e" stroke-width="2"/>
+                                    <text x="90" y="22" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="600">/gitflow:10-start</text>
+                                    <text x="90" y="40" text-anchor="middle" fill="#64748b" font-size="10">
+                                        <tspan data-lang="fr">Demarrer branche</tspan>
+                                        <tspan data-lang="en">Start branch</tspan>
+                                    </text>
+                                </g>
+
+                                <!-- Arrow -->
+                                <line x1="300" y1="105" x2="380" y2="105" stroke="#475569" stroke-width="2"/>
+                                <polygon points="380,105 370,100 370,110" fill="#475569"/>
+
+                                <!-- Commit (loop) -->
+                                <g transform="translate(390, 80)">
+                                    <rect x="0" y="0" width="180" height="50" rx="8" fill="transparent" stroke="#8b5cf6" stroke-width="2"/>
+                                    <text x="90" y="22" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="600">/gitflow:3-commit</text>
+                                    <text x="90" y="40" text-anchor="middle" fill="#64748b" font-size="10">
+                                        <tspan data-lang="fr">Commiter (boucle)</tspan>
+                                        <tspan data-lang="en">Commit (loop)</tspan>
+                                    </text>
+                                    <!-- Loop arrow -->
+                                    <path d="M180,25 Q200,25 200,10 Q200,-5 90,-5 Q-10,-5 -10,10 Q-10,25 0,25" stroke="#8b5cf6" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+                                    <polygon points="0,25 8,20 8,30" fill="#8b5cf6"/>
+                                </g>
+
+                                <!-- ===== DECISION POINT: Choose integration method ===== -->
+                                <!-- Arrow to decision -->
+                                <line x1="570" y1="105" x2="610" y2="105" stroke="#475569" stroke-width="2"/>
+
+                                <!-- Decision diamond -->
+                                <polygon points="650,105 690,80 730,105 690,130" fill="transparent" stroke="#6366f1" stroke-width="2"/>
+                                <text x="690" y="102" text-anchor="middle" fill="#a5b4fc" font-size="8" font-weight="500">
+                                    <tspan data-lang="fr">Methode?</tspan>
+                                    <tspan data-lang="en">Method?</tspan>
+                                </text>
+                                <text x="690" y="113" text-anchor="middle" fill="#64748b" font-size="7">PR ou Direct</text>
+
+                                <!-- ===== PATH 1: PR FLOW (Up) ===== -->
+                                <line x1="690" y1="80" x2="690" y2="55" stroke="#06b6d4" stroke-width="2"/>
+                                <polygon points="690,55 685,65 695,65" fill="#06b6d4"/>
+
+                                <!-- PR Flow label -->
+                                <text x="770" y="50" text-anchor="start" fill="#06b6d4" font-size="9" font-weight="600">
+                                    <tspan data-lang="fr">METHODE PR</tspan>
+                                    <tspan data-lang="en">PR METHOD</tspan>
+                                </text>
+                                <text x="770" y="62" text-anchor="start" fill="#64748b" font-size="7">
+                                    <tspan data-lang="fr">Equipe, review, CI/CD</tspan>
+                                    <tspan data-lang="en">Team, review, CI/CD</tspan>
+                                </text>
+
+                                <!-- PR Flow box -->
+                                <g transform="translate(580, 160)">
+                                    <rect x="0" y="0" width="380" height="95" rx="8" fill="#06b6d4" fill-opacity="0.05" stroke="#06b6d4" stroke-width="1.5"/>
+                                    <text x="190" y="18" text-anchor="middle" fill="#22d3ee" font-size="10" font-weight="600">
+                                        <tspan data-lang="fr">PR FLOW : Equipe / Review / CI</tspan>
+                                        <tspan data-lang="en">PR FLOW: Team / Review / CI</tspan>
+                                    </text>
+
+                                    <!-- PR -->
+                                    <g transform="translate(15, 35)">
+                                        <rect x="0" y="0" width="85" height="45" rx="5" fill="transparent" stroke="#06b6d4" stroke-width="2"/>
+                                        <text x="42" y="20" text-anchor="middle" fill="#22d3ee" font-size="8" font-weight="600">/gitflow:7-pr</text>
+                                        <text x="42" y="35" text-anchor="middle" fill="#64748b" font-size="7">Creer PR</text>
+                                    </g>
+
+                                    <!-- Arrow -->
+                                    <line x1="100" y1="57" x2="115" y2="57" stroke="#06b6d4" stroke-width="1.5"/>
+                                    <polygon points="115,57 108,53 108,61" fill="#06b6d4"/>
+
+                                    <!-- Merge GitHub -->
+                                    <g transform="translate(120, 35)">
+                                        <rect x="0" y="0" width="85" height="45" rx="5" fill="#334155" fill-opacity="0.5" stroke="#64748b" stroke-width="1.5"/>
+                                        <text x="42" y="20" text-anchor="middle" fill="#94a3b8" font-size="8" font-weight="500">Merge</text>
+                                        <text x="42" y="35" text-anchor="middle" fill="#64748b" font-size="7">sur GitHub</text>
+                                    </g>
+
+                                    <!-- Arrow -->
+                                    <line x1="205" y1="57" x2="220" y2="57" stroke="#06b6d4" stroke-width="1.5"/>
+                                    <polygon points="220,57 213,53 213,61" fill="#06b6d4"/>
+
+                                    <!-- Finish -->
+                                    <g transform="translate(225, 35)">
+                                        <rect x="0" y="0" width="85" height="45" rx="5" fill="transparent" stroke="#22c55e" stroke-width="2"/>
+                                        <text x="42" y="20" text-anchor="middle" fill="#4ade80" font-size="8" font-weight="600">/gitflow:11-finish</text>
+                                        <text x="42" y="35" text-anchor="middle" fill="#64748b" font-size="7">tag + cleanup</text>
+                                    </g>
+
+                                    <!-- Result -->
+                                    <line x1="310" y1="57" x2="325" y2="57" stroke="#22c55e" stroke-width="1.5"/>
+                                    <polygon points="325,57 318,53 318,61" fill="#22c55e"/>
+                                    <text x="340" y="55" text-anchor="start" fill="#22c55e" font-size="8">
+                                        <tspan data-lang="fr">Done</tspan>
+                                        <tspan data-lang="en">Done</tspan>
+                                    </text>
+                                    <text x="340" y="67" text-anchor="start" fill="#64748b" font-size="6">(branche remote)</text>
+                                </g>
+
+                                <!-- Connect decision to PR flow -->
+                                <path d="M 690 80 L 690 55 L 770 55 L 770 160" stroke="#06b6d4" stroke-width="1.5" fill="none"/>
+                                <polygon points="770,160 765,150 775,150" fill="#06b6d4"/>
+
+                                <!-- ===== PATH 2: DIRECT MERGE (Down) ===== -->
+                                <line x1="690" y1="130" x2="690" y2="155" stroke="#f97316" stroke-width="2"/>
+                                <polygon points="690,155 685,145 695,145" fill="#f97316"/>
+
+                                <!-- Direct Flow box -->
+                                <g transform="translate(40, 160)">
+                                    <rect x="0" y="0" width="380" height="95" rx="8" fill="#f97316" fill-opacity="0.05" stroke="#f97316" stroke-width="1.5"/>
+                                    <text x="190" y="18" text-anchor="middle" fill="#fb923c" font-size="10" font-weight="600">
+                                        <tspan data-lang="fr">DIRECT MERGE : Solo / Pas de review</tspan>
+                                        <tspan data-lang="en">DIRECT MERGE: Solo / No review</tspan>
+                                    </text>
+
+                                    <!-- Plan -->
+                                    <g transform="translate(60, 35)">
+                                        <rect x="0" y="0" width="100" height="45" rx="5" fill="transparent" stroke="#f97316" stroke-width="2"/>
+                                        <text x="50" y="20" text-anchor="middle" fill="#fb923c" font-size="8" font-weight="600">/gitflow:4-plan</text>
+                                        <text x="50" y="35" text-anchor="middle" fill="#64748b" font-size="7">Analyse conflits</text>
+                                    </g>
+
+                                    <!-- Arrow -->
+                                    <line x1="160" y1="57" x2="180" y2="57" stroke="#f97316" stroke-width="1.5"/>
+                                    <polygon points="180,57 173,53 173,61" fill="#f97316"/>
+
+                                    <!-- Exec -->
+                                    <g transform="translate(185, 35)">
+                                        <rect x="0" y="0" width="100" height="45" rx="5" fill="transparent" stroke="#f97316" stroke-width="2"/>
+                                        <text x="50" y="20" text-anchor="middle" fill="#fb923c" font-size="8" font-weight="600">/gitflow:5-exec</text>
+                                        <text x="50" y="35" text-anchor="middle" fill="#64748b" font-size="7">Merge local</text>
+                                    </g>
+
+                                    <!-- Result -->
+                                    <line x1="285" y1="57" x2="305" y2="57" stroke="#f97316" stroke-width="1.5"/>
+                                    <polygon points="305,57 298,53 298,61" fill="#f97316"/>
+                                    <text x="315" y="55" text-anchor="start" fill="#fb923c" font-size="8">
+                                        <tspan data-lang="fr">Done</tspan>
+                                        <tspan data-lang="en">Done</tspan>
+                                    </text>
+                                    <text x="315" y="67" text-anchor="start" fill="#64748b" font-size="6">(branche locale)</text>
+                                </g>
+
+                                <!-- Connect decision to Direct flow -->
+                                <path d="M 690 155 L 690 175 L 420 175 L 420 160" stroke="#f97316" stroke-width="1.5" fill="none"/>
+                                <polygon points="420,160 415,170 425,170" fill="#f97316"/>
+
+                                <!-- ===== UTILITIES ===== -->
+                                <text x="500" y="295" text-anchor="middle" fill="#64748b" font-size="12" font-weight="500">
+                                    <tspan data-lang="fr">UTILITAIRES (independants)</tspan>
+                                    <tspan data-lang="en">UTILITIES (standalone)</tspan>
+                                </text>
+
+                                <g transform="translate(80, 310)">
+                                    <rect x="0" y="0" width="120" height="35" rx="5" fill="transparent" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,2"/>
+                                    <text x="60" y="22" text-anchor="middle" fill="#64748b" font-size="10">/gitflow:1-init</text>
+                                </g>
+
+                                <g transform="translate(220, 310)">
+                                    <rect x="0" y="0" width="130" height="35" rx="5" fill="transparent" stroke="#3b82f6" stroke-width="1.5"/>
+                                    <text x="65" y="22" text-anchor="middle" fill="#60a5fa" font-size="10">/gitflow:2-status</text>
+                                </g>
+
+                                <g transform="translate(370, 310)">
+                                    <rect x="0" y="0" width="120" height="35" rx="5" fill="transparent" stroke="#ef4444" stroke-width="1.5"/>
+                                    <text x="60" y="22" text-anchor="middle" fill="#f87171" font-size="10">/gitflow:6-abort</text>
+                                </g>
+
+                                <g transform="translate(510, 310)">
+                                    <rect x="0" y="0" width="140" height="35" rx="5" fill="transparent" stroke="#f97316" stroke-width="1.5"/>
+                                    <text x="70" y="22" text-anchor="middle" fill="#fb923c" font-size="10">/gitflow:12-cleanup</text>
+                                </g>
+
+                                <g transform="translate(670, 310)">
+                                    <rect x="0" y="0" width="140" height="35" rx="5" fill="transparent" stroke="#22c55e" stroke-width="1.5"/>
+                                    <text x="70" y="22" text-anchor="middle" fill="#4ade80" font-size="10">/gitflow:11-finish</text>
+                                </g>
+
+                                <!-- Legend -->
+                                <g transform="translate(40, 370)">
+                                    <rect x="0" y="-8" width="16" height="16" rx="3" fill="#06b6d4" fill-opacity="0.1" stroke="#06b6d4" stroke-width="1.5"/>
+                                    <text x="25" y="4" fill="#06b6d4" font-size="9">
+                                        <tspan data-lang="fr">PR Flow (recommande)</tspan>
+                                        <tspan data-lang="en">PR Flow (recommended)</tspan>
+                                    </text>
+
+                                    <rect x="180" y="-8" width="16" height="16" rx="3" fill="#f97316" fill-opacity="0.1" stroke="#f97316" stroke-width="1.5"/>
+                                    <text x="205" y="4" fill="#fb923c" font-size="9">
+                                        <tspan data-lang="fr">Direct Merge (solo)</tspan>
+                                        <tspan data-lang="en">Direct Merge (solo)</tspan>
+                                    </text>
+
+                                    <rect x="360" y="-8" width="16" height="16" rx="3" fill="#334155" fill-opacity="0.5" stroke="#64748b" stroke-width="1"/>
+                                    <text x="385" y="4" fill="#64748b" font-size="9">
+                                        <tspan data-lang="fr">Action externe (GitHub)</tspan>
+                                        <tspan data-lang="en">External action (GitHub)</tspan>
+                                    </text>
+
+                                    <polygon points="558,-8 570,0 558,8 546,0" fill="transparent" stroke="#6366f1" stroke-width="1.5"/>
+                                    <text x="580" y="4" fill="#64748b" font-size="9">
+                                        <tspan data-lang="fr">Decision</tspan>
+                                        <tspan data-lang="en">Decision</tspan>
+                                    </text>
+                                </g>
+                            </svg>
+                        </div>
+
                         <div class="command-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
 
                             <!-- gitflow:1-init -->
@@ -1178,7 +1502,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #475569; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:1-init</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Initialisation</span>
                                     <span data-lang="en">Initialization</span>
                                 </h5>
@@ -1193,7 +1517,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #3b82f6; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:2-status</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Etat du projet</span>
                                     <span data-lang="en">Project Status</span>
                                 </h5>
@@ -1208,7 +1532,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #8b5cf6; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:3-commit</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Commit intelligent</span>
                                     <span data-lang="en">Smart Commit</span>
                                 </h5>
@@ -1223,7 +1547,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #f97316; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:4-plan</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Planifier l'integration</span>
                                     <span data-lang="en">Plan Integration</span>
                                 </h5>
@@ -1238,7 +1562,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #f97316; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:5-exec</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Executer le merge</span>
                                     <span data-lang="en">Execute Merge</span>
                                 </h5>
@@ -1253,7 +1577,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #ef4444; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:6-abort</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Annuler l'operation</span>
                                     <span data-lang="en">Abort Operation</span>
                                 </h5>
@@ -1268,7 +1592,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #06b6d4; color: #0f172a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:7-pull-request</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Creer une Pull Request</span>
                                     <span data-lang="en">Create Pull Request</span>
                                 </h5>
@@ -1283,7 +1607,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #10b981; color: #0f172a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:8-review</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Review de Pull Request</span>
                                     <span data-lang="en">Pull Request Review</span>
                                 </h5>
@@ -1298,7 +1622,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #6366f1; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:9-merge</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Merger la Pull Request</span>
                                     <span data-lang="en">Merge Pull Request</span>
                                 </h5>
@@ -1313,7 +1637,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #22c55e; color: #0f172a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:10-start</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Demarrer une branche</span>
                                     <span data-lang="en">Start a Branch</span>
                                 </h5>
@@ -1333,7 +1657,7 @@
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
                                     <code style="background: #eab308; color: #0f172a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:11-finish</code>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Finaliser release/hotfix</span>
                                     <span data-lang="en">Finish Release/Hotfix</span>
                                 </h5>
@@ -1349,7 +1673,7 @@
                                     <code style="background: #64748b; color: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">/gitflow:12-cleanup</code>
                                     <span style="background: #1e293b; color: #94a3b8; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.7rem;">MAINTENANCE</span>
                                 </div>
-                                <h5 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                                <h5 style="color: #c8d0dc; margin: 0 0 0.5rem 0; font-size: 0.95rem;">
                                     <span data-lang="fr">Audit et nettoyage worktrees</span>
                                     <span data-lang="en">Audit and Cleanup Worktrees</span>
                                 </h5>
@@ -1378,45 +1702,248 @@
                             GitFlow uses <strong>git worktrees</strong> to isolate each branch in its own directory. This allows working on multiple branches simultaneously without having to checkout.
                         </p>
 
-                        <div class="code-block">
-                            <button class="copy-btn">Copy</button>
-                            <pre><code>parent/
-├── my-project/                    # Repertoire principal du projet
-│   ├── <a href=".claude/gitflow/" class="file-link">.claude/gitflow/</a>
-│   │   ├── <a href=".claude/gitflow/config.json" class="file-link">config.json</a>        # Configuration GitFlow
-│   │   ├── <a href=".claude/gitflow/plans/" class="file-link">plans/</a>              # Plans d'integration
-│   │   ├── <a href=".claude/gitflow/logs/" class="file-link">logs/</a>               # Historique des operations
-│   │   ├── <a href=".claude/gitflow/migrations/" class="file-link">migrations/</a>         # Snapshots EF Core
-│   │   ├── backup/             # Sauvegardes de config
-│   │   └── cache/              # Cache cross-branch
-│   └── ...
-│
-└── worktrees/                     # Worktrees organises
-    ├── main/                      # Worktree permanent (production)
-    ├── develop/                   # Worktree permanent (integration)
-    ├── features/                  # Features en cours
-    │   ├── user-auth/
-    │   └── payment-gateway/
-    ├── releases/                  # Releases en cours
-    │   └── v1.2.0/
-    └── hotfixes/                  # Hotfixes en cours
-        └── critical-fix/</code></pre>
-                        </div>
+                        <!-- Worktree Structure SVG Diagram -->
+                        <div class="svg-diagram" style="margin: 1.5rem 0;">
+                            <svg viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet" style="width: 100%; max-width: 1100px; height: auto; display: block; margin: 0 auto;">
+                                <!-- Definitions for folder icons -->
+                                <defs>
+                                    <linearGradient id="folderGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#fbbf24"/>
+                                        <stop offset="100%" style="stop-color:#f59e0b"/>
+                                    </linearGradient>
+                                    <linearGradient id="folderBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#60a5fa"/>
+                                        <stop offset="100%" style="stop-color:#3b82f6"/>
+                                    </linearGradient>
+                                    <linearGradient id="folderGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#4ade80"/>
+                                        <stop offset="100%" style="stop-color:#22c55e"/>
+                                    </linearGradient>
+                                    <linearGradient id="folderYellow" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#fde047"/>
+                                        <stop offset="100%" style="stop-color:#eab308"/>
+                                    </linearGradient>
+                                    <linearGradient id="folderPink" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f472b6"/>
+                                        <stop offset="100%" style="stop-color:#ec4899"/>
+                                    </linearGradient>
+                                    <linearGradient id="folderPurple" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#a78bfa"/>
+                                        <stop offset="100%" style="stop-color:#8b5cf6"/>
+                                    </linearGradient>
+                                </defs>
 
-                        <div class="alert alert-info">
-                            <span class="alert-icon">&#128161;</span>
-                            <div class="alert-content">
-                                <h5 data-lang="fr">Navigation entre worktrees</h5>
-                                <h5 data-lang="en">Navigating between worktrees</h5>
-                                <p data-lang="fr">
-                                    Pour travailler sur une feature : <code>cd ../worktrees/features/ma-feature/</code><br/>
-                                    Pour ouvrir dans VS Code : <code>code ../worktrees/features/ma-feature/</code>
-                                </p>
-                                <p data-lang="en">
-                                    To work on a feature: <code>cd ../worktrees/features/my-feature/</code><br/>
-                                    To open in VS Code: <code>code ../worktrees/features/my-feature/</code>
-                                </p>
-                            </div>
+                                <!-- Title -->
+                                <text x="550" y="35" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="600">
+                                    <tspan data-lang="fr">Structure des dossiers GitFlow</tspan>
+                                    <tspan data-lang="en">GitFlow Folder Structure</tspan>
+                                </text>
+
+                                <!-- ========== LEFT SIDE: Project Structure ========== -->
+                                <text x="180" y="70" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="500">
+                                    <tspan data-lang="fr">Projet principal</tspan>
+                                    <tspan data-lang="en">Main project</tspan>
+                                </text>
+
+                                <!-- my-project folder -->
+                                <g transform="translate(30, 85)">
+                                    <rect x="0" y="0" width="300" height="40" rx="8" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+                                    <path d="M15,12 L15,8 L22,8 L25,12 L35,12 L35,28 L15,28 Z" fill="url(#folderBlue)"/>
+                                    <text x="50" y="26" fill="#f8fafc" font-size="14" font-weight="600">my-project/</text>
+                                    <text x="180" y="26" fill="#64748b" font-size="11">Repertoire principal</text>
+                                </g>
+
+                                <!-- .claude/gitflow/ folder -->
+                                <g transform="translate(60, 135)">
+                                    <line x1="-15" y1="-20" x2="-15" y2="20" stroke="#475569" stroke-width="2"/>
+                                    <line x1="-15" y1="20" x2="0" y2="20" stroke="#475569" stroke-width="2"/>
+                                    <rect x="0" y="0" width="270" height="40" rx="8" fill="transparent" stroke="#8b5cf6" stroke-width="2"/>
+                                    <path d="M15,12 L15,8 L22,8 L25,12 L35,12 L35,28 L15,28 Z" fill="url(#folderPurple)"/>
+                                    <text x="50" y="26" fill="#a78bfa" font-size="13" font-weight="600">.claude/gitflow/</text>
+                                    <text x="200" y="26" fill="#64748b" font-size="10">Config GitFlow</text>
+                                </g>
+
+                                <!-- Config files inside .claude/gitflow -->
+                                <g transform="translate(90, 185)">
+                                    <line x1="-15" y1="-20" x2="-15" y2="155" stroke="#475569" stroke-width="2" stroke-dasharray="4,4"/>
+
+                                    <!-- config.json -->
+                                    <g transform="translate(0, 0)">
+                                        <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                        <rect x="0" y="0" width="200" height="30" rx="6" fill="transparent" stroke="#475569" stroke-width="1"/>
+                                        <rect x="12" y="7" width="16" height="16" rx="2" fill="#6366f1"/>
+                                        <text x="40" y="20" fill="#e2e8f0" font-size="11" font-family="monospace">config.json</text>
+                                        <text x="135" y="20" fill="#64748b" font-size="9">Configuration</text>
+                                    </g>
+
+                                    <!-- plans/ -->
+                                    <g transform="translate(0, 40)">
+                                        <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                        <rect x="0" y="0" width="200" height="30" rx="6" fill="transparent" stroke="#475569" stroke-width="1"/>
+                                        <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,21 L12,21 Z" fill="#f97316"/>
+                                        <text x="40" y="20" fill="#e2e8f0" font-size="11" font-family="monospace">plans/</text>
+                                        <text x="105" y="20" fill="#64748b" font-size="9">Plans d'integration</text>
+                                    </g>
+
+                                    <!-- logs/ -->
+                                    <g transform="translate(0, 80)">
+                                        <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                        <rect x="0" y="0" width="200" height="30" rx="6" fill="transparent" stroke="#475569" stroke-width="1"/>
+                                        <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,21 L12,21 Z" fill="#64748b"/>
+                                        <text x="40" y="20" fill="#e2e8f0" font-size="11" font-family="monospace">logs/</text>
+                                        <text x="90" y="20" fill="#64748b" font-size="9">Historique</text>
+                                    </g>
+
+                                    <!-- migrations/ -->
+                                    <g transform="translate(0, 120)">
+                                        <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                        <rect x="0" y="0" width="200" height="30" rx="6" fill="transparent" stroke="#475569" stroke-width="1"/>
+                                        <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,21 L12,21 Z" fill="#06b6d4"/>
+                                        <text x="40" y="20" fill="#06b6d4" font-size="11" font-family="monospace">migrations/</text>
+                                        <text x="130" y="20" fill="#64748b" font-size="9">EF Core</text>
+                                    </g>
+
+                                    <!-- backup/ & cache/ -->
+                                    <g transform="translate(0, 160)">
+                                        <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                        <rect x="0" y="0" width="200" height="30" rx="6" fill="transparent" stroke="#334155" stroke-width="1"/>
+                                        <text x="15" y="20" fill="#64748b" font-size="10">backup/, cache/</text>
+                                        <text x="130" y="20" fill="#475569" font-size="9">Autres</text>
+                                    </g>
+                                </g>
+
+                                <!-- Separator line -->
+                                <line x1="400" y1="80" x2="400" y2="480" stroke="#334155" stroke-width="2" stroke-dasharray="8,8"/>
+
+                                <!-- ========== RIGHT SIDE: Worktrees Structure ========== -->
+                                <text x="750" y="70" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="500">
+                                    <tspan data-lang="fr">Worktrees (branches isolees)</tspan>
+                                    <tspan data-lang="en">Worktrees (isolated branches)</tspan>
+                                </text>
+
+                                <!-- worktrees/ folder -->
+                                <g transform="translate(430, 85)">
+                                    <rect x="0" y="0" width="260" height="40" rx="8" fill="transparent" stroke="#fbbf24" stroke-width="2"/>
+                                    <path d="M15,12 L15,8 L22,8 L25,12 L35,12 L35,28 L15,28 Z" fill="url(#folderGradient)"/>
+                                    <text x="50" y="26" fill="#fbbf24" font-size="14" font-weight="600">worktrees/</text>
+                                    <text x="160" y="26" fill="#64748b" font-size="11">Branches isolees</text>
+                                </g>
+
+                                <!-- main/ -->
+                                <g transform="translate(460, 140)">
+                                    <line x1="-15" y1="-15" x2="-15" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <rect x="0" y="0" width="220" height="32" rx="6" fill="transparent" stroke="#6366f1" stroke-width="1.5"/>
+                                    <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,23 L12,23 Z" fill="#6366f1"/>
+                                    <text x="40" y="21" fill="#818cf8" font-size="12" font-weight="500">main/</text>
+                                    <text x="100" y="21" fill="#64748b" font-size="10">Production</text>
+                                    <circle cx="200" cy="16" r="6" fill="#6366f1"/>
+                                </g>
+
+                                <!-- develop/ -->
+                                <g transform="translate(460, 182)">
+                                    <line x1="-15" y1="-10" x2="-15" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <rect x="0" y="0" width="220" height="32" rx="6" fill="transparent" stroke="#f97316" stroke-width="1.5"/>
+                                    <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,23 L12,23 Z" fill="#f97316"/>
+                                    <text x="40" y="21" fill="#fb923c" font-size="12" font-weight="500">develop/</text>
+                                    <text x="115" y="21" fill="#64748b" font-size="10">Integration</text>
+                                    <circle cx="200" cy="16" r="6" fill="#f97316"/>
+                                </g>
+
+                                <!-- features/ -->
+                                <g transform="translate(460, 230)">
+                                    <line x1="-15" y1="-16" x2="-15" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <rect x="0" y="0" width="220" height="32" rx="6" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="1.5"/>
+                                    <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,23 L12,23 Z" fill="url(#folderGreen)"/>
+                                    <text x="40" y="21" fill="#4ade80" font-size="12" font-weight="600">features/</text>
+                                    <text x="125" y="21" fill="#64748b" font-size="10">En cours</text>
+                                    <circle cx="200" cy="16" r="6" fill="#22c55e"/>
+                                </g>
+
+                                <!-- Feature subfolders -->
+                                <g transform="translate(490, 275)">
+                                    <line x1="-15" y1="-13" x2="-15" y2="45" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+                                    <g transform="translate(0, 0)">
+                                        <line x1="-15" y1="12" x2="0" y2="12" stroke="#22c55e" stroke-width="1.5"/>
+                                        <rect x="0" y="0" width="170" height="26" rx="5" fill="transparent" stroke="#22c55e" stroke-width="1"/>
+                                        <text x="12" y="18" fill="#4ade80" font-size="11" font-family="monospace">user-auth/</text>
+                                    </g>
+
+                                    <g transform="translate(0, 35)">
+                                        <line x1="-15" y1="12" x2="0" y2="12" stroke="#22c55e" stroke-width="1.5"/>
+                                        <rect x="0" y="0" width="170" height="26" rx="5" fill="transparent" stroke="#22c55e" stroke-width="1"/>
+                                        <text x="12" y="18" fill="#4ade80" font-size="11" font-family="monospace">payment-gateway/</text>
+                                    </g>
+                                </g>
+
+                                <!-- releases/ -->
+                                <g transform="translate(460, 365)">
+                                    <line x1="-15" y1="-29" x2="-15" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <rect x="0" y="0" width="220" height="32" rx="6" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="1.5"/>
+                                    <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,23 L12,23 Z" fill="url(#folderYellow)"/>
+                                    <text x="40" y="21" fill="#fde047" font-size="12" font-weight="600">releases/</text>
+                                    <text x="125" y="21" fill="#64748b" font-size="10">En cours</text>
+                                    <circle cx="200" cy="16" r="6" fill="#eab308"/>
+                                </g>
+
+                                <!-- Release subfolder -->
+                                <g transform="translate(490, 410)">
+                                    <line x1="-15" y1="-13" x2="-15" y2="12" stroke="#eab308" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                    <line x1="-15" y1="12" x2="0" y2="12" stroke="#eab308" stroke-width="1.5"/>
+                                    <rect x="0" y="0" width="170" height="26" rx="5" fill="transparent" stroke="#eab308" stroke-width="1"/>
+                                    <text x="12" y="18" fill="#fde047" font-size="11" font-family="monospace">v1.2.0/</text>
+                                </g>
+
+                                <!-- hotfixes/ -->
+                                <g transform="translate(460, 450)">
+                                    <line x1="-15" y1="-14" x2="-15" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <line x1="-15" y1="15" x2="0" y2="15" stroke="#475569" stroke-width="2"/>
+                                    <rect x="0" y="0" width="220" height="32" rx="6" fill="#ec4899" fill-opacity="0.15" stroke="#ec4899" stroke-width="1.5"/>
+                                    <path d="M12,9 L12,6 L18,6 L20,9 L28,9 L28,23 L12,23 Z" fill="url(#folderPink)"/>
+                                    <text x="40" y="21" fill="#f472b6" font-size="12" font-weight="600">hotfixes/</text>
+                                    <text x="125" y="21" fill="#64748b" font-size="10">Urgents</text>
+                                    <circle cx="200" cy="16" r="6" fill="#ec4899"/>
+                                </g>
+
+                                <!-- Hotfix subfolder -->
+                                <g transform="translate(490, 495)">
+                                    <line x1="-15" y1="-13" x2="-15" y2="10" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                    <line x1="-15" y1="10" x2="0" y2="10" stroke="#ec4899" stroke-width="1.5"/>
+                                    <rect x="0" y="0" width="170" height="24" rx="5" fill="transparent" stroke="#ec4899" stroke-width="1"/>
+                                    <text x="12" y="16" fill="#f472b6" font-size="11" font-family="monospace">critical-fix/</text>
+                                </g>
+
+                                <!-- Legend -->
+                                <g transform="translate(750, 140)">
+                                    <rect x="0" y="0" width="200" height="130" rx="8" fill="transparent" stroke="#334155" stroke-width="1"/>
+                                    <text x="100" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="500">
+                                        <tspan data-lang="fr">Legende</tspan>
+                                        <tspan data-lang="en">Legend</tspan>
+                                    </text>
+
+                                    <circle cx="20" cy="45" r="5" fill="#6366f1"/>
+                                    <text x="35" y="49" fill="#94a3b8" font-size="10">Permanent</text>
+
+                                    <circle cx="20" cy="68" r="5" fill="#22c55e"/>
+                                    <text x="35" y="72" fill="#94a3b8" font-size="10">Feature</text>
+
+                                    <circle cx="110" cy="45" r="5" fill="#eab308"/>
+                                    <text x="125" y="49" fill="#94a3b8" font-size="10">Release</text>
+
+                                    <circle cx="110" cy="68" r="5" fill="#ec4899"/>
+                                    <text x="125" y="72" fill="#94a3b8" font-size="10">Hotfix</text>
+
+                                    <line x1="15" y1="90" x2="185" y2="90" stroke="#334155" stroke-width="1"/>
+                                    <text x="100" y="110" text-anchor="middle" fill="#64748b" font-size="9">
+                                        <tspan data-lang="fr">Chaque worktree = 1 branche isolee</tspan>
+                                        <tspan data-lang="en">Each worktree = 1 isolated branch</tspan>
+                                    </text>
+                                </g>
+                            </svg>
                         </div>
 
                         <h3 data-lang="fr">Fichiers de configuration</h3>
@@ -1481,15 +2008,15 @@
 
                         <div class="code-block">
                             <button class="copy-btn">Copy</button>
-                            <pre><code># Initialiser GitFlow avec worktrees
-/gitflow:1-init --with-worktrees
+                            <pre><code><span class="code-comment"># Initialiser GitFlow avec worktrees</span>
+<span class="code-cmd">/gitflow:1-init</span> <span class="code-flag">--with-worktrees</span>
 
-# Demarrer une feature (cree le worktree automatiquement)
-/gitflow:10-start feature user-auth
-# → Worktree cree: ../worktrees/features/user-auth/
+<span class="code-comment"># Demarrer une feature (cree le worktree automatiquement)</span>
+<span class="code-cmd">/gitflow:10-start</span> <span class="code-arg">feature</span> <span class="code-string">user-auth</span>
+<span class="code-output"># → Worktree cree: ../worktrees/features/user-auth/</span>
 
-# Travailler sans worktree (meme repertoire)
-/gitflow:10-start feature test --no-worktree</code></pre>
+<span class="code-comment"># Travailler sans worktree (meme repertoire)</span>
+<span class="code-cmd">/gitflow:10-start</span> <span class="code-arg">feature</span> <span class="code-string">test</span> <span class="code-flag">--no-worktree</span></code></pre>
                         </div>
                     </section>
 
@@ -1671,118 +2198,15 @@ git merge --no-ff feature/my-feature</code></pre>
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Initialise la structure GitFlow dans le projet. Cree les branches main/develop, configure le fichier de config, et detecte automatiquement le type de projet.
+                                    Cette commande est le point d'entree obligatoire pour tout nouveau projet utilisant GitFlow. Elle analyse le repository existant pour detecter la source de version (package.json, .csproj, VERSION file), identifie les branches deja presentes, et detecte automatiquement si le projet utilise Entity Framework Core. A partir de cette analyse, elle genere un plan d'initialisation detaille que l'utilisateur peut valider avant execution. Une fois approuve, elle cree la structure complete : branches main et develop, dossier .claude/gitflow/ avec la configuration, et met a jour CLAUDE.md avec les informations du projet. Cette approche en deux temps (plan puis execution) garantit une initialisation sans surprise et parfaitement adaptee au contexte du projet.
                                 </p>
                                 <p data-lang="en">
-                                    Initializes GitFlow structure in the project. Creates main/develop branches, configures the config file, and auto-detects project type.
+                                    This command is the mandatory entry point for any new project using GitFlow. It analyzes the existing repository to detect the version source (package.json, .csproj, VERSION file), identifies branches already present, and automatically detects if the project uses Entity Framework Core. From this analysis, it generates a detailed initialization plan that the user can validate before execution. Once approved, it creates the complete structure: main and develop branches, .claude/gitflow/ folder with configuration, and updates CLAUDE.md with project information. This two-step approach (plan then execution) ensures a surprise-free initialization perfectly adapted to the project context.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:1-init</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">1-init.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/1-init.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 1 - Initialize GitFlow structure with versioning and EF Core configuration
-agent: gitflow-init
-model: haiku
----
-
-# Phase 1: INIT - Project Initialization
-
-You are a GitFlow and EF Core expert. Initialize the .NET project for the GitFlow workflow.
-
-**Workflow:** Analyse → Genere plan → Utilisateur valide → Execute avec `--exec`
-
----
-
-## Mode par defaut : Generer le plan
-
-### 1. Analyse
-
-Analyse le repository et detecte :
-
-**Git:**
-- Verifier si c'est un repo Git
-- Lister les branches existantes (main/master, develop)
-- Recuperer l'URL du remote origin
-
-**Version (.NET - ordre de priorite):**
-1. `*.csproj` → balise `&lt;Version&gt;`
-2. `Directory.Build.props` → balise `&lt;Version&gt;`
-3. `AssemblyInfo.cs` → attribut `[AssemblyVersion]`
-4. Fichier `VERSION` → contenu brut
-5. Dernier tag git → format `vX.Y.Z`
-6. Aucune → proposer `0.1.0` avec fichier `VERSION`
-
-**EF Core:**
-- Detecter si EF Core est reference dans les csproj
-- Lister les DbContext existants
-
-### 2. Generer le fichier plan
-
-Cree `.claude/gitflow/plans/init_&lt;YYYYMMDD&gt;.md` contenant :
-
-```markdown
-# Plan d'initialisation GitFlow
-
-&gt; Lisez ce fichier puis executez: `/gitflow:1-init --exec`
-
-## Repository
-| Info | Valeur |
-|------|--------|
-| Nom | {nom_repo} |
-| Remote | {url_ou_local} |
-
-## Version
-| Source | Fichier | Version |
-|--------|---------|---------|
-| {type} | {chemin} | {version} |
-
-## Actions prevues
-- [ ] Branches: main ({creer|existe}), develop ({creer|existe})
-- [ ] Structure: .claude/gitflow/{config.json, plans/, logs/, migrations/}
-- [ ] CLAUDE.md: section Repository
-- [ ] EF Core: {actif|inactif} - Contexts: {liste}
-
-## Configuration
-- Versioning: SemVer
-- Tag prefix: v
-- Auto-increment: feature→minor, hotfix→patch, release→manual
-```
-
-## Mode --exec : Executer le plan
-
-### Actions
-1. **Branches**: Creer main et develop si absentes, checkout develop
-2. **Structure**: Creer `.claude/gitflow/{plans,logs,migrations}`
-3. **Config**: Creer `config.json` avec la configuration du plan
-4. **CLAUDE.md**: Ajouter section Repository si branches existaient
-5. **VERSION**: Creer fichier si aucune source detectee
-6. **Commit** (demander): `chore(gitflow): initialisation v{VERSION}`
-
-## Modes
-
-| Commande | Action |
-|----------|--------|
-| `/gitflow:1-init` | Genere plan |
-| `/gitflow:1-init --exec` | Execute plan existant |
-| `/gitflow:1-init --yes` | Genere + execute sans fichier intermediaire |</code></pre>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -1794,10 +2218,10 @@ Cree `.claude/gitflow/plans/init_&lt;YYYYMMDD&gt;.md` contenant :
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Affiche l'etat detaille du projet : branche actuelle, version, branches actives, migrations EF Core en attente. <strong>Nouveau :</strong> Vue globale des migrations par branche avec detection des conflits ModelSnapshot et ordre de merge recommande.
+                                    Cette commande est votre tableau de bord avant toute action GitFlow. Elle collecte et affiche l'etat complet du repository : branche courante et son type (feature/release/hotfix), version actuelle lue depuis la source configuree, synchronisation avec develop et main (commits ahead/behind), et etat des migrations EF Core. Elle detecte egalement les risques potentiels comme une divergence importante avec develop, des migrations non commitees, ou des conflits ModelSnapshot imminents. Utilisez-la systematiquement avant de commencer une operation pour avoir une vision claire de la situation. L'option --all-branches permet de voir l'etat des migrations sur toutes les branches actives avec un ordre de merge recommande.
                                 </p>
                                 <p data-lang="en">
-                                    Shows detailed project status: current branch, version, active branches, pending EF Core migrations. <strong>New:</strong> Global migrations view per branch with ModelSnapshot conflict detection and recommended merge order.
+                                    This command is your dashboard before any GitFlow action. It collects and displays the complete repository state: current branch and its type (feature/release/hotfix), current version read from the configured source, synchronization with develop and main (commits ahead/behind), and EF Core migrations status. It also detects potential risks such as significant divergence from develop, uncommitted migrations, or imminent ModelSnapshot conflicts. Use it systematically before starting an operation to have a clear view of the situation. The --all-branches option shows migration status across all active branches with a recommended merge order.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
@@ -1806,92 +2230,6 @@ Cree `.claude/gitflow/plans/init_&lt;YYYYMMDD&gt;.md` contenant :
 # Voir toutes les branches avec migrations
 /gitflow:2-status --all-branches</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">2-status.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/2-status.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 2 - Display GitFlow state with versioning and EF Core details
-agent: gitflow-status
-model: haiku
----
-
-# Phase 2: STATUS - Overview
-
-Tu es expert GitFlow et EF Core. Affiche l'etat complet du projet .NET.
-
----
-
-## Informations a collecter
-
-### Git
-- Branche courante et type (feature/release/hotfix/develop/main)
-- Etat working directory (clean/dirty)
-- Synchronisation vs develop et main (commits ahead/behind)
-- Dernier tag
-
-### Version
-Lire depuis la source configuree dans `.claude/gitflow/config.json`:
-- `versioning.source` → type (csproj, Directory.Build.props, AssemblyInfo, VERSION, git-tag)
-- `versioning.sourceFile` → chemin du fichier
-- Lire la version actuelle depuis CE fichier
-
-### EF Core
-- Lister les migrations (total et pending)
-- Lister les DbContext detectes
-
-### Risques
-- Divergence &gt; 5 commits vs develop
-- Migrations non commitees
-- ModelSnapshot modifie non commite
-
----
-
-## Affichage
-
-```
-================================================================================
-                           GITFLOW STATUS
-================================================================================
-
-BRANCHE: {branch} ({type}) | {clean|dirty}
-VERSION: {version} ({source})
-
-SYNC
-  vs develop: +{ahead}/-{behind} | vs main: +{ahead}/-{behind} | Tag: {tag}
-
-EF CORE
-  Migrations: {total} total, {pending} pending
-  [Pending] {liste}
-
-PLANS: {n} active | OPERATIONS: {none|rebase|merge} | RISKS: {liste}
-
-================================================================================
-Actions: /gitflow:4-plan | /gitflow:3-commit | /gitflow:6-abort
-================================================================================
-```
-
-## Modes
-
-| Mode | Output |
-|------|--------|
-| Normal | Affichage complet |
-| `--short` | `[branch] status \| vX.Y.Z \| +X/-Y \| N pending` |
-| `--json` | JSON structure |</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -1903,113 +2241,15 @@ Actions: /gitflow:4-plan | /gitflow:3-commit | /gitflow:6-abort
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Commit intelligent avec validation des migrations EF Core. Genere un message de commit structure base sur les changements. Detecte les operations destructives (DropTable, DropColumn).
+                                    Cette commande remplace le commit Git standard par un commit intelligent adapte au workflow GitFlow et EF Core. Elle analyse automatiquement les fichiers modifies pour valider que les migrations EF Core sont completes (les 3 fichiers requis), detecte les operations destructives comme DropTable ou DropColumn qui necessitent une confirmation explicite, et genere un message de commit structure selon les conventions (feat:, fix:, db:). Si vous travaillez dans un worktree, elle propose automatiquement de pousser vers le remote apres le commit. Cette validation en amont evite les erreurs courantes comme committer une migration incomplete ou oublier de signaler une operation destructive a l'equipe.
                                 </p>
                                 <p data-lang="en">
-                                    Smart commit with EF Core migration validation. Generates structured commit message based on changes. Detects destructive operations (DropTable, DropColumn).
+                                    This command replaces the standard Git commit with a smart commit adapted to GitFlow and EF Core workflow. It automatically analyzes modified files to validate that EF Core migrations are complete (the 3 required files), detects destructive operations like DropTable or DropColumn that require explicit confirmation, and generates a structured commit message following conventions (feat:, fix:, db:). If you're working in a worktree, it automatically offers to push to remote after the commit. This upstream validation prevents common errors like committing an incomplete migration or forgetting to signal a destructive operation to the team.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:3-commit</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">3-commit.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/3-commit.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 3 - Smart commit with EF Core migration validation
-agent: gitflow-commit
-model: sonnet
-args: [message]
----
-
-# Phase 3: COMMIT - Migration-aware commits
-
-Tu es expert GitFlow et EF Core. Gere les commits avec validation des migrations .NET.
-
-**Argument:** `$ARGUMENTS` = message commit (optionnel, genere si absent)
-
----
-
-## Workflow
-
-### 1. Analyser les fichiers
-
-- Fichiers stages
-- Fichiers modifies non stages
-- Fichiers non suivis
-- Detecter les fichiers migration dans chaque categorie
-
-### 2. Valider les migrations
-
-Une migration EF Core valide = **3 fichiers** :
-- `{Timestamp}_{Name}.cs` - Migration principale
-- `{Timestamp}_{Name}.Designer.cs` - Metadonnees
-- `{Context}ModelSnapshot.cs` - Etat du modele
-
-**Verifications:**
-- Les 3 fichiers sont presents
-- Le build compile (`dotnet build`)
-- Pas de conflit ModelSnapshot avec develop
-
-### 3. ⚠️ SAFETY CHECK - Operations destructives
-
-**BLOQUANT** - Scanner les migrations pour operations dangereuses :
-
-| Pattern | Risque | Niveau |
-|---------|--------|--------|
-| `DropTable` | Suppression table entiere | CRITICAL |
-| `DropColumn` | Perte donnees colonne | CRITICAL |
-| `DeleteData` | Suppression lignes | CRITICAL |
-| `DropForeignKey` | Casse integrite | HIGH |
-| `DropIndex` | Impact performance | MEDIUM |
-
-**Si detecte :** Afficher alerte, demander confirmation explicite.
-
-### 4. Classifier le commit
-
-| Fichiers | Type | Prefix |
-|----------|------|--------|
-| Migrations seules | migration | `db(migrations):` |
-| Migrations + code | mixed | `feat:` ou `fix:` |
-| Code sans migration | code | Selon type branche |
-| Config/docs | chore | `chore:` |
-
-## Modes
-
-| Commande | Action |
-|----------|--------|
-| `/gitflow:3-commit {msg}` | Commit avec message |
-| `/gitflow:3-commit` | Genere message auto |
-| `/gitflow:3-commit --validate` | Valide sans commit |
-| `/gitflow:3-commit --dry-run` | Simulation |
-
-## Push automatique (Worktree)
-
-Detection automatique : `git rev-parse --git-common-dir`
-Si worktree detecte → push automatique apres commit.
-
-| Config `afterCommit` | Worktree | Action |
-|---------------------|----------|--------|
-| `worktree` | Oui | Push automatique |
-| `worktree` | Non | Demander a l'utilisateur |
-| `always` | - | Push automatique |
-| `ask` | - | Demander a l'utilisateur |
-| `never` | - | Ne pas push |</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
 
                                 <div class="alert alert-info">
                                     <span class="alert-icon">&#128640;</span>
@@ -2035,106 +2275,15 @@ Si worktree detecte → push automatique apres commit.
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Cree un plan d'integration detaille avant le merge. Analyse les conflits potentiels, les migrations EF Core, et genere un fichier de plan.
+                                    Cette commande prepare une integration complexe en analysant tous les aspects critiques avant l'execution. Elle examine la branche courante pour determiner le nombre de commits a integrer, detecte les migrations EF Core presentes et verifie s'il y a un conflit ModelSnapshot avec la branche cible. En fonction du type de branche (feature, release, hotfix), elle determine la strategie optimale : rebase simple, rebase avec recreation de migration si conflit, ou merge direct. Le resultat est un fichier plan detaille dans .claude/gitflow/plans/ qui liste toutes les etapes a executer, les risques identifies, et les actions de rollback possibles. Ce plan peut etre relu et valide avant execution avec /gitflow:5-exec.
                                 </p>
                                 <p data-lang="en">
-                                    Creates detailed integration plan before merge. Analyzes potential conflicts, EF Core migrations, and generates a plan file.
+                                    This command prepares a complex integration by analyzing all critical aspects before execution. It examines the current branch to determine the number of commits to integrate, detects present EF Core migrations and checks for ModelSnapshot conflicts with the target branch. Based on branch type (feature, release, hotfix), it determines the optimal strategy: simple rebase, rebase with migration recreation if conflict, or direct merge. The result is a detailed plan file in .claude/gitflow/plans/ listing all steps to execute, identified risks, and possible rollback actions. This plan can be reviewed and validated before execution with /gitflow:5-exec.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:4-plan</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">4-plan.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/4-plan.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 4 - Generate integration plan with versioning and EF Core analysis
-agent: gitflow-plan
-model: sonnet
----
-
-# Phase 4: PLAN - Integration Planning
-
-Tu es expert GitFlow et EF Core. Cree un plan d'integration pour la branche courante.
-
----
-
-## Workflow
-
-### 1. Analyser contexte
-
-**Git:**
-- Branche courante et type (feature/release/hotfix)
-- Commits depuis divergence avec develop/main
-- Fichiers modifies
-
-**Version:**
-- Lire depuis source configuree
-- Calculer nouvelle version selon type branche
-
-**EF Core:**
-- Migrations sur cette branche
-- Migrations sur develop (absentes ici)
-- Conflit ModelSnapshot? (modifie des deux cotes)
-
-### 2. Determiner strategie
-
-**Feature → Develop:**
-| Condition | Strategie |
-|-----------|-----------|
-| Pas de migrations | Rebase + Merge --no-ff |
-| Migrations sans conflit | Rebase + Merge --no-ff |
-| Conflit ModelSnapshot | Rebase + Remove migration + Re-add |
-
-**Release → Main + Develop:**
-| Condition | Strategie |
-|-----------|-----------|
-| Release stable | Tag v{VERSION} + Double merge |
-| Migrations pending | Script SQL idempotent |
-| Version | Auto-increment minor |
-
-**Hotfix → Main + Develop:**
-| Condition | Strategie |
-|-----------|-----------|
-| Migration urgente | Prefix `Hotfix_` + Script SQL |
-| Version | Auto-increment patch |
-
-### 3. Generer fichier plan
-
-Cree `.claude/gitflow/plans/{type}-{nom}_{date}.md` :
-
-```markdown
-# Plan: {BRANCH_NAME}
-
-## Meta
-- **Source**: {branch} → **Cible**: {target}
-- **Version**: {current} → {new}
-
-## Etapes
-1. Preparation (fetch, backup)
-2. Migrations (si conflit: remove + rebase + re-add)
-3. Integration (rebase/merge selon strategie)
-4. Version (tag + update fichier source)
-5. Validation (build, tests, migrations list)
-
-## Executer
-`/gitflow:5-exec`
-```</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2146,119 +2295,15 @@ Cree `.claude/gitflow/plans/{type}-{nom}_{date}.md` :
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Execute le plan d'integration : build, tests, rebase, merge, versioning, push. Gere automatiquement les migrations EF Core.
+                                    Cette commande execute le plan genere par /gitflow:4-plan de maniere securisee et tracable. Elle commence par creer un checkpoint permettant un rollback en cas de probleme, puis execute chaque etape du plan : fetch des dernieres modifications, rebase sur la branche cible si necessaire (avec gestion automatique des conflits ModelSnapshot), merge avec l'option --no-ff pour preserver l'historique, et mise a jour du versioning. Pour les releases et hotfixes, elle gere automatiquement le tag Git et l'increment de version. A chaque etape, elle valide le build et les tests. En cas d'echec, elle peut etre reprise avec --resume ou annulee avec /gitflow:6-abort. L'option --dry-run permet de simuler l'execution sans rien modifier.
                                 </p>
                                 <p data-lang="en">
-                                    Executes integration plan: build, tests, rebase, merge, versioning, push. Automatically handles EF Core migrations.
+                                    This command executes the plan generated by /gitflow:4-plan in a secure and traceable manner. It starts by creating a checkpoint allowing rollback in case of issues, then executes each plan step: fetching latest changes, rebasing on target branch if needed (with automatic ModelSnapshot conflict handling), merging with --no-ff option to preserve history, and version update. For releases and hotfixes, it automatically handles Git tag and version increment. At each step, it validates build and tests. On failure, it can be resumed with --resume or cancelled with /gitflow:6-abort. The --dry-run option allows simulating execution without modifying anything.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:5-exec</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">5-exec.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/5-exec.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 5 - Execute plan with versioning auto-increment
-agent: gitflow-exec
-model: sonnet
-args: [plan_file]
----
-
-# Phase 5: EXEC - Plan Execution
-
-Tu es expert GitFlow et EF Core. Execute le plan d'integration de maniere securisee.
-
-**Argument:** `$ARGUMENTS` = chemin plan (optionnel, prend le plus recent)
-
----
-
-## Workflow
-
-### 1. Charger plan
-
-- Trouver le fichier plan (argument ou plus recent dans `.claude/gitflow/plans/`)
-- Extraire: branche source, cible, commit initial, version
-
-### 2. Verifier pre-requis
-
-- Working directory propre
-- Sur la bonne branche
-- Build OK
-- Plan valide
-
-### 3. Creer checkpoint
-
-Sauvegarder dans `.claude/gitflow/logs/checkpoint_{timestamp}.json`:
-- Branche, commit, plan, status
-- Backup migrations si presentes
-
-### 4. Executer etapes
-
-**Rebase (si necessaire):**
-- Fetch origin
-- Rebase sur target
-- Si conflit ModelSnapshot: accept theirs + regenerer migration
-
-**Merge:**
-- Checkout target
-- Pull
-- Merge --no-ff source
-
-**Release/Hotfix - Version:**
-1. Lire version depuis source configuree
-2. Creer tag avec version actuelle
-3. Calculer nouvelle version (minor pour release, patch pour hotfix)
-4. Mettre a jour le fichier source
-5. Sync config.json
-
-### 5. Validation
-
-- Build OK
-- Tests OK (si disponibles)
-- Migrations list correcte
-- Historique git correct
-
-### 6. Finaliser
-
-- Archiver plan (suffix `_DONE_{timestamp}`)
-- Afficher resume et prochaines etapes
-
----
-
-## Gestion conflits ModelSnapshot
-
-Si conflit pendant rebase:
-1. Accepter version develop: `git checkout --theirs */Migrations/*ModelSnapshot.cs`
-2. Regenerer migration: `dotnet ef migrations add {NomMigration}`
-3. Continuer rebase: `git rebase --continue`
-
----
-
-## Modes
-
-| Commande | Action |
-|----------|--------|
-| `/gitflow:5-exec` | Plan le plus recent |
-| `/gitflow:5-exec {plan}` | Plan specifie |
-| `/gitflow:5-exec --yes` | Sans confirmations |
-| `/gitflow:5-exec --dry-run` | Simulation |
-| `/gitflow:5-exec --resume` | Reprendre execution interrompue |</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2270,55 +2315,15 @@ Si conflit pendant rebase:
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Annule une operation GitFlow en cours. Restaure l'etat precedent depuis les checkpoints sauvegardes.
+                                    Cette commande est votre filet de securite quand une operation GitFlow tourne mal. Elle detecte automatiquement l'etat actuel du repository (merge en cours, rebase interrompu, conflit non resolu) et propose les options de recuperation appropriees. Elle peut annuler un merge avec git merge --abort, restaurer l'etat complet depuis un checkpoint sauvegarde par /gitflow:5-exec, abandonner completement une branche feature/hotfix en la supprimant proprement, ou nettoyer le working directory. Avant toute operation destructive, elle affiche clairement ce qui sera perdu et demande une confirmation explicite. C'est la commande a utiliser en cas de probleme pour revenir a un etat stable sans perdre de travail.
                                 </p>
                                 <p data-lang="en">
-                                    Aborts an ongoing GitFlow operation. Restores previous state from saved checkpoints.
+                                    This command is your safety net when a GitFlow operation goes wrong. It automatically detects the current repository state (ongoing merge, interrupted rebase, unresolved conflict) and offers appropriate recovery options. It can cancel a merge with git merge --abort, restore complete state from a checkpoint saved by /gitflow:5-exec, completely abandon a feature/hotfix branch by cleanly deleting it, or clean the working directory. Before any destructive operation, it clearly shows what will be lost and asks for explicit confirmation. This is the command to use when problems occur to return to a stable state without losing work.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:6-abort</code></pre>
                                 </div>
-                                <details class="template-section">
-                                    <summary>
-                                        <span data-lang="fr">Voir le prompt complet</span>
-                                        <span data-lang="en">View complete prompt</span>
-                                    </summary>
-                                    <div class="prompt-content">
-                                        <pre><code># GitFlow Abort - Rollback and Recovery
-
-Rollback and recovery operations for GitFlow.
-
-## Use Cases
-- Abort merge in progress
-- Rollback failed integration
-- Abandon and delete branch
-- Reset to checkpoint
-
-## Workflow
-
-1. **DETECT CURRENT STATE**
-   - Check for merge/rebase in progress
-   - Identify active branch type
-   - Find available checkpoints
-
-2. **OFFER OPTIONS** (via AskUserQuestion)
-   - Abort current merge: git merge --abort
-   - Reset to checkpoint: restore saved state
-   - Abandon branch: delete and return to develop
-   - Clean working tree: stash or discard changes
-
-3. **EXECUTE ROLLBACK**
-   - Restore from checkpoint if available
-   - Clean up temporary files
-   - Return to safe branch (develop)
-
-## Safety
-- NEVER delete without confirmation
-- Always show what will be lost
-- Create backup before destructive operations</code></pre>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2330,10 +2335,10 @@ Rollback and recovery operations for GitFlow.
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Cree une Pull Request avec titre et description auto-generes. Execute les pre-checks (build, tests, EF Core) avant creation. Ajoute automatiquement les labels appropries.
+                                    Cette commande automatise la creation de Pull Request en generant un contenu professionnel et complet. Elle commence par verifier que vous etes sur une branche de travail valide (feature, release, hotfix), execute les pre-checks (build, tests) et detecte la presence de migrations EF Core. Elle genere ensuite automatiquement le titre depuis le nom de branche, construit la description a partir des commits effectues, ajoute les labels appropries (feature, bugfix, enhancement) et lie les issues mentionnees. La PR ciblee est determinee automatiquement : develop pour les features, main pour les releases et hotfixes. L'option --draft permet de creer une PR en mode brouillon pour obtenir des feedbacks avant finalisation.
                                 </p>
                                 <p data-lang="en">
-                                    Creates a Pull Request with auto-generated title and description. Runs pre-checks (build, tests, EF Core) before creation. Automatically adds appropriate labels.
+                                    This command automates Pull Request creation by generating professional and complete content. It starts by verifying you're on a valid working branch (feature, release, hotfix), runs pre-checks (build, tests) and detects EF Core migrations presence. It then automatically generates the title from the branch name, builds the description from commits made, adds appropriate labels (feature, bugfix, enhancement) and links mentioned issues. The target PR is determined automatically: develop for features, main for releases and hotfixes. The --draft option creates a draft PR to get feedback before finalization.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
@@ -2346,60 +2351,6 @@ Rollback and recovery operations for GitFlow.
 # PR en draft
 /gitflow:7-pull-request --draft</code></pre>
                                 </div>
-                                <details>
-                                    <summary>
-                                        <span data-lang="fr">Modes disponibles</span>
-                                        <span data-lang="en">Available modes</span>
-                                    </summary>
-                                    <div class="code-block">
-                                        <pre><code>| Commande | Action |
-|----------|--------|
-| `/gitflow:7-pull-request` | PR vers develop |
-| `/gitflow:7-pull-request main` | PR vers main |
-| `/gitflow:7-pull-request --draft` | PR en draft |
-| `/gitflow:7-pull-request --dry-run` | Simulation |</code></pre>
-                                    </div>
-                                </details>
-                                <details class="template-section">
-                                    <summary>
-                                        <span data-lang="fr">Voir le prompt complet</span>
-                                        <span data-lang="en">View complete prompt</span>
-                                    </summary>
-                                    <div class="prompt-content">
-                                        <pre><code># GitFlow Pull Request - Fast PR Creation
-
-Create Pull Request with auto-generated description.
-
-## Arguments
-/gitflow:7-pull-request [base] [--draft] [--dry-run]
-- base: Target branch (default: develop)
-- --draft: Create as draft PR
-- --dry-run: Simulation only
-
-## Workflow
-
-1. **PRE-CHECKS**
-   - Verify on feature/release/hotfix branch
-   - Run build and tests
-   - Check for EF Core migrations
-
-2. **GENERATE CONTENT**
-   - Title from branch name
-   - Description from commits
-   - Add labels (feature/bugfix/release)
-   - Link related issues
-
-3. **CREATE PR**
-   gh pr create --title "..." --body "..."
-
-## PR Template
-- Summary (bullet points)
-- Changes by category
-- Test plan
-- EF Core migration notes (if any)
-- Checklist</code></pre>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2411,10 +2362,10 @@ Create Pull Request with auto-generated description.
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Analyse une Pull Request avec une checklist complete : qualite code, patterns .NET, migrations EF Core, tests et securite. Fournit un feedback structure avec recommandation (APPROVE/CHANGES_REQUESTED).
+                                    Cette commande effectue une revue de code structuree et exhaustive d'une Pull Request. Elle analyse le diff complet en verifiant plusieurs aspects : qualite du code (patterns existants, duplication, nommage, gestion d'erreurs), bonnes pratiques .NET (injection de dependances, async/await, null safety, LINQ), migrations EF Core si presentes (reversibilite, breaking changes, indexes, foreign keys), securite (exposition de donnees sensibles, validation d'inputs, SQL injection) et couverture de tests. Elle genere un rapport structure avec une recommandation finale (APPROVE ou CHANGES_REQUESTED). Les options --security et --ef-core permettent de se concentrer sur un aspect specifique, tandis que --quick produit une checklist rapide pour les petits changements.
                                 </p>
                                 <p data-lang="en">
-                                    Analyzes a Pull Request with complete checklist: code quality, .NET patterns, EF Core migrations, tests and security. Provides structured feedback with recommendation (APPROVE/CHANGES_REQUESTED).
+                                    This command performs a structured and exhaustive code review of a Pull Request. It analyzes the complete diff checking multiple aspects: code quality (existing patterns, duplication, naming, error handling), .NET best practices (dependency injection, async/await, null safety, LINQ), EF Core migrations if present (reversibility, breaking changes, indexes, foreign keys), security (sensitive data exposure, input validation, SQL injection) and test coverage. It generates a structured report with a final recommendation (APPROVE or CHANGES_REQUESTED). The --security and --ef-core options focus on specific aspects, while --quick produces a fast checklist for small changes.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
@@ -2427,72 +2378,6 @@ Create Pull Request with auto-generated description.
 # Focus migrations EF Core
 /gitflow:8-review 123 --ef-core</code></pre>
                                 </div>
-                                <details>
-                                    <summary>
-                                        <span data-lang="fr">Modes disponibles</span>
-                                        <span data-lang="en">Available modes</span>
-                                    </summary>
-                                    <div class="code-block">
-                                        <pre><code>| Commande | Action |
-|----------|--------|
-| `/gitflow:8-review 123` | Review PR #123 |
-| `/gitflow:8-review --security` | Focus securite |
-| `/gitflow:8-review --ef-core` | Focus migrations |
-| `/gitflow:8-review --quick` | Checklist rapide |</code></pre>
-                                    </div>
-                                </details>
-                                <details class="template-section">
-                                    <summary>
-                                        <span data-lang="fr">Voir le prompt complet</span>
-                                        <span data-lang="en">View complete prompt</span>
-                                    </summary>
-                                    <div class="prompt-content">
-                                        <pre><code># GitFlow Review - PR Review Checklist
-
-Fast PR review with validation checklist.
-
-## Arguments
-/gitflow:8-review &lt;pr-number&gt; [--security] [--ef-core] [--quick]
-- pr-number: Pull Request number
-- --security: Focus on security review
-- --ef-core: Focus on EF Core migrations
-- --quick: Quick checklist only
-
-## Review Checklist
-
-### Code Quality
-- [ ] Follows existing patterns
-- [ ] No code duplication
-- [ ] Clear naming conventions
-- [ ] Appropriate error handling
-
-### .NET Patterns
-- [ ] Proper dependency injection
-- [ ] Async/await usage
-- [ ] Null safety
-- [ ] LINQ best practices
-
-### EF Core (if applicable)
-- [ ] Migration is reversible
-- [ ] No breaking changes
-- [ ] Proper indexes
-- [ ] Foreign keys defined
-
-### Security
-- [ ] No sensitive data exposure
-- [ ] Input validation
-- [ ] Authorization checks
-- [ ] SQL injection prevention
-
-### Tests
-- [ ] Unit tests added/updated
-- [ ] Integration tests if needed
-- [ ] Test coverage maintained
-
-## Output
-Recommendation: APPROVE / CHANGES_REQUESTED</code></pre>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2504,10 +2389,10 @@ Recommendation: APPROVE / CHANGES_REQUESTED</code></pre>
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Merge une Pull Request apres validation des reviews et CI. Strategie automatique : squash (feature) ou merge commit (release/hotfix). Cleanup automatique des branches.
+                                    Cette commande finalise l'integration d'une Pull Request de maniere securisee et controlee. Elle verifie d'abord tous les pre-requis : approbations des reviewers, statut CI (tous les checks doivent etre verts), absence de conflits et branche a jour. La strategie de merge est determinee automatiquement selon le type de branche : squash merge pour les features (historique propre dans develop), merge commit pour les releases et hotfixes (preservation de l'historique complet). Apres le merge, elle nettoie automatiquement la branche source sur le remote et met a jour les branches locales. L'option --auto permet d'activer l'auto-merge qui s'executera des que la CI sera verte.
                                 </p>
                                 <p data-lang="en">
-                                    Merges a Pull Request after review and CI validation. Auto strategy: squash (feature) or merge commit (release/hotfix). Automatic branch cleanup.
+                                    This command finalizes Pull Request integration in a secure and controlled manner. It first verifies all prerequisites: reviewer approvals, CI status (all checks must be green), no conflicts and branch up to date. Merge strategy is determined automatically based on branch type: squash merge for features (clean history in develop), merge commit for releases and hotfixes (full history preservation). After merge, it automatically cleans up the source branch on remote and updates local branches. The --auto option enables auto-merge that will execute as soon as CI is green.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
@@ -2520,68 +2405,6 @@ Recommendation: APPROVE / CHANGES_REQUESTED</code></pre>
 # Simulation
 /gitflow:9-merge 123 --dry-run</code></pre>
                                 </div>
-                                <details>
-                                    <summary>
-                                        <span data-lang="fr">Modes disponibles</span>
-                                        <span data-lang="en">Available modes</span>
-                                    </summary>
-                                    <div class="code-block">
-                                        <pre><code>| Commande | Action |
-|----------|--------|
-| `/gitflow:9-merge 123` | Merge PR #123 |
-| `/gitflow:9-merge 123 --auto` | Merge auto quand CI vert |
-| `/gitflow:9-merge 123 --dry-run` | Simulation |
-| `/gitflow:9-merge 123 --admin` | Override protections (danger) |</code></pre>
-                                    </div>
-                                </details>
-                                <details class="template-section">
-                                    <summary>
-                                        <span data-lang="fr">Voir le prompt complet</span>
-                                        <span data-lang="en">View complete prompt</span>
-                                    </summary>
-                                    <div class="prompt-content">
-                                        <pre><code># GitFlow Merge - Safe Branch Merge
-
-Safe merge execution with validation.
-
-## Arguments
-/gitflow:9-merge &lt;pr-number&gt; [--auto] [--dry-run] [--admin]
-- pr-number: Pull Request number
-- --auto: Enable auto-merge when CI passes
-- --dry-run: Simulation only
-- --admin: Override branch protections (danger)
-
-## Pre-merge Checks
-- [ ] PR approved by required reviewers
-- [ ] All CI checks passing
-- [ ] No merge conflicts
-- [ ] Branch is up to date
-
-## Merge Strategy (automatic)
-- feature → develop: Squash merge
-- release → main: Merge commit
-- hotfix → main: Merge commit
-
-## Workflow
-
-1. **VALIDATE PR STATE**
-   - Check approvals
-   - Verify CI status
-   - Confirm no conflicts
-
-2. **EXECUTE MERGE**
-   gh pr merge &lt;number&gt; --squash/--merge
-
-3. **POST-MERGE CLEANUP**
-   - Delete source branch
-   - Update local branches
-   - Tag if release/hotfix
-
-## Safety
-- NEVER use --admin without explicit request
-- Always verify before merge</code></pre>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2593,10 +2416,10 @@ Safe merge execution with validation.
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Demarre une nouvelle branche (feature, release, hotfix) avec un questionnaire dynamique base sur le contexte du projet. Supporte les worktrees organises (<code>../project-worktrees/{type}s/{name}/</code>). <strong>Pour les releases :</strong> detection de main divergent avec option reset, et consolidation des migrations EF Core en une seule.
+                                    Cette commande est le point de depart pour tout nouveau travail dans GitFlow. Elle cree la branche appropriee (feature depuis develop, release depuis develop, hotfix depuis main) et l'isole dans un worktree separe par defaut. Cette isolation permet de travailler sur plusieurs branches simultanement sans avoir a switcher constamment. L'assistant analyse d'abord le contexte du projet (version actuelle, commits en avance sur develop, branches existantes) puis pose des questions adaptees pour guider la creation. Pour les releases, elle detecte si main a diverge et propose de le resynchroniser, et si trop de migrations EF Core existent, elle propose de les consolider. L'option --no-worktree permet de creer la branche dans le repertoire courant si les worktrees ne sont pas souhaites.
                                 </p>
                                 <p data-lang="en">
-                                    Starts a new branch (feature, release, hotfix) with a dynamic questionnaire based on project context. Supports organized worktrees (<code>../project-worktrees/{type}s/{name}/</code>). <strong>For releases:</strong> divergent main detection with reset option, and EF Core migrations consolidation into one.
+                                    This command is the starting point for any new work in GitFlow. It creates the appropriate branch (feature from develop, release from develop, hotfix from main) and isolates it in a separate worktree by default. This isolation allows working on multiple branches simultaneously without constantly switching. The assistant first analyzes project context (current version, commits ahead on develop, existing branches) then asks adapted questions to guide creation. For releases, it detects if main has diverged and offers to resync it, and if too many EF Core migrations exist, it offers to consolidate them. The --no-worktree option creates the branch in the current directory if worktrees are not desired.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
@@ -2630,154 +2453,6 @@ Safe merge execution with validation.
                                         </p>
                                     </div>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">10-start.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/10-start.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 10 - Start a new feature, release or hotfix branch with worktree
-agent: gitflow-start
-model: haiku
----
-
-# Phase 10: START - Demarrer une branche GitFlow (Worktree)
-
-Tu es expert GitFlow. Cree une branche dans un **worktree separe** (par defaut).
-
-**Argument:** `$ARGUMENTS` = `{type} {name} [--no-worktree]`
-
----
-
-## ETAPE 1: Analyser le contexte
-
-**IMPORTANT:** Avant toute question, collecter ces informations :
-
-```bash
-# 1. Branche courante
-CURRENT_BRANCH=$(git branch --show-current)
-
-# 2. Version actuelle
-VERSION=$(cat package.json | grep '"version"' | head -1)
-
-# 3. Commits develop vs main
-DEVELOP_AHEAD=$(git rev-list --count origin/main..origin/develop)
-
-# 4. Branches existantes
-EXISTING_FEATURES=$(git branch -r | grep 'feature/' | wc -l)
-```
-
----
-
-## ETAPE 2: Afficher le contexte
-
-```
-================================================================================
-                         GITFLOW START - CONTEXTE
-================================================================================
-
-REPOSITORY
-  Branche: {CURRENT_BRANCH} | Version: {VERSION} | Tag: {LAST_TAG}
-  Working dir: {clean|dirty avec N fichiers}
-
-SYNCHRONISATION
-  develop → main: {DEVELOP_AHEAD} commits en avance
-  {Si &gt; 0: "Une release est recommandee"}
-
-BRANCHES ACTIVES
-  Features: {N} | Releases: {N} | Hotfixes: {N}
-
-================================================================================
-```
-
----
-
-## ETAPE 3: Questions dynamiques selon contexte
-
-**Construire les options selon le contexte:**
-
-```javascript
-options = []
-
-// Feature: toujours disponible depuis develop
-if (CURRENT_BRANCH === 'develop' || canSwitchTo('develop')) {
-  options.push({
-    label: "feature",
-    description: "Nouvelle fonctionnalite (depuis develop)"
-  })
-}
-
-// Release: proposer SI develop a des commits ahead de main
-if (DEVELOP_AHEAD &gt; 0) {
-  const [major, minor, patch] = VERSION.split('.').map(Number)
-  options.push({
-    label: `release v${major}.${minor + 1}.0`,
-    description: `Release minor - ${DEVELOP_AHEAD} commits a publier (Recommande)`
-  })
-}
-
-// Hotfix: toujours disponible
-options.push({
-  label: "hotfix",
-  description: "Correction urgente (depuis main)"
-})
-```
-
----
-
-## ETAPE 6: Creer la branche
-
-### Mode Worktree (defaut)
-
-**Structure organisee:** `../worktrees/{type}s/{name}/`
-
-```bash
-WORKTREE_BASE="../worktrees"
-
-# Creer le repertoire parent et le sous-repertoire du type
-mkdir -p "${WORKTREE_BASE}/features"
-mkdir -p "${WORKTREE_BASE}/releases"
-mkdir -p "${WORKTREE_BASE}/hotfixes"
-
-git fetch origin
-
-# Feature (depuis develop)
-WORKTREE_PATH="${WORKTREE_BASE}/features/{name}"
-git worktree add -b feature/{name} "$WORKTREE_PATH" origin/develop
-
-# Release (depuis develop)
-WORKTREE_PATH="${WORKTREE_BASE}/releases/v{version}"
-git worktree add -b release/v{version} "$WORKTREE_PATH" origin/develop
-
-# Hotfix (depuis main)
-WORKTREE_PATH="${WORKTREE_BASE}/hotfixes/{name}"
-git worktree add -b hotfix/{name} "$WORKTREE_PATH" origin/main
-```
-
----
-
-## Exemples
-
-| Commande | Resultat |
-|----------|----------|
-| `/gitflow:10-start` | Mode interactif avec contexte |
-| `/gitflow:10-start feature user-auth` | `feature/user-auth` direct |
-| `/gitflow:10-start release` | Propose versions basees sur actuelle |
-| `/gitflow:10-start hotfix login-fix` | `hotfix/login-fix` direct |
-| `/gitflow:10-start feature test --no-worktree` | Sans worktree |</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2789,123 +2464,15 @@ git worktree add -b hotfix/{name} "$WORKTREE_PATH" origin/main
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Termine la branche courante : merge, tag (pour release/hotfix), cleanup. Equivalent de git flow finish.
+                                    Cette commande finalise proprement une branche apres que sa Pull Request a ete mergee. Le comportement depend du type de branche : pour une feature, elle effectue simplement le nettoyage (suppression de la branche locale et remote). Pour une release ou un hotfix, elle execute le workflow complet GitFlow : checkout de main, creation du tag de version, merge back vers develop pour synchroniser les branches, puis nettoyage. Pour les hotfixes, elle gere automatiquement l'increment de version PATCH et la mise a jour du fichier source de version avant de creer le tag. Le worktree associe est egalement supprime si present. Cette commande garantit que toutes les etapes du GitFlow sont correctement executees apres un merge.
                                 </p>
                                 <p data-lang="en">
-                                    Finishes current branch: merge, tag (for release/hotfix), cleanup. Equivalent to git flow finish.
+                                    This command properly finalizes a branch after its Pull Request has been merged. Behavior depends on branch type: for a feature, it simply performs cleanup (local and remote branch deletion). For a release or hotfix, it executes the complete GitFlow workflow: checkout main, create version tag, merge back to develop to sync branches, then cleanup. For hotfixes, it automatically handles PATCH version increment and version source file update before creating the tag. The associated worktree is also removed if present. This command ensures all GitFlow steps are properly executed after a merge.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:11-finish</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">11-finish.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/11-finish.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 11 - Finish and finalize a GitFlow branch (tag + merge back)
-agent: gitflow-finish
-model: sonnet
----
-
-# Phase 11: FINISH - Finaliser une branche GitFlow
-
-Tu es expert GitFlow. Finalise une branche apres merge de la PR.
-
-**Argument:** `$ARGUMENTS` = branche a finaliser (optionnel, detecte automatiquement)
-
----
-
-## Quand utiliser
-
-| Situation | Action |
-|-----------|--------|
-| PR feature mergee | Cleanup uniquement |
-| PR release mergee | Tag + merge back to develop |
-| PR hotfix mergee | Tag + merge back to develop |
-
----
-
-## Actions selon type
-
-### Feature (simple cleanup)
-
-```bash
-git checkout develop
-git pull origin develop
-git branch -d feature/{name}
-git push origin --delete feature/{name}
-```
-
-### Release (tag + merge back)
-
-```bash
-# 1. Checkout main et pull
-git checkout main
-git pull origin main
-
-# 2. Creer tag
-VERSION=$(echo $BRANCH | sed 's/release\/v//')
-git tag -a "v$VERSION" -m "Release v$VERSION"
-git push origin "v$VERSION"
-
-# 3. Merge back to develop
-git checkout develop
-git pull origin develop
-git merge main --no-ff -m "chore: merge release v$VERSION back to develop"
-git push origin develop
-
-# 4. Cleanup
-git branch -d release/v$VERSION
-git push origin --delete release/v$VERSION
-```
-
-### Hotfix (tag + merge back)
-
-```bash
-# 1. Checkout main et pull
-git checkout main
-git pull origin main
-
-# 2. Creer tag (patch version)
-VERSION=$(cat package.json | jq -r '.version')
-git tag -a "v$VERSION" -m "Hotfix v$VERSION"
-git push origin "v$VERSION"
-
-# 3. Merge back to develop
-git checkout develop
-git merge main --no-ff -m "chore: merge hotfix v$VERSION back to develop"
-git push origin develop
-
-# 4. Cleanup
-git branch -d hotfix/{name}
-git push origin --delete hotfix/{name}
-```
-
----
-
-## Modes
-
-| Commande | Action |
-|----------|--------|
-| `/gitflow:11-finish` | Finaliser branche courante |
-| `/gitflow:11-finish feature/xxx` | Finaliser branche specifiee |
-| `/gitflow:11-finish --dry-run` | Simulation |
-| `/gitflow:11-finish --skip-tag` | Sans creation de tag |</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
                             </div>
                         </div>
 
@@ -2917,69 +2484,15 @@ git push origin --delete hotfix/{name}
                             </div>
                             <div class="command-body">
                                 <p data-lang="fr">
-                                    Audite et nettoie les worktrees orphelins ou obsoletes. Doit etre execute depuis <code>main</code> ou <code>develop</code> uniquement.
+                                    Cette commande de maintenance audite et nettoie les worktrees accumules au fil du temps. Elle categorise chaque worktree trouve : permanents (main, develop - jamais supprimes), actifs (branches avec travail en cours), orphelins (la branche Git associee n'existe plus), stale (inactifs depuis plus de 30 jours), ou dirty (modifications locales non commitees). L'audit affiche un rapport complet avec recommandations. En mode interactif, elle propose de supprimer les worktrees orphelins et stale un par un avec confirmation. Elle doit etre executee depuis main ou develop pour eviter de supprimer le worktree courant. Cette commande est automatiquement appelee par /gitflow:11-finish et /gitflow:6-abort pour maintenir l'environnement propre.
                                 </p>
                                 <p data-lang="en">
-                                    Audit and clean up orphan or stale worktrees. Must be run from <code>main</code> or <code>develop</code> only.
+                                    This maintenance command audits and cleans up worktrees accumulated over time. It categorizes each found worktree: permanent (main, develop - never deleted), active (branches with ongoing work), orphan (associated Git branch no longer exists), stale (inactive for more than 30 days), or dirty (uncommitted local changes). The audit displays a complete report with recommendations. In interactive mode, it offers to delete orphan and stale worktrees one by one with confirmation. It must be run from main or develop to avoid deleting the current worktree. This command is automatically called by /gitflow:11-finish and /gitflow:6-abort to keep the environment clean.
                                 </p>
                                 <div class="code-block">
                                     <button class="copy-btn">Copy</button>
                                     <pre><code>/gitflow:12-cleanup</code></pre>
                                 </div>
-
-                                <details class="template-section">
-                                    <summary>
-                                        <h4 style="display: inline; margin: 0;">
-                                            <span data-lang="fr">Template Prompt</span>
-                                            <span data-lang="en">Prompt Template</span>
-                                        </h4>
-                                        <span class="template-badge">12-cleanup.md</span>
-                                    </summary>
-                                    <div class="template-content">
-                                        <p class="template-path">
-                                            <code>templates/commands/gitflow/12-cleanup.md</code>
-                                        </p>
-                                        <div class="code-block template-code">
-                                            <button class="copy-btn">Copy</button>
-                                            <pre><code>---
-description: Phase 12 - Cleanup worktrees and orphan branches (audit and remove)
-agent: gitflow-cleanup
-model: sonnet
----
-
-# Phase 12: CLEANUP - Audit et nettoyage des worktrees
-
-## Prerequis
-
-**IMPORTANT:** Cette commande doit etre executee depuis `main` ou `develop` uniquement.
-
-## Categories de worktrees
-
-| Type | Description |
-|------|-------------|
-| **Permanents** | main, develop (proteges) |
-| **Actifs** | Branches en cours de travail |
-| **Orphelins** | Branche supprimee |
-| **Stale** | Inactifs > 30 jours |
-| **Dirty** | Modifications non commitees |
-
-## Modes
-
-| Commande | Action |
-|----------|--------|
-| `/gitflow:12-cleanup` | Audit interactif |
-| `/gitflow:12-cleanup --dry-run` | Audit seul |
-| `/gitflow:12-cleanup --force` | Supprime tous les orphelins |
-| `/gitflow:12-cleanup --stale-days=30` | Seuil pour stale |
-
-## Integration automatique
-
-Cette commande est appelee automatiquement par:
-- `/gitflow:11-finish` → Apres finalisation
-- `/gitflow:6-abort --branch` → Apres abandon</code></pre>
-                                        </div>
-                                    </div>
-                                </details>
                             </div>
                         </div>
                     </section>
