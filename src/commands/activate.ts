@@ -4,22 +4,69 @@ import chalk from 'chalk';
 import { logger } from '../lib/logger.js';
 import {
   validateKeyFormat,
-  validateLicenseOnline,
+  detectKeyType,
+  validateJwt,
   saveLicense,
   deleteLicense,
+  getLicenseInfo,
+  decodeLicense,
 } from '../lib/license.js';
 
 export const activateCommand = new Command('activate')
   .description('Activate your license')
-  .argument('[key]', 'License key (CGFW-XXXX-XXXX-XXXX)')
+  .argument('[key]', 'License key (JWT token)')
   .option('--deactivate', 'Remove current license')
+  .option('--status', 'Show current license status')
+  .option('--decode', 'Decode license key without validation (debug)')
   .action(async (key, options) => {
-    logger.header('License Activation');
+    logger.header('License Management');
+
+    // Show status
+    if (options.status) {
+      const info = await getLicenseInfo();
+
+      if (!info.active) {
+        logger.warn('No active license.');
+        logger.info(`Activate with: ${chalk.cyan('claude-tools activate <key>')}`);
+        logger.info(`Purchase at: ${chalk.cyan('https://atlashub.ch/claude-tools')}`);
+        return;
+      }
+
+      console.log();
+      logger.box(
+        [
+          chalk.green.bold('License Active'),
+          '',
+          `Company:  ${chalk.cyan(info.company || 'N/A')}`,
+          `Edition:  ${chalk.cyan(info.edition || 'N/A')}`,
+          `Features: ${chalk.cyan(info.features?.join(', ') || '*')}`,
+          `Expires:  ${chalk.cyan(info.expiresAt ? new Date(info.expiresAt).toLocaleDateString() : 'N/A')}`,
+          info.daysRemaining !== undefined
+            ? `Remaining: ${chalk.yellow(info.daysRemaining + ' days')}`
+            : '',
+        ].filter(Boolean),
+        'success'
+      );
+      return;
+    }
 
     // Deactivate
     if (options.deactivate) {
       await deleteLicense();
       logger.success('License deactivated.');
+      return;
+    }
+
+    // Decode only (debug)
+    if (options.decode && key) {
+      const decoded = decodeLicense(key);
+      if (decoded) {
+        console.log();
+        console.log(chalk.yellow('Decoded license (unverified):'));
+        console.log(JSON.stringify(decoded, null, 2));
+      } else {
+        logger.error('Could not decode license key.');
+      }
       return;
     }
 
@@ -29,12 +76,12 @@ export const activateCommand = new Command('activate')
         {
           type: 'input',
           name: 'licenseKey',
-          message: 'Enter your license key:',
+          message: 'Enter your license key (JWT):',
           validate: (input) => {
             if (validateKeyFormat(input)) {
               return true;
             }
-            return 'Invalid format. Expected: CGFW-XXXX-XXXX-XXXX';
+            return 'Invalid license key format.';
           },
         },
       ]);
@@ -44,34 +91,51 @@ export const activateCommand = new Command('activate')
     // Validate format locally
     if (!validateKeyFormat(key)) {
       logger.error('Invalid license key format.');
-      logger.info('Expected format: CGFW-XXXX-XXXX-XXXX');
+      logger.info('Expected: JWT token (eyJ...)');
       return;
     }
 
-    // Validate online
+    // Detect key type
+    const keyType = detectKeyType(key);
     const spinner = logger.spinner('Validating license...');
 
     try {
-      const result = await validateLicenseOnline(key);
+      let result;
+
+      if (keyType === 'jwt') {
+        // Validate JWT locally (no API call needed)
+        result = validateJwt(key);
+      } else {
+        spinner.stop();
+        logger.error('Legacy license keys are no longer supported.');
+        logger.info('Please obtain a new JWT license key.');
+        return;
+      }
+
       spinner.stop();
 
-      if (result.valid && result.plan && result.expiresAt) {
-        await saveLicense(key, result.plan, result.expiresAt);
+      if (result.valid) {
+        await saveLicense(key, result);
 
         console.log();
         logger.box(
           [
-            chalk.green.bold('License activated successfully!'),
+            chalk.green.bold('✓ License activated successfully!'),
             '',
-            `Plan:    ${chalk.cyan(result.plan)}`,
-            `Expires: ${chalk.cyan(new Date(result.expiresAt).toLocaleDateString())}`,
-          ],
+            `Company:  ${chalk.cyan(result.company || 'N/A')}`,
+            `Edition:  ${chalk.cyan(result.edition || result.plan || 'N/A')}`,
+            `Features: ${chalk.cyan(result.features?.join(', ') || '*')}`,
+            `Expires:  ${chalk.cyan(result.expiresAt ? new Date(result.expiresAt).toLocaleDateString() : 'N/A')}`,
+            result.daysRemaining !== undefined
+              ? `Remaining: ${chalk.yellow(result.daysRemaining + ' days')}`
+              : '',
+          ].filter(Boolean),
           'success'
         );
       } else {
         console.log();
         logger.error(result.error || 'License validation failed.');
-        logger.info(`Purchase at: ${chalk.cyan('https://atlashub.ch/claude-gitflow')}`);
+        logger.info(`Purchase at: ${chalk.cyan('https://atlashub.ch/claude-tools')}`);
       }
     } catch (error) {
       spinner.stop();
